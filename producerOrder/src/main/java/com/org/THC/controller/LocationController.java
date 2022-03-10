@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/weather")
+@RequestMapping(path = "/location")
 public class LocationController {
 
     private LocationService locationService;

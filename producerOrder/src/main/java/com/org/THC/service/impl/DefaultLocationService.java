@@ -18,6 +18,7 @@ public class DefaultLocationService implements LocationService {
     private RestTemplate restTemplate;
     private ObjectMapper objectMapper;
     private List<Location> locationList;
+    String url="http://localhost:8081/location/";
 
     @Autowired
     public DefaultLocationService(RestTemplate restTemplate, ObjectMapper objectMapper, List<Location> locationList){
@@ -29,28 +30,28 @@ public class DefaultLocationService implements LocationService {
     @Override
     public boolean createLocations(Location location) throws JsonProcessingException {
 
-        return restTemplate.postForObject("http://localhost:8081/createLocation", location, boolean.class);
+        return restTemplate.postForObject(url+"createLocation", location, boolean.class);
 
     }
 
     @Override
     public List<Location> getAllLocations() {
         //List<Locations> locationsList= (List<Locations>) locationRepository.findAll();
-        return restTemplate.getForObject("http://localhost:8081/getLocation", locationList.getClass());
+        return restTemplate.getForObject(url+"getLocation", locationList.getClass());
     }
 
     @Override
     public Location getLocationsById(String id) {
-        return restTemplate.postForObject("http://localhost:8081/getById", id, Location.class);
+        return restTemplate.postForObject(url+"getById", id, Location.class);
     }
 
     @Override
     public List<Location> getLocationsByZip(int zip) {
-        return restTemplate.postForObject("http://localhost:8081/getByzip", zip, locationList.getClass());
+        return restTemplate.postForObject(url+"getByzip", zip, locationList.getClass());
     }
 
     @Override
     public Location cancelLocation(String id) {
-        return restTemplate.postForObject("http://localhost:8081/cancel", id, Location.class);
+        return restTemplate.postForObject(url+"cancel", id, Location.class);
     }
 }
