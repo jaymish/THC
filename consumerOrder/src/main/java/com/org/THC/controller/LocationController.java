@@ -25,50 +25,50 @@ LocationController {
         this.locationService = locationService;
     }
 
-    @PostMapping("/createOrder")
-    @ApiOperation(value = "Create Order received from client service")
+    @PostMapping("/createLocation")
+    @ApiOperation(value = "Create Location received from client service")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Saved on DB")
+            @ApiResponse(code = 200, message = "Location Saved on DB")
     })
-    public boolean createOrders(@RequestBody Location location){
-        locationService.createOrder(location);
+    public boolean createLocations(@RequestBody Location location){
+        locationService.createLocation(location);
         return true;
     }
 
 
-    @GetMapping(path = "/getOrder")
-    @ApiOperation(value = "Get All orders")
+    @GetMapping(path = "/getLocation")
+    @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Orders Fetched for client")
+            @ApiResponse(code = 200, message = "All Locations Fetched for client")
     })
-    public List<Location> getOrders(){
-        return locationService.getAllOrders();
+    public List<Location> getLocations(){
+        return locationService.getAllLocations();
     }
 
     @PostMapping("/getById")
-    @ApiOperation(value = "Get orders by ID")
+    @ApiOperation(value = "Get locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Fetched by Id for client" )
+            @ApiResponse(code = 200, message = "Location Fetched by Id for client" )
     })
-    public Location ordersById(@RequestBody String id){
-        return locationService.getOrdersById(id);
+    public Location locationsById(@RequestBody String id){
+        return locationService.getLocationsById(id);
     }
 
     @PostMapping("/getByzip")
-    @ApiOperation(value = "Get orders by ZipCode")
+    @ApiOperation(value = "Get locations by ZipCode")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Fetched by Zip for client")
+            @ApiResponse(code = 200, message = "Location Fetched by Zip for client")
     })
-    public List<Location> ordersByZip(@RequestBody int zip){
-        return locationService.getOrdersByZip(zip);
+    public List<Location> locationsByZip(@RequestBody int zip){
+        return locationService.getLocationsByZip(zip);
     }
 
     @PostMapping("/cancel")
-    @ApiOperation(value = "Cancel orders by ID")
+    @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
     })
-    public ResponseEntity<Location> cancelOrder(@RequestBody String id){
-        return ResponseEntity.ok(locationService.cancelOrder(id));
+    public ResponseEntity<Location> cancelLocation(@RequestBody String id){
+        return ResponseEntity.ok(locationService.cancelLocation(id));
     }
 }

@@ -27,30 +27,30 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public boolean createOrders(Location location) throws JsonProcessingException {
+    public boolean createLocations(Location location) throws JsonProcessingException {
 
-        return restTemplate.postForObject("http://localhost:8081/createOrder", location, boolean.class);
+        return restTemplate.postForObject("http://localhost:8081/createLocation", location, boolean.class);
 
     }
 
     @Override
-    public List<Location> getAllOrders() {
-        //List<Orders> ordersList= (List<Orders>) orderRepository.findAll();
-        return restTemplate.getForObject("http://localhost:8081/getOrder", locationList.getClass());
+    public List<Location> getAllLocations() {
+        //List<Locations> locationsList= (List<Locations>) locationRepository.findAll();
+        return restTemplate.getForObject("http://localhost:8081/getLocation", locationList.getClass());
     }
 
     @Override
-    public Location getOrdersById(String id) {
+    public Location getLocationsById(String id) {
         return restTemplate.postForObject("http://localhost:8081/getById", id, Location.class);
     }
 
     @Override
-    public List<Location> getOrdersByZip(int zip) {
+    public List<Location> getLocationsByZip(int zip) {
         return restTemplate.postForObject("http://localhost:8081/getByzip", zip, locationList.getClass());
     }
 
     @Override
-    public Location cancelOrder(String id) {
+    public Location cancelLocation(String id) {
         return restTemplate.postForObject("http://localhost:8081/cancel", id, Location.class);
     }
 }

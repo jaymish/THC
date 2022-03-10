@@ -18,8 +18,8 @@ public class LocationRepoImpl implements LocationRepo {
     private EntityManager entityManager;
 
     @Override
-    public List<Location> getAllOrders() {
-        Query query = entityManager.createQuery("SELECT orders FROM Location orders");
+    public List<Location> getAllLocations() {
+        Query query = entityManager.createQuery("SELECT locations FROM Location locations");
         List<Location> locationList = (List<Location>) query.getResultList();
         System.out.println("here");
         System.out.println(locationList);
@@ -27,9 +27,9 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
-    public Location getOrderById(String orderId) {
-        Query query = entityManager.createQuery("SELECT orders FROM Location orders WHERE orders.id = :orderId ")
-                .setParameter("orderId",orderId);
+    public Location getLocationById(String locationId) {
+        Query query = entityManager.createQuery("SELECT locations FROM Location locations WHERE locations.id = :locationId ")
+                .setParameter("locationId",locationId);
         List<Location> locationList = query.getResultList();
         System.out.println("here");
         System.out.println(locationList);
@@ -39,8 +39,8 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
-    public List<Location> getOrderByZip(int zip) {
-        Query query = entityManager.createQuery("SELECT orders FROM Location orders WHERE orders.deliveryMethod.shippingorpickup.zip = :zip ")
+    public List<Location> getLocationByZip(int zip) {
+        Query query = entityManager.createQuery("SELECT locations FROM Location locations WHERE locations.deliveryMethod.shippingorpickup.zip = :zip ")
                 .setParameter("zip",zip);
         List<Location> locationList = query.getResultList();
         System.out.println("here");
@@ -51,15 +51,15 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
-    public Location orderCancel(String id) {
-        Location location = getOrderById(id);
+    public Location locationCancel(String id) {
+        Location location = getLocationById(id);
         location.setStatus("Cancel");
         entityManager.merge(location);
         return location;
     }
 
     @Override
-    public Location saveOrder(Location location) {
+    public Location saveLocation(Location location) {
         entityManager.persist(location);
         return location;
     }

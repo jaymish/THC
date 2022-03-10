@@ -27,50 +27,50 @@ public class LocationController {
 
 
     @PostMapping("/addReading")
-    @ApiOperation(value = "Order created by Client")
+    @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Created")
+            @ApiResponse(code = 200, message = "Location Created")
     })
     public boolean addWeatherReading(@RequestBody Location location) throws JsonProcessingException {
         System.out.println(location);
-        locationService.createOrders(location);
+        locationService.createLocations(location);
         return true;
     }
 
-    @GetMapping("/getOrders")
-    @ApiOperation(value = "Get All orders")
+    @GetMapping("/getLocations")
+    @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Orders Fetched")
+            @ApiResponse(code = 200, message = "All Locations Fetched")
     })
     public List<Location> getAll(){
-        return locationService.getAllOrders();
+        return locationService.getAllLocations();
     }
 
-    @PostMapping("/getOrderById")
-    @ApiOperation(value = "Get orders by ID")
+    @PostMapping("/getLocationById")
+    @ApiOperation(value = "Get locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Fetched by Id")
+            @ApiResponse(code = 200, message = "Location Fetched by Id")
     })
     public Location getById(@RequestBody String id){
-        return locationService.getOrdersById(id);
+        return locationService.getLocationsById(id);
     }
 
-    @PostMapping("/getOrderByZip")
-    @ApiOperation(value = "Get orders by ZipCode")
+    @PostMapping("/getLocationByZip")
+    @ApiOperation(value = "Get locations by ZipCode")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Fetched by Zip")
+            @ApiResponse(code = 200, message = "Location Fetched by Zip")
     })
-    public List<Location> getOrdersByZip(@RequestBody int zipcode){
-        return locationService.getOrdersByZip(zipcode);
+    public List<Location> getLocationsByZip(@RequestBody int zipcode){
+        return locationService.getLocationsByZip(zipcode);
     }
 
-    @PostMapping("/cancelOrderById")
-    @ApiOperation(value = "Cancel orders by ID")
+    @PostMapping("/cancelLocationById")
+    @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Canceled by Id")
+            @ApiResponse(code = 200, message = "Location Canceled by Id")
     })
-    public Location cancelOrder(@RequestBody String id){
-        return locationService.cancelOrder(id);
+    public Location cancelLocation(@RequestBody String id){
+        return locationService.cancelLocation(id);
     }
 
 

@@ -6,10 +6,10 @@ import com.org.THC.model.Location;
 import java.util.List;
 
 public interface LocationService {
-    boolean createOrder(Location location);
-    List<Location> getAllOrders();
-    Location getOrdersById(String id);
-    List<Location> getOrdersByZip(int zip);
-    Location cancelOrder(String id);
+    boolean createLocation(Location location);
+    List<Location> getAllLocations();
+    Location getLocationsById(String id);
+    List<Location> getLocationsByZip(int zip);
+    Location cancelLocation(String id);
 
 }

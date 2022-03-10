@@ -6,9 +6,9 @@ import java.util.List;
 
 
 public interface LocationRepo {
-    List<Location> getAllOrders();
-    Location getOrderById(String orderId);
-    Location saveOrder(Location location);
-    List<Location> getOrderByZip(int zip);
-    Location orderCancel(String id);
+    List<Location> getAllLocations();
+    Location getLocationById(String locationId);
+    Location saveLocation(Location location);
+    List<Location> getLocationByZip(int zip);
+    Location locationCancel(String id);
 }

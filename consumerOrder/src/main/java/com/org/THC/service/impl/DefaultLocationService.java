@@ -19,35 +19,35 @@ public class DefaultLocationService implements LocationService {
         this.emailService = emailService;
     }
     @Override
-    public boolean createOrder(Location location) {
+    public boolean createLocation(Location location) {
         System.out.println(location);
-        locationRepo.saveOrder(location);
-        //emailService.sendSimpleMessage(orders.getCustomer().getEmail_id(),"Order Created","Thank you your order was created. Here is the detail of your order \n"+ orders.toString());
+        locationRepo.saveLocation(location);
+        //emailService.sendSimpleMessage(locations.getCustomer().getEmail_id(),"Location Created","Thank you your location was created. Here is the detail of your location \n"+ locations.toString());
         return true;
     }
 
     @Override
-    public List<Location> getAllOrders() {
-        List<Location> locationList = locationRepo.getAllOrders();
+    public List<Location> getAllLocations() {
+        List<Location> locationList = locationRepo.getAllLocations();
         return locationList;
     }
 
     @Override
-    public Location getOrdersById(String id){
-        Location location = locationRepo.getOrderById(id);
+    public Location getLocationsById(String id){
+        Location location = locationRepo.getLocationById(id);
         return location;
     }
 
     @Override
-    public List<Location> getOrdersByZip(int zip){
-        List<Location> locationList = locationRepo.getOrderByZip(zip);
+    public List<Location> getLocationsByZip(int zip){
+        List<Location> locationList = locationRepo.getLocationByZip(zip);
         return locationList;
     }
 
     @Override
-    public Location cancelOrder(String id) {
+    public Location cancelLocation(String id) {
         //logic to check if cancel is possible
-        return locationRepo.orderCancel(id);
+        return locationRepo.locationCancel(id);
     }
 
 }
