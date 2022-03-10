@@ -13,10 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/location")
-public class
-
-
-LocationController {
+public class LocationController {
 
     private LocationService locationService;
     public LocationController(LocationService locationService){
@@ -68,5 +65,14 @@ LocationController {
     })
     public ResponseEntity<Location> cancelLocation(@RequestBody String id){
         return ResponseEntity.ok(locationService.cancelLocation(id));
+    }
+
+    @PostMapping("/active")
+    @ApiOperation(value = "Cancel locations by ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
+    })
+    public ResponseEntity<Location> activeLocation(@RequestBody String id){
+        return ResponseEntity.ok(locationService.activeLocation(id));
     }
 }

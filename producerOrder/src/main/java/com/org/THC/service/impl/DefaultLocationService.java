@@ -54,4 +54,9 @@ public class DefaultLocationService implements LocationService {
     public Location cancelLocation(String id) {
         return restTemplate.postForObject(url+"cancel", id, Location.class);
     }
+
+    @Override
+    public Location activeLocation(String id) {
+        return restTemplate.postForObject(url+"active", id, Location.class);
+    }
 }

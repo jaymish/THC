@@ -53,7 +53,15 @@ public class LocationRepoImpl implements LocationRepo {
     @Override
     public Location locationCancel(String id) {
         Location location = getLocationById(id);
-        location.setStatus("Cancel");
+        location.setStatus("InActive");
+        entityManager.merge(location);
+        return location;
+    }
+
+    @Override
+    public Location locationActive(String id) {
+        Location location = getLocationById(id);
+        location.setStatus("Active");
         entityManager.merge(location);
         return location;
     }

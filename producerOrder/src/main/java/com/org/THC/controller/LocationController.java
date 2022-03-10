@@ -8,11 +8,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/location")
 public class LocationController {
 
@@ -42,8 +44,25 @@ public class LocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
     })
-    public List<Location> getAll(){
-        return locationService.getAllLocations();
+    public String getAll(ModelMap modelMap){
+        List<Location> locationList = locationService.getAllLocations();
+
+        modelMap.put("Locations",locationList);
+        System.out.println(locationList);
+        return "location";
+    }
+
+    @PostMapping("/editLocation")
+    @ApiOperation(value = "Get All locations")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "All Locations Fetched")
+    })
+    public String editLocation(@ModelAttribute("id") String id,ModelMap modelMap){
+        Location location= locationService.getLocationsById(id);
+
+        modelMap.put("Locations",location);
+        System.out.println(location);
+        return "editLocation";
     }
 
     @PostMapping("/getLocationById")
@@ -69,11 +88,20 @@ public class LocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Canceled by Id")
     })
-    public Location cancelLocation(@RequestBody String id){
-        return locationService.cancelLocation(id);
+    public String cancelLocation(@ModelAttribute("id") String id){
+        locationService.cancelLocation(id);
+        return "redirect:/location/getLocations";
     }
 
-
+    @PostMapping("/activeLocationById")
+    @ApiOperation(value = "Cancel locations by ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Location Canceled by Id")
+    })
+    public String activeLocation(@ModelAttribute("id") String id){
+        locationService.activeLocation(id);
+        return "redirect:/location/getLocations";
+    }
 
 
 }

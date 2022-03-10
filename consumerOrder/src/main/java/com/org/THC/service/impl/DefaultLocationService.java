@@ -50,4 +50,10 @@ public class DefaultLocationService implements LocationService {
         return locationRepo.locationCancel(id);
     }
 
+    @Override
+    public Location activeLocation(String id) {
+        //logic to check if cancel is possible
+        return locationRepo.locationActive(id);
+    }
+
 }
