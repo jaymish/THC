@@ -12,4 +12,5 @@ public interface LocationRepo {
     List<Location> getLocationByZip(int zip);
     Location locationCancel(String id);
     Location locationActive(String id);
+    Location updateLocation(Location location);
 }

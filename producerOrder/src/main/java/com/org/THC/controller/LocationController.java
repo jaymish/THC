@@ -27,16 +27,33 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-
-    @PostMapping("/addReading")
+    @GetMapping("/addLocation")
     @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Created")
     })
-    public boolean addWeatherReading(@RequestBody Location location) throws JsonProcessingException {
+    public String addWeatherReading() {
+
+        return "addLocation";
+    }
+
+
+    @PostMapping("/addLocation")
+    @ApiOperation(value = "Location created by Client")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Location Created")
+    })
+    public String addWeatherReading(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
+        Location location=new Location();
+        location.setName(name);
+        location.setAddressline1(addressline1);
+        location.setAddressline2(addressline2);
+        location.setCity(city);
+        location.setState(state);
+        location.setZip(zip);
         System.out.println(location);
         locationService.createLocations(location);
-        return true;
+        return "redirect:/location/getLocations";
     }
 
     @GetMapping("/getLocations")
@@ -48,7 +65,7 @@ public class LocationController {
         List<Location> locationList = locationService.getAllLocations();
 
         modelMap.put("Locations",locationList);
-        System.out.println(locationList);
+        //System.out.println(locationList);
         return "location";
     }
 
@@ -61,9 +78,30 @@ public class LocationController {
         Location location= locationService.getLocationsById(id);
 
         modelMap.put("Locations",location);
-        System.out.println(location);
+        //System.out.println(location);
         return "editLocation";
     }
+
+    @PostMapping("/updateLocation")
+    @ApiOperation(value = "Cancel locations by ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Location Canceled by Id")
+    })
+    public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
+        //locationService.activeLocation(id);
+        Location location=new Location();
+        location.setId(id);
+        location.setName(name);
+        location.setAddressline1(addressline1);
+        location.setAddressline2(addressline2);
+        location.setCity(city);
+        location.setState(state);
+        location.setStatus(status);
+        location.setZip(zip);
+        locationService.updateLocation(location);
+        return "redirect:/location/getLocations";
+    }
+
 
     @PostMapping("/getLocationById")
     @ApiOperation(value = "Get locations by ID")

@@ -67,6 +67,22 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
+    public Location updateLocation(Location locationUpdated) {
+        Location location = getLocationById(locationUpdated.getId());
+        if (location==null){
+            return null;
+        }
+        location.setAddressline1(locationUpdated.getAddressline1());
+        location.setAddressline2(locationUpdated.getAddressline2());
+        location.setName(locationUpdated.getName());
+        location.setCity(locationUpdated.getCity());
+        location.setState(locationUpdated.getState());
+        location.setZip(locationUpdated.getZip());
+        entityManager.merge(location);
+        return location;
+    }
+
+    @Override
     public Location saveLocation(Location location) {
         entityManager.persist(location);
         return location;

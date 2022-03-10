@@ -56,4 +56,9 @@ public class DefaultLocationService implements LocationService {
         return locationRepo.locationActive(id);
     }
 
+    @Override
+    public Location updateLocation(Location location) {
+        return locationRepo.updateLocation(location);
+    }
+
 }

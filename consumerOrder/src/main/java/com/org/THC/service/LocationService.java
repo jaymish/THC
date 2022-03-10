@@ -12,5 +12,5 @@ public interface LocationService {
     List<Location> getLocationsByZip(int zip);
     Location cancelLocation(String id);
     Location activeLocation(String id);
-
+    Location updateLocation(Location location);
 }

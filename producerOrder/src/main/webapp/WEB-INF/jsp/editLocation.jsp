@@ -13,24 +13,37 @@
 </head>
 <body>
 <div class="container-fluid">
-<form>
+<form action="/location/updateLocation" method="post">
     <h1>Edit Location</h1>
     ${Locations}
 <%--<c: var="var" items="${Locations}" varStatus="counter">--%>
     <input type="hidden" name="id" id="id" value="${Locations.id}">
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="${Locations.name}">
+        <input type="text" class="form-control" id="name" name="name" value="${Locations.name}" required>
     </div>
     <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <label for="addressline1" class="form-label">Address Line 1</label>
+        <input type="text" class="form-control" id="addressline1" name="addressline1" value="${Locations.addressline1}" required>
     </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <div class="mb-3">
+        <label for="addressline2" class="form-label">Address Line 2</label>
+        <input type="text" class="form-control" id="addressline2" name="addressline2" value="${Locations.addressline2}">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city" name="city" value="${Locations.city}" required>
+    </div>
+    <div class="mb-3">
+        <label for="state" class="form-label">State</label>
+        <input type="text" class="form-control" id="state" name="state" value="${Locations.state}" required>
+    </div>
+    <div class="mb-3">
+        <label for="zip" class="form-label">Zip</label>
+        <input type="text" class="form-control" id="zip" name="zip" value="${Locations.zip}" required>
+    </div>
+    <input type="hidden" name="status" id="status" value="${Locations.status}">
+    <button type="submit" class="btn btn-primary">Update</button>
 <%--</c:>>--%>
 </form>
 </div>

@@ -28,8 +28,8 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public boolean createLocations(Location location) throws JsonProcessingException {
-
+    public boolean createLocations(Location location){
+        System.out.println(location);
         return restTemplate.postForObject(url+"createLocation", location, boolean.class);
 
     }
@@ -58,5 +58,10 @@ public class DefaultLocationService implements LocationService {
     @Override
     public Location activeLocation(String id) {
         return restTemplate.postForObject(url+"active", id, Location.class);
+    }
+
+    @Override
+    public Location updateLocation(Location location) {
+        return restTemplate.postForObject(url+"update", location, Location.class);
     }
 }

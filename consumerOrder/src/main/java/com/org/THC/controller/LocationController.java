@@ -75,4 +75,13 @@ public class LocationController {
     public ResponseEntity<Location> activeLocation(@RequestBody String id){
         return ResponseEntity.ok(locationService.activeLocation(id));
     }
+
+    @PostMapping("/update")
+    @ApiOperation(value = "Cancel locations by ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
+    })
+    public ResponseEntity<Location> updateLocation(@RequestBody Location location){
+        return ResponseEntity.ok(locationService.updateLocation(location));
+    }
 }

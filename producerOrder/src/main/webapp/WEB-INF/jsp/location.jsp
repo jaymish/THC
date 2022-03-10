@@ -13,6 +13,9 @@
 <body>
 <div class="container-fluid">
     <h1>Location List</h1>
+    <form name="active" action="/location/addLocation" method="get">
+        <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Location</button>
+    </form>
     <table style="width:100%" class="table table-bordered">
         <thead>
         <tr>
@@ -39,10 +42,10 @@
             <td><c:out value="${var.zip}"/></td>
             <td><c:out value="${var.status}"/></td>
             <td>
-                <form name="delete" action="/location/editLocation" method="post">
+                <form name="edit" action="/location/editLocation" method="post">
                     <input type="hidden" name="id" id="id" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-success" style="width: 75%">Edit</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 75%">Edit</button>
                 </form>
             </td>
             <td>
@@ -58,10 +61,10 @@
             </c:when>
             <c:otherwise>
 
-                    <form name="delete" action="/location/activeLocationById" method="post">
+                    <form name="active" action="/location/activeLocationById" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
 <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
-                        <button id="activate" name="activate" type="submit" class="btn btn-primary" style="width: 75%" >Activate</button>
+                        <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 75%" >Activate</button>
                     </form>
 
             </c:otherwise>
