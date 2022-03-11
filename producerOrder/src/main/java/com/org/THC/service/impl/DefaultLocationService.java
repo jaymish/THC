@@ -30,14 +30,14 @@ public class DefaultLocationService implements LocationService {
     @Override
     public boolean createLocations(Location location){
         System.out.println(location);
-        return restTemplate.postForObject(url+"createLocation", location, boolean.class);
+        return restTemplate.postForObject(url+"create", location, boolean.class);
 
     }
 
     @Override
     public List<Location> getAllLocations() {
         //List<Locations> locationsList= (List<Locations>) locationRepository.findAll();
-        return restTemplate.getForObject(url+"getLocation", locationList.getClass());
+        return restTemplate.getForObject(url+"getAll", locationList.getClass());
     }
 
     @Override

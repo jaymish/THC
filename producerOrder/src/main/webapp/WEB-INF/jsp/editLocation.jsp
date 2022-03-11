@@ -15,7 +15,6 @@
 <div class="container-fluid">
 <form action="/location/updateLocation" method="post">
     <h1>Edit Location</h1>
-    ${Locations}
 <%--<c: var="var" items="${Locations}" varStatus="counter">--%>
     <input type="hidden" name="id" id="id" value="${Locations.id}">
     <div class="mb-3">

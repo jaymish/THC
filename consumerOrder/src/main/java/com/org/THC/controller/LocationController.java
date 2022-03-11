@@ -20,7 +20,7 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @PostMapping("/createLocation")
+    @PostMapping("/create")
     @ApiOperation(value = "Create Location received from client service")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Saved on DB")
@@ -31,7 +31,7 @@ public class LocationController {
     }
 
 
-    @GetMapping(path = "/getLocation")
+    @GetMapping(path = "/getAll")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched for client")
