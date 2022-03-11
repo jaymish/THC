@@ -16,6 +16,7 @@
     <form name="active" action="/location/addLocation" method="get">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Location</button>
     </form>
+
 <%--    <input type="search" id="form1" class="form-control" />--%>
 
 <%--    <input type="search" id="search" onkeyup="myFunction()" placeholder="Search for Location" title="Type in a name" style="width:100%">--%>
@@ -35,8 +36,9 @@
             <th scope="col" style="width: 7%">City</th>
             <th scope="col" style="width: 3%">State</th>
             <th scope="col" style="width: 7%">Zip</th>
-            <th scope="col">Menu</th>
             <th scope="col" >Status</th>
+            <th scope="col">Menu</th>
+            <th scope="col">Open Hours</th>
             <th scope="col" style="width: 10%">Update</th>
             <th scope="col" style="width: 10%">Activate/Deactivate</th>
         </tr>
@@ -56,14 +58,21 @@
                 <form name="edit" action="/menu/getMenus" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 75%">Menu</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Menu</button>
+                </form>
+            </td>
+            <td>
+                <form name="hours" action="/openHours/getOpenHours" method="get">
+                    <input type="hidden" name="locationid" id="locationid" value="${var.id}">
+                        <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Open Hours</button>
                 </form>
             </td>
             <td>
                 <form name="edit" action="/location/editLocation" method="post">
                     <input type="hidden" name="id" id="id" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 75%">Edit</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
                 </form>
             </td>
             <td>
@@ -73,7 +82,7 @@
                 <form name="delete" action="/location/cancelLocationById" method="post">
                     <input type="hidden" name="id" id="id" value="${var.id}">
 <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 75%">DeActivate</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
                 </form>
 
             </c:when>

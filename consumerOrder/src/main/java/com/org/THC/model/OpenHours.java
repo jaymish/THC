@@ -2,10 +2,7 @@ package com.org.THC.model;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Time;
 import java.util.UUID;
 
@@ -15,8 +12,10 @@ public class OpenHours {
     @Id
     private String id;
     private String day;
-    private Time startTime;
-    private Time endTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private TimeModel startTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private TimeModel endTime;
     private String status;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Location location;

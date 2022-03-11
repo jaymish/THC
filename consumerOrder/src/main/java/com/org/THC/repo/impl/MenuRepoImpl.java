@@ -67,7 +67,6 @@ public class MenuRepoImpl implements MenuRepo {
         menu.setDescription(menuUpdated.getDescription());
         menu.setPrice(menuUpdated.getPrice());
         menu.setCategory(menuUpdated.getCategory());
-        menu.setSubCategory(menuUpdated.getSubCategory());
         entityManager.merge(menu);
         return menu;
     }

@@ -46,14 +46,13 @@ public class MenuController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Created")
     })
-    public String addWeatherReading(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price, @ModelAttribute("category") String category, @ModelAttribute("subCategory") String subCategory, @ModelAttribute("location") String locationId,ModelMap modelMap) {
+    public String addWeatherReading(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price, @ModelAttribute("category") String category,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
         System.out.println("addmenu");
         Menu menu=new Menu();
         menu.setItemName(itemName);
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setCategory(category);
-        menu.setSubCategory(subCategory);
         menu.setLocation(locationService.getLocationsById(locationId));
         System.out.println(menu);
         menuService.createMenus(menu);
@@ -93,7 +92,7 @@ public class MenuController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Canceled by Id")
     })
-    public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("category") String category,@ModelAttribute("subCategory") String subCategory,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
+    public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("category") String category,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
         //menuService.activeMenu(id);
         System.out.println("menu here");
         Menu menu=new Menu();
@@ -102,7 +101,6 @@ public class MenuController {
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setCategory(category);
-        menu.setSubCategory(subCategory);
         menu.setStatus(status);
         //menu.setLocation(location);
         menuService.updateMenu(menu);
