@@ -27,12 +27,11 @@ public class DefaultMenuService implements MenuService {
     }
 
     @Override
-    public boolean createMenus(String itemName, String description,  String price, String category, String locationId){
+    public boolean createMenus(String itemName, String description,  String price, String locationId){
         Menu menu=new Menu();
         menu.setItemName(itemName);
         menu.setDescription(description);
         menu.setPrice(price);
-        menu.setCategory(category);
         menu.setLocation(locationService.getLocationsById(locationId));
         return restTemplate.postForObject(url+"create", menu, boolean.class);
 
@@ -40,14 +39,14 @@ public class DefaultMenuService implements MenuService {
 
     @Override
     public List<Menu> getAllMenus(String id) {
-        List<Menu> menusList= restTemplate.postForObject(url+"getAll",id, menuList.getClass());
+        List<Menu> menusList= restTemplate.postForObject(url+"get-all",id, menuList.getClass());
 
         return menusList;
     }
 
     @Override
     public Menu getMenusById(String id) {
-        return restTemplate.postForObject(url+"getById", id, Menu.class);
+        return restTemplate.postForObject(url+"get-by-id", id, Menu.class);
     }
 
     @Override
@@ -56,23 +55,22 @@ public class DefaultMenuService implements MenuService {
     }
 
     @Override
-    public Menu cancelMenu(String id) {
-        return restTemplate.postForObject(url+"cancel", id, Menu.class);
+    public Menu deactivateMenu(String id) {
+        return restTemplate.postForObject(url+"deactivate", id, Menu.class);
     }
 
     @Override
-    public Menu activeMenu(String id) {
-        return restTemplate.postForObject(url+"active", id, Menu.class);
+    public Menu activateMenu(String id) {
+        return restTemplate.postForObject(url+"activate", id, Menu.class);
     }
 
     @Override
-    public Menu updateMenu(String id,String itemName,String description,String price,String category,String status,String location) {
+    public Menu updateMenu(String id,String itemName,String description,String price,String status,String location) {
         Menu menu=new Menu();
         menu.setId(id);
         menu.setItemName(itemName);
         menu.setDescription(description);
         menu.setPrice(price);
-        menu.setCategory(category);
         menu.setStatus(status);
         return restTemplate.postForObject(url+"update", menu, Menu.class);
     }

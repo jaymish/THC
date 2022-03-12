@@ -20,7 +20,7 @@
 <body>
 <div class="container-fluid">
     <h1>Reservation List</h1>
-    <form name="active" action="/reservation/addReservation" method="get">
+    <form name="activate" action="/reservation/add-reservation" method="get">
         <input type="hidden" name="location" id="location" value="${locationid}">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Reservation</button>
     </form>
@@ -60,7 +60,7 @@
                 <td><c:out value="${var.date}"/></td>
                 <td><fmt:formatNumber type = "number" maxIntegerDigits = "2" minIntegerDigits="2" value = "${var.time.hours}" />:<fmt:formatNumber type = "number" maxIntegerDigits = "2" minIntegerDigits="2" value = "${var.time.minutes}" /> <c:out value="${fn:toUpperCase(var.time.amPm)}"/></td>
                 <td>
-                    <form name="edit" action="/reservation/editReservation" method="post">
+                    <form name="edit" action="/reservation/edit-reservation" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
                             <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                         <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
@@ -70,7 +70,7 @@
                     <c:choose>
                         <c:when test="${var.status=='Active'}">
 
-                            <form name="delete" action="/reservation/cancelReservationById" method="post">
+                            <form name="delete" action="/reservation/deactivate-reservation-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                                 <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
@@ -79,7 +79,7 @@
                         </c:when>
                         <c:otherwise>
 
-                            <form name="active" action="/reservation/activeReservationById" method="post">
+                            <form name="activate" action="/reservation/activate-reservation-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
                                 <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>

@@ -33,7 +33,7 @@ public class ReservationController {
     }
 
 
-    @PostMapping(path = "/getAll")
+    @PostMapping(path = "/get-all")
     @ApiOperation(value = "Get All reservations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Reservations Fetched for client")
@@ -43,7 +43,7 @@ public class ReservationController {
         return reservationList;
     }
 
-    @PostMapping("/getById")
+    @PostMapping("/get-by-id")
     @ApiOperation(value = "Get reservations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Reservation Fetched by Id for client" )

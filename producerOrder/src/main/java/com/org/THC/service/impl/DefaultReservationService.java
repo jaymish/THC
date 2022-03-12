@@ -59,14 +59,14 @@ public class DefaultReservationService implements ReservationService {
 
     @Override
     public List<Reservation> getAllReservations(String id) {
-        List<Reservation> reservationsList= restTemplate.postForObject(url+"getAll",id, reservationList.getClass());
+        List<Reservation> reservationsList= restTemplate.postForObject(url+"get-all",id, reservationList.getClass());
 
         return reservationsList;
     }
 
     @Override
     public Reservation getReservationsById(String id) {
-        return restTemplate.postForObject(url+"getById", id, Reservation.class);
+        return restTemplate.postForObject(url+"get-by-id", id, Reservation.class);
     }
 
     @Override
@@ -75,13 +75,13 @@ public class DefaultReservationService implements ReservationService {
     }
 
     @Override
-    public Reservation cancelReservation(String id) {
-        return restTemplate.postForObject(url+"cancel", id, Reservation.class);
+    public Reservation deactivateReservation(String id) {
+        return restTemplate.postForObject(url+"deactivate", id, Reservation.class);
     }
 
     @Override
-    public Reservation activeReservation(String id) {
-        return restTemplate.postForObject(url+"active", id, Reservation.class);
+    public Reservation activateReservation(String id) {
+        return restTemplate.postForObject(url+"activate", id, Reservation.class);
     }
 
     @Override

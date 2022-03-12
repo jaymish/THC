@@ -27,27 +27,27 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/addLocation")
+    @GetMapping("/add-location")
     @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Created")
     })
-    public String addWeatherReading() {
+    public String addLocation() {
         return "location/addLocation";
     }
 
 
-    @PostMapping("/addLocation")
+    @PostMapping("/add-location")
     @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Created")
     })
-    public String addWeatherReading(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
+    public String addLocation(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
         locationService.createLocations(name,addressline1,addressline2,city,state,zip);
-        return "redirect:/location/getLocations";
+        return "redirect:/location/get-locations";
     }
 
-    @GetMapping("/getLocations")
+    @GetMapping("/get-locations")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
@@ -58,7 +58,7 @@ public class LocationController {
         return "location/listLocation";
     }
 
-    @PostMapping("/editLocation")
+    @PostMapping("/edit-location")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
@@ -69,53 +69,53 @@ public class LocationController {
         return "location/editLocation";
     }
 
-    @PostMapping("/updateLocation")
+    @PostMapping("/update-location")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id")
+            @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
         locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
-        return "redirect:/location/getLocations";
+        return "redirect:/location/get-locations";
     }
 
 
-    @PostMapping("/getLocationById")
+    /*@PostMapping("/get-location-by-id")
     @ApiOperation(value = "Get locations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Fetched by Id")
     })
     public Location getById(@RequestBody String id){
         return locationService.getLocationsById(id);
-    }
+    }*/
 
-    @PostMapping("/getLocationByZip")
+    /*@PostMapping("/getLocationByZip")
     @ApiOperation(value = "Get locations by ZipCode")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Fetched by Zip")
     })
     public List<Location> getLocationsByZip(@RequestBody int zipcode){
         return locationService.getLocationsByZip(zipcode);
-    }
+    }*/
 
-    @PostMapping("/cancelLocationById")
+    @PostMapping("/deactivate-location-by-id")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id")
+            @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
-    public String cancelLocation(@ModelAttribute("id") String id){
-        locationService.cancelLocation(id);
-        return "redirect:/location/getLocations";
+    public String deactivateLocation(@ModelAttribute("id") String id){
+        locationService.deactivateLocation(id);
+        return "redirect:/location/get-locations";
     }
 
-    @PostMapping("/activeLocationById")
+    @PostMapping("/activate-location-by-id")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id")
+            @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
-    public String activeLocation(@ModelAttribute("id") String id){
-        locationService.activeLocation(id);
-        return "redirect:/location/getLocations";
+    public String activateLocation(@ModelAttribute("id") String id){
+        locationService.activateLocation(id);
+        return "redirect:/location/get-locations";
     }
 
 

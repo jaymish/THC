@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class DefaultLocationService implements LocationService {
-    //List<Weather> list=new LinkedList<>();
 
     private RestTemplate restTemplate;
     private ObjectMapper objectMapper;
@@ -43,12 +42,12 @@ public class DefaultLocationService implements LocationService {
     @Override
     public List<Location> getAllLocations() {
         //List<Locations> locationsList= (List<Locations>) locationRepository.findAll();
-        return restTemplate.getForObject(url+"getAll", locationList.getClass());
+        return restTemplate.getForObject(url+"get-all", locationList.getClass());
     }
 
     @Override
     public Location getLocationsById(String id) {
-        return restTemplate.postForObject(url+"getById", id, Location.class);
+        return restTemplate.postForObject(url+"get-by-id", id, Location.class);
     }
 
     @Override
@@ -57,13 +56,13 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public Location cancelLocation(String id) {
-        return restTemplate.postForObject(url+"cancel", id, Location.class);
+    public Location deactivateLocation(String id) {
+        return restTemplate.postForObject(url+"deactivate", id, Location.class);
     }
 
     @Override
-    public Location activeLocation(String id) {
-        return restTemplate.postForObject(url+"active", id, Location.class);
+    public Location activateLocation(String id) {
+        return restTemplate.postForObject(url+"activate", id, Location.class);
     }
 
     @Override

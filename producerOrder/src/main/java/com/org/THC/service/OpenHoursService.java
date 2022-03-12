@@ -11,7 +11,7 @@ public interface OpenHoursService {
     List<OpenHours> getAllOpenHours(String id);
     OpenHours getOpenHoursById(String id);
     List<OpenHours> getOpenHoursByZip(int zip);
-    OpenHours cancelOpenHours(String id);
-    OpenHours activeOpenHours(String id);
+    OpenHours deactivateOpenHours(String id);
+    OpenHours activateOpenHours(String id);
     OpenHours updateOpenHours(String id,String day,  String startTime,String endTime,String locationId);
 }

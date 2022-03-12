@@ -18,7 +18,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
     private ObjectMapper objectMapper;
     private List<OpenHours> listOpenHours;
     private LocationService locationService;
-    String url="http://localhost:8081/openHours/";
+    String url="http://localhost:8081/open-hours/";
 
     @Autowired
     public DefaultOpenHoursService(RestTemplate restTemplate, ObjectMapper objectMapper, List<OpenHours> listOpenHours,LocationService locationService){
@@ -69,14 +69,14 @@ public class DefaultOpenHoursService implements OpenHoursService {
 
     @Override
     public List<OpenHours> getAllOpenHours(String id) {
-        List<OpenHours> openHoursList= restTemplate.postForObject(url+"getAll",id, listOpenHours.getClass());
+        List<OpenHours> openHoursList= restTemplate.postForObject(url+"get-all",id, listOpenHours.getClass());
 
         return openHoursList;
     }
 
     @Override
     public OpenHours getOpenHoursById(String id) {
-        return restTemplate.postForObject(url+"getById", id, OpenHours.class);
+        return restTemplate.postForObject(url+"get-by-id", id, OpenHours.class);
     }
 
     @Override
@@ -85,13 +85,13 @@ public class DefaultOpenHoursService implements OpenHoursService {
     }
 
     @Override
-    public OpenHours cancelOpenHours(String id) {
-        return restTemplate.postForObject(url+"cancel", id, OpenHours.class);
+    public OpenHours deactivateOpenHours(String id) {
+        return restTemplate.postForObject(url+"deactivate", id, OpenHours.class);
     }
 
     @Override
-    public OpenHours activeOpenHours(String id) {
-        return restTemplate.postForObject(url+"active", id, OpenHours.class);
+    public OpenHours activateOpenHours(String id) {
+        return restTemplate.postForObject(url+"activate", id, OpenHours.class);
     }
 
     @Override

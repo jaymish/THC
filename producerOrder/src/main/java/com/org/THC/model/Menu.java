@@ -16,7 +16,6 @@ public class Menu {
     private String itemName;
     private String description;
     private String price;
-    private String category;
     private String status;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Location location;

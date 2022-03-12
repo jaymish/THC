@@ -10,7 +10,7 @@ public interface ReservationService {
     List<Reservation> getAllReservations(String id);
     Reservation getReservationsById(String id);
     List<Reservation> getReservationsByZip(int zip);
-    Reservation cancelReservation(String id);
-    Reservation activeReservation(String id);
+    Reservation deactivateReservation(String id);
+    Reservation activateReservation(String id);
     Reservation updateReservation(String id,String firstName, String lastName,  String phoneNumber, String emailId,int noOfPeople,String date,String time ,String status,String location);
 }

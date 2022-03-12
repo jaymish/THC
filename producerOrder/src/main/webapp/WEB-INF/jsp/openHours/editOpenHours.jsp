@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/openHours/updateOpenHours" method="post">
+    <form action="/open-hours/update-open-hours" method="post">
         <h1>Edit Hours</h1>
         <%--<c: var="var" items="${OpenHours}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${OpenHours.id}">

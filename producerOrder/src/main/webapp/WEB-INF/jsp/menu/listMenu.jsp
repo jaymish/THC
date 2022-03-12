@@ -18,7 +18,7 @@
 <body>
 <div class="container-fluid">
     <h1>Menu List</h1>
-    <form name="active" action="/menu/addMenu" method="get">
+    <form name="activate" action="/menu/add-menu" method="get">
         <input type="hidden" name="location" id="location" value="${locationid}">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Menu</button>
     </form>
@@ -37,9 +37,8 @@
         <tr>
             <th scope="col" style="width: 5%" >#</th>
             <th scope="col" style="width: 17%" >Item Name</th>
-            <th scope="col" style="width: 28%">Description</th>
+            <th scope="col" style="width: 38%">Description</th>
             <th scope="col" style="width: 10%">Price</th>
-            <th scope="col" style="width: 10%">Category</th>
             <th scope="col" style="width: 15%">Update</th>
             <th scope="col" style="width: 15%">Activate/Deactivate</th>
         </tr>
@@ -52,9 +51,8 @@
                 <td><c:out value="${var.itemName}"/></td>
                 <td><c:out value="${var.description}"/></td>
                 <td><c:out value="${var.price}"/></td>
-                <td><c:out value="${var.category}"/></td>
                 <td>
-                    <form name="edit" action="/menu/editMenu" method="post">
+                    <form name="edit" action="/menu/edit-menu" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
                             <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                         <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
@@ -64,7 +62,7 @@
                     <c:choose>
                         <c:when test="${var.status=='Active'}">
 
-                            <form name="delete" action="/menu/cancelMenuById" method="post">
+                            <form name="delete" action="/menu/deactivate-menu-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                                 <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
@@ -73,7 +71,7 @@
                         </c:when>
                         <c:otherwise>
 
-                            <form name="active" action="/menu/activeMenuById" method="post">
+                            <form name="activate" action="/menu/activate-menu-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
                                 <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>

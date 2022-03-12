@@ -15,7 +15,7 @@ spring:
     hibernate:
       ddl-auto: validate
   profiles:
-    active: local
+    activate: local
   application:
     name: Notifications-application
   mail:

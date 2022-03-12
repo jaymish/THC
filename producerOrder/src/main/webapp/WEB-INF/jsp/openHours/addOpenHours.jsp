@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/openHours/addOpenHours" method="post">
+    <form action="/open-hours/add-open-hours" method="post">
         <h1>Add Hours</h1>
         <div class="mb-3">
             <label for="day" class="form-label">Day</label>

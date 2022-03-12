@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/location/addLocation" method="post">
+    <form action="/location/add-location" method="post">
         <h1>Add Location</h1>
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>

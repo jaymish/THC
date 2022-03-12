@@ -81,4 +81,6 @@ public class LocationRepoImpl implements LocationRepo {
         entityManager.persist(location);
         return location;
     }
+
+
 }

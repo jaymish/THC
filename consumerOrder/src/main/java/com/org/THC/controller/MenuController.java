@@ -30,7 +30,7 @@ public class MenuController {
     }
 
 
-    @PostMapping(path = "/getAll")
+    @PostMapping(path = "/get-all")
     @ApiOperation(value = "Get All menus")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Menus Fetched for client")
@@ -40,7 +40,7 @@ public class MenuController {
         return menuList;
     }
 
-    @PostMapping("/getById")
+    @PostMapping("/get-by-id")
     @ApiOperation(value = "Get menus by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Fetched by Id for client" )

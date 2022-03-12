@@ -6,6 +6,8 @@ import com.org.THC.service.LocationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import java.util.List;
 public class LocationController {
 
     private LocationService locationService;
-    public LocationController(LocationService locationService){
+    public LocationController(LocationService locationService ){
         this.locationService = locationService;
     }
 
@@ -31,7 +33,7 @@ public class LocationController {
     }
 
 
-    @GetMapping(path = "/getAll")
+    @GetMapping(path = "/get-all")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched for client")
@@ -40,7 +42,7 @@ public class LocationController {
         return locationService.getAllLocations();
     }
 
-    @PostMapping("/getById")
+    @PostMapping("/get-by-id")
     @ApiOperation(value = "Get locations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Fetched by Id for client" )
@@ -83,5 +85,12 @@ public class LocationController {
     })
     public ResponseEntity<Location> updateLocation(@RequestBody Location location){
         return ResponseEntity.ok(locationService.updateLocation(location));
+    }
+
+
+    @GetMapping("/page")
+    public ResponseEntity<List<Location>> getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "id") String sortBy){
+        List<Location> list = locationService.getAllpage(pageNo, pageSize, sortBy);
+        return new ResponseEntity<List<Location>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 }

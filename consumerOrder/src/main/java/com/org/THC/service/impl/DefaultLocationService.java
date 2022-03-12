@@ -3,9 +3,14 @@ package com.org.THC.service.impl;
 
 import com.org.THC.model.Location;
 import com.org.THC.repo.LocationRepo;
+import com.org.THC.repo.PageLocationRepo;
 import com.org.THC.service.LocationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,10 +18,12 @@ public class DefaultLocationService implements LocationService {
 
     private LocationRepo locationRepo;
     private EmailServiceImpl emailService;
+    private PageLocationRepo pageLocationRepo;
 
-    public DefaultLocationService(LocationRepo locationRepo, EmailServiceImpl emailService){
+    public DefaultLocationService(LocationRepo locationRepo, EmailServiceImpl emailService,PageLocationRepo pageLocationRepo){
         this.locationRepo = locationRepo;
         this.emailService = emailService;
+        this.pageLocationRepo=pageLocationRepo;
     }
     @Override
     public boolean createLocation(Location location) {
@@ -58,6 +65,17 @@ public class DefaultLocationService implements LocationService {
     @Override
     public Location updateLocation(Location location) {
         return locationRepo.updateLocation(location);
+    }
+
+    @Override
+    public List<Location> getAllpage(Integer pageNo, Integer pageSize, String sortBy){
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<Location> pagedResult = pageLocationRepo.findAll(paging);
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Location>();
+        }
     }
 
 }

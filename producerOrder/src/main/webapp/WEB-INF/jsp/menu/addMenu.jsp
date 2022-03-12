@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/menu/addMenu" method="post">
+    <form action="/menu/add-menu" method="post">
         <h1>Add Menu</h1>
         <div class="mb-3">
             <label for="itemName" class="form-label">Name</label>
@@ -32,10 +32,6 @@
             <input type="text" class="form-control" id="price" name="price" >
         </div>
 
-        <div class="mb-3">
-            <label for="category" class="form-label">category</label>
-            <input type="text" class="form-control" id="category" name="category" >
-        </div>
         <input type="hidden" name="location" id="location" value="${LocationId}">
         <%--<div class="mb-3">
             <label for="location" class="form-label">Select Location</label>

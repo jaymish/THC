@@ -13,7 +13,7 @@
 <body>
 <div class="container-fluid">
     <h1>Location List</h1>
-    <form name="active" action="/location/addLocation" method="get">
+    <form name="activate" action="/location/add-location" method="get">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Location</button>
     </form>
 
@@ -54,28 +54,28 @@
             <td><c:out value="${var.state}"/></td>
             <td><c:out value="${var.zip}"/></td>
             <td>
-                <form name="edit" action="/menu/getMenus" method="get">
+                <form name="edit" action="/menu/get-menu" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                     <button id="deactivate" name="deactivate" type="submit" class="btn btn-dark" style="width: 100%">Menu</button>
                 </form>
             </td>
             <td>
-                <form name="hours" action="/openHours/getOpenHours" method="get">
+                <form name="hours" action="/open-hours/get-open-hours" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                     <button id="deactivate" name="deactivate" type="submit" class="btn btn-info" style="width: 100%">Open Hours</button>
                 </form>
             </td>
             <td>
-                <form name="hours" action="/reservation/getReservations" method="get">
+                <form name="hours" action="/reservation/get-reservation" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                     <button id="deactivate" name="deactivate" type="submit" class="btn btn-secondary" style="width: 100%">Reservation</button>
                 </form>
             </td>
             <td>
-                <form name="edit" action="/location/editLocation" method="post">
+                <form name="edit" action="/location/edit-location" method="post">
                     <input type="hidden" name="id" id="id" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                     <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
@@ -85,7 +85,7 @@
             <c:choose>
             <c:when test="${var.status=='Active'}">
 
-                <form name="delete" action="/location/cancelLocationById" method="post">
+                <form name="delete" action="/location/deactivate-location-by-id" method="post">
                     <input type="hidden" name="id" id="id" value="${var.id}">
 <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                     <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
@@ -94,7 +94,7 @@
             </c:when>
             <c:otherwise>
 
-                    <form name="active" action="/location/activeLocationById" method="post">
+                    <form name="activate" action="/location/activate-location-by-id" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
 <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
                         <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>

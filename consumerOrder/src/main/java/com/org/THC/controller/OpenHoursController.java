@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/openHours")
+@RequestMapping(path = "/open-hours")
 public class OpenHoursController {
 
     private OpenHoursService openHoursService;
@@ -33,7 +33,7 @@ public class OpenHoursController {
     }
 
 
-    @PostMapping(path = "/getAll")
+    @PostMapping(path = "/get-all")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched for client")
@@ -43,7 +43,7 @@ public class OpenHoursController {
         return openHoursList;
     }
 
-    @PostMapping("/getById")
+    @PostMapping("/get-by-id")
     @ApiOperation(value = "Get openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Fetched by Id for client" )

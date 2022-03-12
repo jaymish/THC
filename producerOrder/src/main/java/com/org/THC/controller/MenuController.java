@@ -1,6 +1,5 @@
 package com.org.THC.controller;
 
-import com.org.THC.model.Location;
 import com.org.THC.model.Menu;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.MenuService;
@@ -29,30 +28,30 @@ public class MenuController {
         this.locationService=locationService;
     }
 
-    @GetMapping("/addMenu")
+    @GetMapping("/add-menu")
     @ApiOperation(value = "Menu created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Created")
     })
-    public String addWeatherReading(@ModelAttribute("location") String locationId,ModelMap modelMap) {
+    public String addMenu(@ModelAttribute("location") String locationId,ModelMap modelMap) {
 
         modelMap.put("LocationId",locationId);
         return "menu/addMenu";
     }
 
 
-    @PostMapping("/addMenu")
+    @PostMapping("/add-menu")
     @ApiOperation(value = "Menu created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Created")
     })
-    public String addWeatherReading(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price, @ModelAttribute("category") String category,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
-        menuService.createMenus(itemName, description, price, category,locationId);
+    public String addMenu(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
+        menuService.createMenus(itemName, description, price,locationId);
         modelMap.put("locationid",locationId);
-        return "redirect:/menu/getMenus?locationid="+locationId+"&deactivate=";
+        return "redirect:/menu/get-menu?locationid="+locationId+"&deactivate=";
     }
 
-    @GetMapping("/getMenus")
+    @GetMapping("/get-menu")
     @ApiOperation(value = "Get All menus")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Menus Fetched")
@@ -65,7 +64,7 @@ public class MenuController {
         return "menu/listMenu";
     }
 
-    @PostMapping("/editMenu")
+    @PostMapping("/edit-menu")
     @ApiOperation(value = "Get All menus")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Menus Fetched")
@@ -77,18 +76,18 @@ public class MenuController {
         return "menu/editMenu";
     }
 
-    @PostMapping("/updateMenu")
+    @PostMapping("/update-menu")
     @ApiOperation(value = "Cancel menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id")
+            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
     })
-    public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("category") String category,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
-        menuService.updateMenu(id,itemName,description,price,category,status,location);
-        return "redirect:/menu/getMenus?locationid="+location+"&deactivate=";
+    public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
+        menuService.updateMenu(id,itemName,description,price,status,location);
+        return "redirect:/menu/get-menu?locationid="+location+"&deactivate=";
     }
 
 
-    @PostMapping("/getMenuById")
+    /*@PostMapping("/getMenuById")
     @ApiOperation(value = "Get menus by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Menu Fetched by Id")
@@ -104,26 +103,26 @@ public class MenuController {
     })
     public List<Menu> getMenusByZip(@RequestBody int zipcode){
         return menuService.getMenusByZip(zipcode);
-    }
+    }*/
 
-    @PostMapping("/cancelMenuById")
+    @PostMapping("/deactivate-menu-by-id")
     @ApiOperation(value = "Cancel menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id")
+            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
     })
-    public String cancelMenu(@ModelAttribute("id") String id){
-        Menu menu= menuService.cancelMenu(id);
-        return "redirect:/menu/getMenus?locationid="+menu.getLocation().getId()+"&deactivate=";
+    public String deactivateMenu(@ModelAttribute("id") String id){
+        Menu menu= menuService.deactivateMenu(id);
+        return "redirect:/menu/get-menu?locationid="+menu.getLocation().getId()+"&deactivate=";
 
     }
 
-    @PostMapping("/activeMenuById")
+    @PostMapping("/activate-menu-by-id")
     @ApiOperation(value = "Cancel menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id")
+            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
     })
-    public String activeMenu(@ModelAttribute("id") String id){
-        Menu menu= menuService.activeMenu(id);
-        return "redirect:/menu/getMenus?locationid="+menu.getLocation().getId()+"&deactivate=";
+    public String activateMenu(@ModelAttribute("id") String id){
+        Menu menu= menuService.activateMenu(id);
+        return "redirect:/menu/get-menu?locationid="+menu.getLocation().getId()+"&deactivate=";
     }
 }

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/reservation/updateReservation" method="post">
+    <form action="/reservation/update-reservation" method="post">
         <h1>Edit Location</h1>
         <%--<c: var="var" items="${Reservation}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${Reservations.id}">

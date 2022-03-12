@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/openHours")
+@RequestMapping(path = "/open-hours")
 public class OpenHoursController {
 
     private OpenHoursService openHoursService;
@@ -28,30 +28,30 @@ public class OpenHoursController {
         this.locationService=locationService;
     }
 
-    @GetMapping("/addOpenHours")
+    @GetMapping("/add-open-hours")
     @ApiOperation(value = "OpenHours created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Created")
     })
-    public String addWeatherReading(@ModelAttribute("location") String locationId, ModelMap modelMap) {
+    public String addHours(@ModelAttribute("location") String locationId, ModelMap modelMap) {
 
         modelMap.put("LocationId",locationId);
         return "openHours/addOpenHours";
     }
 
 
-    @PostMapping("/addOpenHours")
+    @PostMapping("/add-open-hours")
     @ApiOperation(value = "OpenHours created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Created")
     })
-    public String addWeatherReading(@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
+    public String addHours(@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
         openHoursService.createOpenHours(day,startTime,endTime,locationId);
         modelMap.put("locationid",locationId);
-        return "redirect:/openHours/getOpenHours?locationid="+locationId+"&deactivate=";
+        return "redirect:/open-hours/get-open-hours?locationid="+locationId+"&deactivate=";
     }
 
-    @GetMapping("/getOpenHours")
+    @GetMapping("/get-open-hours")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched")
@@ -64,7 +64,7 @@ public class OpenHoursController {
         return "openHours/listOpenHours";
     }
 
-    @PostMapping("/editOpenHours")
+    @PostMapping("/edit-open-hours")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched")
@@ -76,18 +76,18 @@ public class OpenHoursController {
         return "openHours/editOpenHours";
     }
 
-    @PostMapping("/updateOpenHours")
+    @PostMapping("/update-open-hours")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id")
+            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
     public String updateOpenHours(@ModelAttribute("id") String id,@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,@ModelAttribute("location") String location){
         openHoursService.updateOpenHours(id,day,startTime,endTime,location);
-        return "redirect:/openHours/getOpenHours?locationid="+location+"&deactivate=";
+        return "redirect:/open-hours/get-open-hours?locationid="+location+"&deactivate=";
     }
 
 
-    @PostMapping("/getOpenHoursById")
+    /*@PostMapping("/get-open-hoursById")
     @ApiOperation(value = "Get openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Fetched by Id")
@@ -96,33 +96,33 @@ public class OpenHoursController {
         return openHoursService.getOpenHoursById(id);
     }
 
-    @PostMapping("/getOpenHoursByZip")
+    @PostMapping("/get-open-hoursByZip")
     @ApiOperation(value = "Get openHours by ZipCode")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Fetched by Zip")
     })
     public List<OpenHours> getOpenHoursByZip(@RequestBody int zipcode){
         return openHoursService.getOpenHoursByZip(zipcode);
-    }
+    }*/
 
-    @PostMapping("/cancelOpenHoursById")
+    @PostMapping("/deactivate-open-hours-by-id")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id")
+            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
-    public String cancelOpenHours(@ModelAttribute("id") String id){
-        OpenHours openHours= openHoursService.cancelOpenHours(id);
-        return "redirect:/openHours/getOpenHours?locationid="+openHours.getLocation().getId()+"&deactivate=";
+    public String deactivateOpenHours(@ModelAttribute("id") String id){
+        OpenHours openHours= openHoursService.deactivateOpenHours(id);
+        return "redirect:/open-hours/get-open-hours?locationid="+openHours.getLocation().getId()+"&deactivate=";
 
     }
 
-    @PostMapping("/activeOpenHoursById")
+    @PostMapping("/activate-open-hours-by-id")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id")
+            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
-    public String activeOpenHours(@ModelAttribute("id") String id){
-        OpenHours openHours= openHoursService.activeOpenHours(id);
-        return "redirect:/openHours/getOpenHours?locationid="+openHours.getLocation().getId()+"&deactivate=";
+    public String activateOpenHours(@ModelAttribute("id") String id){
+        OpenHours openHours= openHoursService.activateOpenHours(id);
+        return "redirect:/open-hours/get-open-hours?locationid="+openHours.getLocation().getId()+"&deactivate=";
     }
 }
