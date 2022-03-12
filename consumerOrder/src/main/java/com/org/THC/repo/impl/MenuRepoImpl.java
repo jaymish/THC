@@ -32,8 +32,6 @@ public class MenuRepoImpl implements MenuRepo {
         Query query = entityManager.createQuery("SELECT menus FROM Menu menus WHERE menus.id = :menuId ")
                 .setParameter("menuId",menuId);
         List<Menu> menuList = query.getResultList();
-        System.out.println("here");
-        System.out.println(menuList);
         if(menuList.size() == 0 )
             return null;
         return menuList.get(0);

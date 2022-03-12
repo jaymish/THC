@@ -33,8 +33,7 @@ public class LocationController {
             @ApiResponse(code = 200, message = "Location Created")
     })
     public String addWeatherReading() {
-
-        return "addLocation";
+        return "location/addLocation";
     }
 
 
@@ -44,15 +43,7 @@ public class LocationController {
             @ApiResponse(code = 200, message = "Location Created")
     })
     public String addWeatherReading(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
-        Location location=new Location();
-        location.setName(name);
-        location.setAddressline1(addressline1);
-        location.setAddressline2(addressline2);
-        location.setCity(city);
-        location.setState(state);
-        location.setZip(zip);
-        System.out.println(location);
-        locationService.createLocations(location);
+        locationService.createLocations(name,addressline1,addressline2,city,state,zip);
         return "redirect:/location/getLocations";
     }
 
@@ -63,10 +54,8 @@ public class LocationController {
     })
     public String getAll(ModelMap modelMap){
         List<Location> locationList = locationService.getAllLocations();
-
         modelMap.put("Locations",locationList);
-        //System.out.println(locationList);
-        return "location";
+        return "location/listLocation";
     }
 
     @PostMapping("/editLocation")
@@ -76,10 +65,8 @@ public class LocationController {
     })
     public String editLocation(@ModelAttribute("id") String id,ModelMap modelMap){
         Location location= locationService.getLocationsById(id);
-
         modelMap.put("Locations",location);
-        //System.out.println(location);
-        return "editLocation";
+        return "location/editLocation";
     }
 
     @PostMapping("/updateLocation")
@@ -88,17 +75,7 @@ public class LocationController {
             @ApiResponse(code = 200, message = "Location Canceled by Id")
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
-        //locationService.activeLocation(id);
-        Location location=new Location();
-        location.setId(id);
-        location.setName(name);
-        location.setAddressline1(addressline1);
-        location.setAddressline2(addressline2);
-        location.setCity(city);
-        location.setState(state);
-        location.setStatus(status);
-        location.setZip(zip);
-        locationService.updateLocation(location);
+        locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
         return "redirect:/location/getLocations";
     }
 

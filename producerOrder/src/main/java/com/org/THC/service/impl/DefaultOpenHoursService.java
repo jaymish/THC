@@ -29,12 +29,10 @@ public class DefaultOpenHoursService implements OpenHoursService {
     }
 
     @Override
-    public boolean createOpenHours(String day,  String startTime,String endTime,String locationId){
-        System.out.println("addopenHours");
+    public boolean createOpenHours(String day,String startTime,String endTime,String locationId){
         OpenHours openHours=new OpenHours();
         openHours.setDay(day);
         String[] timeStart = startTime.split(":");
-        System.out.println(timeStart[0]);
         TimeModel start=new TimeModel();
         start.setHours(Integer.valueOf(timeStart[0]));
         start.setMinutes(Integer.valueOf(timeStart[1]));
@@ -65,7 +63,6 @@ public class DefaultOpenHoursService implements OpenHoursService {
         openHours.setStartTime(start);
         openHours.setEndTime(end);
         openHours.setLocation(locationService.getLocationsById(locationId));
-        System.out.println("Day:"+day+"  Start:"+startTime+"  End"+endTime);
         return restTemplate.postForObject(url+"create", openHours, boolean.class);
 
     }
@@ -103,7 +100,6 @@ public class DefaultOpenHoursService implements OpenHoursService {
         openHours.setId(id);
         openHours.setDay(day);
         String[] timeStart = startTime.split(":");
-        System.out.println(timeStart[0]);
         TimeModel start=new TimeModel();
         start.setHours(Integer.valueOf(timeStart[0]));
         start.setMinutes(Integer.valueOf(timeStart[1]));

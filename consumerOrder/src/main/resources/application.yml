@@ -8,7 +8,7 @@ spring:
     password: ${SPRING_DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   profiles:
     active: local
   application:

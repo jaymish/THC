@@ -37,7 +37,7 @@ public class MenuController {
     public String addWeatherReading(@ModelAttribute("location") String locationId,ModelMap modelMap) {
 
         modelMap.put("LocationId",locationId);
-        return "addMenu";
+        return "menu/addMenu";
     }
 
 
@@ -47,15 +47,7 @@ public class MenuController {
             @ApiResponse(code = 200, message = "Menu Created")
     })
     public String addWeatherReading(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price, @ModelAttribute("category") String category,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
-        System.out.println("addmenu");
-        Menu menu=new Menu();
-        menu.setItemName(itemName);
-        menu.setDescription(description);
-        menu.setPrice(price);
-        menu.setCategory(category);
-        menu.setLocation(locationService.getLocationsById(locationId));
-        System.out.println(menu);
-        menuService.createMenus(menu);
+        menuService.createMenus(itemName, description, price, category,locationId);
         modelMap.put("locationid",locationId);
         return "redirect:/menu/getMenus?locationid="+locationId+"&deactivate=";
     }
@@ -70,8 +62,7 @@ public class MenuController {
 
         modelMap.put("LocationMenu",menuList);
         modelMap.put("locationid",id);
-        System.out.println(menuList);
-        return "menu";
+        return "menu/listMenu";
     }
 
     @PostMapping("/editMenu")
@@ -83,8 +74,7 @@ public class MenuController {
         Menu menu= menuService.getMenusById(id);
 
         modelMap.put("Menus",menu);
-        //System.out.println(menu);
-        return "editMenu";
+        return "menu/editMenu";
     }
 
     @PostMapping("/updateMenu")
@@ -93,19 +83,7 @@ public class MenuController {
             @ApiResponse(code = 200, message = "Menu Canceled by Id")
     })
     public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("category") String category,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
-        //menuService.activeMenu(id);
-        System.out.println("menu here");
-        Menu menu=new Menu();
-        menu.setId(id);
-        menu.setItemName(itemName);
-        menu.setDescription(description);
-        menu.setPrice(price);
-        menu.setCategory(category);
-        menu.setStatus(status);
-        //menu.setLocation(location);
-        menuService.updateMenu(menu);
-        System.out.println(location);
-        System.out.println("menu here");
+        menuService.updateMenu(id,itemName,description,price,category,status,location);
         return "redirect:/menu/getMenus?locationid="+location+"&deactivate=";
     }
 

@@ -35,14 +35,13 @@
     <table style="width:100%" class="table table-bordered" id="MenuTable">
         <thead>
         <tr>
-            <th scope="col" style="width: 3%" >#</th>
-            <th scope="col" style="width: 15%" >Item Name</th>
-            <th scope="col" style="width: 25%">Description</th>
-            <th scope="col" style="width: 7%">Price</th>
-            <th scope="col" style="width: 3%">Category</th>
-            <th scope="col" >Status</th>
-            <th scope="col" style="width: 10%">Update</th>
-            <th scope="col" style="width: 10%">Activate/Deactivate</th>
+            <th scope="col" style="width: 5%" >#</th>
+            <th scope="col" style="width: 17%" >Item Name</th>
+            <th scope="col" style="width: 28%">Description</th>
+            <th scope="col" style="width: 10%">Price</th>
+            <th scope="col" style="width: 10%">Category</th>
+            <th scope="col" style="width: 15%">Update</th>
+            <th scope="col" style="width: 15%">Activate/Deactivate</th>
         </tr>
         </thead>
         <tbody>
@@ -54,12 +53,11 @@
                 <td><c:out value="${var.description}"/></td>
                 <td><c:out value="${var.price}"/></td>
                 <td><c:out value="${var.category}"/></td>
-                <td><c:out value="${var.status}"/></td>
                 <td>
                     <form name="edit" action="/menu/editMenu" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
                             <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                        <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 75%">Edit</button>
+                        <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
                     </form>
                 </td>
                 <td>
@@ -69,7 +67,7 @@
                             <form name="delete" action="/menu/cancelMenuById" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                                <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 75%">DeActivate</button>
+                                <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
                             </form>
 
                         </c:when>
@@ -78,7 +76,7 @@
                             <form name="active" action="/menu/activeMenuById" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
-                                <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 75%" >Activate</button>
+                                <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>
                             </form>
 
                         </c:otherwise>

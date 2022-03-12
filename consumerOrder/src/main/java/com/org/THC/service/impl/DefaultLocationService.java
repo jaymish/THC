@@ -20,7 +20,6 @@ public class DefaultLocationService implements LocationService {
     }
     @Override
     public boolean createLocation(Location location) {
-        System.out.println(location);
         locationRepo.saveLocation(location);
         //emailService.sendSimpleMessage(locations.getCustomer().getEmail_id(),"Location Created","Thank you your location was created. Here is the detail of your location \n"+ locations.toString());
         return true;

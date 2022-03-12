@@ -15,7 +15,7 @@
 <body>
 <div class="container-fluid">
     <form action="/openHours/updateOpenHours" method="post">
-        <h1>Edit Location</h1>
+        <h1>Edit Hours</h1>
         <%--<c: var="var" items="${OpenHours}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${OpenHours.id}">
         <div class="mb-3">
@@ -40,10 +40,29 @@
             <label for="startTime" class="form-label">Start Time</label>
             <c:choose>
                 <c:when test="${OpenHours.startTime.amPm=='PM'}">
-                    <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print(String.format("%02d",(Integer)pageContext.getAttribute("starthours")+12)+":"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+
+                    <c:choose>
+                        <c:when test="${OpenHours.startTime.hours=='12'}">
+                            <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print("12:"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print(String.format("%02d",(Integer)pageContext.getAttribute("starthours")+12)+":"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+                        </c:otherwise>
+                    </c:choose>
+
                 </c:when>
                 <c:otherwise>
-                    <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print(String.format("%02d",pageContext.getAttribute("starthours"))+":"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+
+                    <c:choose>
+                        <c:when test="${OpenHours.startTime.hours=='12'}">
+                            <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print("00:"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="time" class="form-control" id="startTime" name="startTime" value="<% out.print(String.format("%02d",pageContext.getAttribute("starthours"))+":"+String.format("%02d",pageContext.getAttribute("startminutes"))); %>">
+                        </c:otherwise>
+                    </c:choose>
+
+
                 </c:otherwise>
 
             </c:choose>
@@ -53,10 +72,30 @@
         <label for="endTime" class="form-label">End Time</label>
         <c:choose>
             <c:when test="${OpenHours.endTime.amPm=='PM'}">
-                <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print(String.format("%02d",(Integer)pageContext.getAttribute("endhours")+12)+":"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+
+                <c:choose>
+                    <c:when test="${OpenHours.endTime.hours=='12'}">
+                        <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print("12:"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print(String.format("%02d",(Integer)pageContext.getAttribute("endhours")+12)+":"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+                    </c:otherwise>
+                </c:choose>
+
+
             </c:when>
             <c:otherwise>
-                <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print(String.format("%02d",pageContext.getAttribute("endhours"))+":"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+
+                <c:choose>
+                    <c:when test="${OpenHours.endTime.hours=='12'}">
+                        <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print("00:"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="time" class="form-control" id="endTime" name="endTime" value="<% out.print(String.format("%02d",pageContext.getAttribute("endhours"))+":"+String.format("%02d",pageContext.getAttribute("endminutes"))); %>">
+                    </c:otherwise>
+                </c:choose>
+
+
             </c:otherwise>
 
         </c:choose>

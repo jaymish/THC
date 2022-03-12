@@ -36,7 +36,7 @@ public class OpenHoursController {
     public String addWeatherReading(@ModelAttribute("location") String locationId, ModelMap modelMap) {
 
         modelMap.put("LocationId",locationId);
-        return "addOpenHours";
+        return "openHours/addOpenHours";
     }
 
 
@@ -61,8 +61,7 @@ public class OpenHoursController {
 
         modelMap.put("LocationOpenHours",openHoursList);
         modelMap.put("locationid",id);
-        System.out.println(openHoursList);
-        return "openHours";
+        return "openHours/listOpenHours";
     }
 
     @PostMapping("/editOpenHours")
@@ -74,9 +73,7 @@ public class OpenHoursController {
         OpenHours openHours= openHoursService.getOpenHoursById(id);
 
         modelMap.put("OpenHours",openHours);
-        System.out.println(openHours);
-        System.out.println("I am here");
-        return "editOpenHours";
+        return "openHours/editOpenHours";
     }
 
     @PostMapping("/updateOpenHours")
@@ -85,12 +82,7 @@ public class OpenHoursController {
             @ApiResponse(code = 200, message = "OpenHours Canceled by Id")
     })
     public String updateOpenHours(@ModelAttribute("id") String id,@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,@ModelAttribute("location") String location){
-        //openHoursService.activeOpenHours(id);
-        System.out.println("openHours here");
-        //openHours.setLocation(location);
-        openHoursService.updateOpenHours( id,day,   startTime, endTime, location);
-        System.out.println(location);
-        System.out.println("openHours here");
+        openHoursService.updateOpenHours(id,day,startTime,endTime,location);
         return "redirect:/openHours/getOpenHours?locationid="+location+"&deactivate=";
     }
 

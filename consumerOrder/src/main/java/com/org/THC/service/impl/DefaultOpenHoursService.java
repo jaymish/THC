@@ -19,7 +19,6 @@ public class DefaultOpenHoursService implements OpenHoursService {
     }
     @Override
     public boolean createOpenHours(OpenHours openHours) {
-        System.out.println(openHours);
         openHoursRepo.saveOpenHours(openHours);
         //emailService.sendSimpleMessage(openHours.getCustomer().getEmail_id(),"OpenHours Created","Thank you your openHours was created. Here is the detail of your openHours \n"+ openHours.toString());
         return true;

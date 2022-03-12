@@ -30,17 +30,17 @@
     <table style="width:100%" class="table table-bordered" id="LocationTable">
         <thead>
         <tr>
-            <th scope="col" style="width: 3%" >#</th>
+            <th scope="col" style="width: 2%" >#</th>
             <th scope="col" style="width: 15%" >Name</th>
             <th scope="col" style="width: 25%">Addressline</th>
             <th scope="col" style="width: 7%">City</th>
             <th scope="col" style="width: 3%">State</th>
-            <th scope="col" style="width: 7%">Zip</th>
-            <th scope="col" >Status</th>
-            <th scope="col">Menu</th>
-            <th scope="col">Open Hours</th>
-            <th scope="col" style="width: 10%">Update</th>
-            <th scope="col" style="width: 10%">Activate/Deactivate</th>
+            <th scope="col" style="width: 5%">Zip</th>
+            <th scope="col" style="width: 5%">Menu</th>
+            <th scope="col" style="width: 8%">Open Hours</th>
+            <th scope="col" style="width: 8%">Reservation</th>
+            <th scope="col" style="width: 11%">Update</th>
+            <th scope="col" style="width: 11%">Activate/Deactivate</th>
         </tr>
         </thead>
         <tbody>
@@ -49,23 +49,29 @@
         <tr>
             <td>${counter.count}</td>
             <td><c:out value="${var.name}"/></td>
-            <td><c:out value="${var.addressline1}"/><c:out value="${var.addressline2}"/></td>
+            <td><c:out value="${var.addressline1}"/> <c:out value="${var.addressline2}"/></td>
             <td><c:out value="${var.city}"/></td>
             <td><c:out value="${var.state}"/></td>
             <td><c:out value="${var.zip}"/></td>
-            <td><c:out value="${var.status}"/></td>
             <td>
                 <form name="edit" action="/menu/getMenus" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Menu</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-dark" style="width: 100%">Menu</button>
                 </form>
             </td>
             <td>
                 <form name="hours" action="/openHours/getOpenHours" method="get">
                     <input type="hidden" name="locationid" id="locationid" value="${var.id}">
                         <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
-                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Open Hours</button>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-info" style="width: 100%">Open Hours</button>
+                </form>
+            </td>
+            <td>
+                <form name="hours" action="/reservation/getReservations" method="get">
+                    <input type="hidden" name="locationid" id="locationid" value="${var.id}">
+                        <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
+                    <button id="deactivate" name="deactivate" type="submit" class="btn btn-secondary" style="width: 100%">Reservation</button>
                 </form>
             </td>
             <td>
@@ -91,7 +97,7 @@
                     <form name="active" action="/location/activeLocationById" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
 <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
-                        <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 75%" >Activate</button>
+                        <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>
                     </form>
 
             </c:otherwise>

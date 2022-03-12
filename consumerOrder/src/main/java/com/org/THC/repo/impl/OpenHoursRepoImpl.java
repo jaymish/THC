@@ -32,8 +32,6 @@ public class OpenHoursRepoImpl implements OpenHoursRepo {
         Query query = entityManager.createQuery("SELECT openHourss FROM OpenHours openHourss WHERE openHourss.id = :openHoursId ")
                 .setParameter("openHoursId",openHoursId);
         List<OpenHours> openHoursList = query.getResultList();
-        System.out.println("here");
-        System.out.println(openHoursList);
         if(openHoursList.size() == 0 )
             return null;
         return openHoursList.get(0);

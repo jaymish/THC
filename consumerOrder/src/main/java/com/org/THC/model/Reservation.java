@@ -2,10 +2,7 @@ package com.org.THC.model;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.UUID;
@@ -20,8 +17,9 @@ public class Reservation {
     private String phoneNumber;
     private String emailId;
     private int noOfPeople;
-    private Date date;
-    private Time time;
+    private String date;
+    @OneToOne(cascade = CascadeType.ALL)
+    private TimeModel time;
     private String status;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Location location;

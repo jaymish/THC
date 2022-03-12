@@ -14,7 +14,7 @@
 <body>
 <div class="container-fluid">
     <form action="/menu/updateMenu" method="post">
-        <h1>Edit Location</h1>
+        <h1>Edit Menu</h1>
         <%--<c: var="var" items="${Menus}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${Menus.id}">
         <div class="mb-3">
@@ -32,10 +32,6 @@
         <div class="mb-3">
             <label for="category" class="form-label">category</label>
             <input type="text" class="form-control" id="category" name="category" value="${Menus.category}" required>
-        </div>
-        <div class="mb-3">
-            <label for="subCategory" class="form-label">subCategory</label>
-            <input type="text" class="form-control" id="subCategory" name="subCategory" value="${Menus.subCategory}" required>
         </div>
 
         <input type="hidden" name="status" id="status" value="${Menus.status}">

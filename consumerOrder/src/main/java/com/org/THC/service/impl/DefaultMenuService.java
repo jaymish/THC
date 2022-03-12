@@ -19,7 +19,6 @@ public class DefaultMenuService implements MenuService {
     }
     @Override
     public boolean createMenu(Menu menu) {
-        System.out.println(menu);
         menuRepo.saveMenu(menu);
         //emailService.sendSimpleMessage(menus.getCustomer().getEmail_id(),"Menu Created","Thank you your menu was created. Here is the detail of your menu \n"+ menus.toString());
         return true;

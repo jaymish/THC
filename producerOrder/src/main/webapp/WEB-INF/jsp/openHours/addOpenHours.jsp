@@ -37,7 +37,7 @@
         </div>
         <br>
         <div class="md-3">
-            <label for="endTime" class="form-label">Start Time</label>
+            <label for="endTime" class="form-label">End Time</label>
             <input type="time" class="form-control" id="endTime" name="endTime">
         </div>
 

@@ -37,8 +37,6 @@ public class MenuController {
     })
     public List<Menu> getMenus(@RequestBody String locationid){
         List<Menu> menuList=menuService.getAllMenus(locationid);
-        System.out.println("here"+locationid);
-        System.out.println(menuList);
         return menuList;
     }
 

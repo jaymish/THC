@@ -40,8 +40,6 @@ public class OpenHoursController {
     })
     public List<OpenHours> getOpenHours(@RequestBody String locationid){
         List<OpenHours> openHoursList=openHoursService.getAllOpenHours(locationid);
-        System.out.println("here"+locationid);
-        System.out.println(openHoursList);
         return openHoursList;
     }
 

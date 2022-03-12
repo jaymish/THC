@@ -18,7 +18,7 @@
 <body>
 <div class="container-fluid">
     <form action="/menu/addMenu" method="post">
-        <h1>Edit Location</h1>
+        <h1>Add Menu</h1>
         <div class="mb-3">
             <label for="itemName" class="form-label">Name</label>
             <input type="text" class="form-control" id="itemName" name="itemName" >

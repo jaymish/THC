@@ -21,8 +21,6 @@ public class LocationRepoImpl implements LocationRepo {
     public List<Location> getAllLocations() {
         Query query = entityManager.createQuery("SELECT locations FROM Location locations");
         List<Location> locationList = (List<Location>) query.getResultList();
-        System.out.println("here");
-        System.out.println(locationList);
         return locationList;
     }
 
@@ -31,8 +29,6 @@ public class LocationRepoImpl implements LocationRepo {
         Query query = entityManager.createQuery("SELECT locations FROM Location locations WHERE locations.id = :locationId ")
                 .setParameter("locationId",locationId);
         List<Location> locationList = query.getResultList();
-        System.out.println("here");
-        System.out.println(locationList);
         if(locationList.size() == 0 )
             return null;
         return locationList.get(0);
@@ -43,8 +39,6 @@ public class LocationRepoImpl implements LocationRepo {
         Query query = entityManager.createQuery("SELECT locations FROM Location locations WHERE locations.deliveryMethod.shippingorpickup.zip = :zip ")
                 .setParameter("zip",zip);
         List<Location> locationList = query.getResultList();
-        System.out.println("here");
-        System.out.println(locationList);
         if(locationList.size() == 0 )
             return null;
         return locationList;

@@ -28,8 +28,14 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public boolean createLocations(Location location){
-        System.out.println(location);
+    public boolean createLocations(String name, String addressline1, String addressline2, String city, String state,  int zip){
+        Location location=new Location();
+        location.setName(name);
+        location.setAddressline1(addressline1);
+        location.setAddressline2(addressline2);
+        location.setCity(city);
+        location.setState(state);
+        location.setZip(zip);
         return restTemplate.postForObject(url+"create", location, boolean.class);
 
     }
@@ -61,7 +67,16 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public Location updateLocation(Location location) {
+    public Location updateLocation(String id, String name, String addressline1, String addressline2, String city, String state, int zip, String status) {
+        Location location=new Location();
+        location.setId(id);
+        location.setName(name);
+        location.setAddressline1(addressline1);
+        location.setAddressline2(addressline2);
+        location.setCity(city);
+        location.setState(state);
+        location.setStatus(status);
+        location.setZip(zip);
         return restTemplate.postForObject(url+"update", location, Location.class);
     }
 }
