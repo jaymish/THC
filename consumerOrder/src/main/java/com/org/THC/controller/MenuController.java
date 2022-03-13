@@ -1,6 +1,8 @@
 package com.org.THC.controller;
 
 import com.org.THC.model.Menu;
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageMenu;
 import com.org.THC.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,12 +32,12 @@ public class MenuController {
     }
 
 
-    @PostMapping(path = "/get-all")
+    @GetMapping(path = "/get-all")
     @ApiOperation(value = "Get All menus")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Menus Fetched for client")
     })
-    public List<Menu> getMenus(@RequestBody String locationid){
+    public List<Menu> getMenus(@RequestParam("locationid") String locationid){
         List<Menu> menuList=menuService.getAllMenus(locationid);
         return menuList;
     }
@@ -50,30 +52,35 @@ public class MenuController {
     }
 
 
-    @PostMapping("/cancel")
-    @ApiOperation(value = "Cancel menus by ID")
+    @PostMapping("/deactivate")
+    @ApiOperation(value = "Deactivate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
     })
-    public ResponseEntity<Menu> cancelMenu(@RequestBody String id){
-        return ResponseEntity.ok(menuService.cancelMenu(id));
+    public ResponseEntity<Menu> deactivateMenu(@RequestBody String id){
+        return ResponseEntity.ok(menuService.deactivateMenu(id));
     }
 
-    @PostMapping("/active")
-    @ApiOperation(value = "Cancel menus by ID")
+    @PostMapping("/activate")
+    @ApiOperation(value = "Deactivate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
     })
-    public Menu activeMenu(@RequestBody String id){
-        return menuService.activeMenu(id);
+    public Menu activateMenu(@RequestBody String id){
+        return menuService.activateMenu(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel menus by ID")
+    @ApiOperation(value = "Deactivate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
     })
     public Menu updateMenu(@RequestBody Menu menu){
         return menuService.updateMenu(menu);
+    }
+
+    @GetMapping("/page")
+    public PageMenu getAllMenu(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid,@RequestParam(defaultValue = "all") String show){
+        return menuService.getAllpage(pageNo, pageSize, sortBy,locationid,show);
     }
 }

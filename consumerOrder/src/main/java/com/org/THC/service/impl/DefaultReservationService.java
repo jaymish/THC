@@ -1,8 +1,15 @@
 package com.org.THC.service.impl;
 
+import com.org.THC.model.Location;
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
+import com.org.THC.repo.PageReservationRepo;
 import com.org.THC.repo.ReservationRepo;
 import com.org.THC.service.ReservationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +19,12 @@ public class DefaultReservationService implements ReservationService {
 
     private ReservationRepo reservationRepo;
     private EmailServiceImpl emailService;
+    private PageReservationRepo pageReservationRepo;
 
-    public DefaultReservationService(ReservationRepo reservationRepo, EmailServiceImpl emailService){
+    public DefaultReservationService(ReservationRepo reservationRepo, EmailServiceImpl emailService,PageReservationRepo pageReservationRepo){
         this.reservationRepo = reservationRepo;
         this.emailService = emailService;
+        this.pageReservationRepo=pageReservationRepo;
     }
     @Override
     public boolean createReservation(Reservation reservation) {
@@ -39,19 +48,35 @@ public class DefaultReservationService implements ReservationService {
 
 
     @Override
-    public Reservation cancelReservation(String id) {
-        //logic to check if cancel is possible
-        return reservationRepo.reservationCancel(id);
+    public Reservation deactivateReservation(String id) {
+        //logic to check if deactivate is possible
+        return reservationRepo.reservationDeactivate(id);
     }
 
     @Override
-    public Reservation activeReservation(String id) {
-        //logic to check if cancel is possible
-        return reservationRepo.reservationActive(id);
+    public Reservation activateReservation(String id) {
+        //logic to check if deactivate is possible
+        return reservationRepo.reservationActivate(id);
     }
 
     @Override
     public Reservation updateReservation(Reservation reservation) {
         return reservationRepo.updateReservation(reservation);
+    }
+
+    @Override
+    public PageReservation getAllpage(Integer pageNo, Integer pageSize, String sortBy, String locationId){
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<Reservation> pagedResult = pageReservationRepo.findByLocation_Id(locationId,paging);
+        PageReservation pageReservation = new PageReservation();
+        if(pagedResult.hasContent()) {
+            pageReservation.setReservationList(pagedResult.getContent());
+            pageReservation.setPages(pagedResult.getTotalPages());
+            return pageReservation;
+        } else {
+            pageReservation.setReservationList(null);
+            pageReservation.setPages(0);
+            return pageReservation;
+        }
     }
 }

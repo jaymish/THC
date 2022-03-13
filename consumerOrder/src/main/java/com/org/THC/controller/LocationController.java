@@ -2,6 +2,7 @@ package com.org.THC.controller;
 
 
 import com.org.THC.model.Location;
+import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -60,28 +61,28 @@ public class LocationController {
         return locationService.getLocationsByZip(zip);
     }
 
-    @PostMapping("/cancel")
-    @ApiOperation(value = "Cancel locations by ID")
+    @PostMapping("/deactivate")
+    @ApiOperation(value = "Deactivate locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Location Deactivateed by Id for client")
     })
-    public ResponseEntity<Location> cancelLocation(@RequestBody String id){
-        return ResponseEntity.ok(locationService.cancelLocation(id));
+    public ResponseEntity<Location> deactivateLocation(@RequestBody String id){
+        return ResponseEntity.ok(locationService.deactivateLocation(id));
     }
 
-    @PostMapping("/active")
-    @ApiOperation(value = "Cancel locations by ID")
+    @PostMapping("/activate")
+    @ApiOperation(value = "Deactivate locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Location Deactivateed by Id for client")
     })
-    public ResponseEntity<Location> activeLocation(@RequestBody String id){
-        return ResponseEntity.ok(locationService.activeLocation(id));
+    public ResponseEntity<Location> activateLocation(@RequestBody String id){
+        return ResponseEntity.ok(locationService.activateLocation(id));
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel locations by ID")
+    @ApiOperation(value = "Deactivate locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Location Deactivateed by Id for client")
     })
     public ResponseEntity<Location> updateLocation(@RequestBody Location location){
         return ResponseEntity.ok(locationService.updateLocation(location));
@@ -89,8 +90,7 @@ public class LocationController {
 
 
     @GetMapping("/page")
-    public ResponseEntity<List<Location>> getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "id") String sortBy){
-        List<Location> list = locationService.getAllpage(pageNo, pageSize, sortBy);
-        return new ResponseEntity<List<Location>>(list, new HttpHeaders(), HttpStatus.OK);
+    public PageLocation getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "id") String sortBy,@RequestParam(defaultValue = "all") String show){
+        return locationService.getAllpage(pageNo, pageSize, sortBy,show);
     }
 }

@@ -3,6 +3,7 @@ package com.org.THC.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.THC.model.Location;
+import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,7 +28,7 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/add-location")
+    @GetMapping("/add")
     @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Created")
@@ -37,28 +38,37 @@ public class LocationController {
     }
 
 
-    @PostMapping("/add-location")
+    @PostMapping("/add")
     @ApiOperation(value = "Location created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Created")
     })
     public String addLocation(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
         locationService.createLocations(name,addressline1,addressline2,city,state,zip);
-        return "redirect:/location/get-locations";
+        return "redirect:/location/get-all";
     }
 
-    @GetMapping("/get-locations")
+    @GetMapping("/get-all")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
     })
-    public String getAll(ModelMap modelMap){
-        List<Location> locationList = locationService.getAllLocations();
-        modelMap.put("Locations",locationList);
+    public String getAll(@RequestParam(defaultValue = "all") String show,@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,ModelMap modelMap){
+        //List<Location> locationList = locationService.getAllLocations();
+        PageLocation pageLocation=locationService.getAllpage(pageNo,pageSize,show);
+        modelMap.put("Locations",pageLocation.getLocationList());
+        if(pageLocation.getPages()<=0){
+            modelMap.put("pages",0);
+        }
+        else {
+            modelMap.put("pages", pageLocation.getPages() - 1);
+        }
+        modelMap.put("currentpage",pageNo);
+        modelMap.put("show",show);
         return "location/listLocation";
     }
 
-    @PostMapping("/edit-location")
+    @PostMapping("/edit")
     @ApiOperation(value = "Get All locations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
@@ -69,14 +79,14 @@ public class LocationController {
         return "location/editLocation";
     }
 
-    @PostMapping("/update-location")
+    @PostMapping("/update")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
         locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
-        return "redirect:/location/get-locations";
+        return "redirect:/location/get-all";
     }
 
 
@@ -98,24 +108,24 @@ public class LocationController {
         return locationService.getLocationsByZip(zipcode);
     }*/
 
-    @PostMapping("/deactivate-location-by-id")
+    @PostMapping("/deactivate-by-id")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
-    public String deactivateLocation(@ModelAttribute("id") String id){
+    public String deactivateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         locationService.deactivateLocation(id);
-        return "redirect:/location/get-locations";
+        return "redirect:/location/get-all?show="+show;
     }
 
-    @PostMapping("/activate-location-by-id")
+    @PostMapping("/activate-by-id")
     @ApiOperation(value = "Cancel locations by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Deactivated by Id")
     })
-    public String activateLocation(@ModelAttribute("id") String id){
+    public String activateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         locationService.activateLocation(id);
-        return "redirect:/location/get-locations";
+        return "redirect:/location/get-all?show="+show;
     }
 
 

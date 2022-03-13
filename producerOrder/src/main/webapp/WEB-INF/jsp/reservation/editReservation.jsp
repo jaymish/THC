@@ -14,8 +14,8 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/reservation/update-reservation" method="post">
-        <h1>Edit Location</h1>
+    <form action="/reservation/update" method="post">
+        <h1>Edit Reservation</h1>
         <%--<c: var="var" items="${Reservation}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${Reservations.id}">
 
@@ -84,4 +84,33 @@
     </form>
 </div>
 </body>
+<script>
+    var datemin = new Date();
+    var mindd = datemin.getDate()+1;
+    var minmm = datemin.getMonth()+1; //January is 0!
+    var minyyyy = datemin.getFullYear();
+
+    var datemax = new Date();
+    var maxdd = datemax.getDate()+8;
+    var maxmm = datemax.getMonth()+1; //January is 0!
+    var maxyyyy = datemax.getFullYear();
+    if(mindd<10){
+        mindd='0'+mindd
+    }
+    if(minmm<10){
+        minmm='0'+minmm
+    }
+
+    if(maxdd<10){
+        maxdd='0'+maxdd
+    }
+    if(maxmm<10){
+        maxmm='0'+maxmm
+    }
+
+    datemin = minyyyy+'-'+minmm+'-'+mindd;
+    datemax = maxyyyy+'-'+maxmm+'-'+maxdd;
+    document.getElementById("date").setAttribute("min", datemin);
+    document.getElementById("date").setAttribute("max", datemax);
+</script>
 </html>

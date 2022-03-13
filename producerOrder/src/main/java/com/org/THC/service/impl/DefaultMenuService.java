@@ -2,6 +2,8 @@ package com.org.THC.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.THC.model.Menu;
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageMenu;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class DefaultMenuService implements MenuService {
 
     @Override
     public List<Menu> getAllMenus(String id) {
-        List<Menu> menusList= restTemplate.postForObject(url+"get-all",id, menuList.getClass());
+        List<Menu> menusList= restTemplate.getForObject(url+"get-all?locationid="+id, menuList.getClass());
 
         return menusList;
     }
@@ -73,5 +75,11 @@ public class DefaultMenuService implements MenuService {
         menu.setPrice(price);
         menu.setStatus(status);
         return restTemplate.postForObject(url+"update", menu, Menu.class);
+    }
+
+    @Override
+    public PageMenu getAllpage(Integer pageNo, Integer pageSize, String locationId,String show) {
+        PageMenu pageMenu=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageMenu.class);
+        return pageMenu;
     }
 }

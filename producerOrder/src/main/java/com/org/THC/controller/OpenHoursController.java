@@ -1,6 +1,8 @@
 package com.org.THC.controller;
 
 import com.org.THC.model.OpenHours;
+import com.org.THC.model.PageMenu;
+import com.org.THC.model.PageOpenHours;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.OpenHoursService;
 import io.swagger.annotations.ApiOperation;
@@ -28,19 +30,19 @@ public class OpenHoursController {
         this.locationService=locationService;
     }
 
-    @GetMapping("/add-open-hours")
+    @GetMapping("/add")
     @ApiOperation(value = "OpenHours created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Created")
     })
-    public String addHours(@ModelAttribute("location") String locationId, ModelMap modelMap) {
+    public String addHours(@RequestParam("location") String locationId, ModelMap modelMap) {
 
         modelMap.put("LocationId",locationId);
         return "openHours/addOpenHours";
     }
 
 
-    @PostMapping("/add-open-hours")
+    @PostMapping("/add")
     @ApiOperation(value = "OpenHours created by Client")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Created")
@@ -48,23 +50,32 @@ public class OpenHoursController {
     public String addHours(@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
         openHoursService.createOpenHours(day,startTime,endTime,locationId);
         modelMap.put("locationid",locationId);
-        return "redirect:/open-hours/get-open-hours?locationid="+locationId+"&deactivate=";
+        return "redirect:/open-hours/get-all?locationid="+locationId+"&deactivate=";
     }
 
-    @GetMapping("/get-open-hours")
+    @GetMapping("/get-all")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched")
     })
-    public String getAll(@ModelAttribute("locationid") String id,ModelMap modelMap){
-        List<OpenHours> openHoursList = openHoursService.getAllOpenHours(id);
+    public String getAll(@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam("locationid") String id,ModelMap modelMap){
+        PageOpenHours pageOpenHours=openHoursService.getAllpage(pageNo,pageSize,id);
+        modelMap.put("LocationOpenHours",pageOpenHours.getOpenHoursList());
+        if(pageOpenHours.getPages()<=0){
+            modelMap.put("pages",0);
+        }
+        else {
+            modelMap.put("pages", pageOpenHours.getPages() - 1);
+        }
+        modelMap.put("currentpage",pageNo);
+        /* List<OpenHours> openHoursList = openHoursService.getAllOpenHours(id);
 
-        modelMap.put("LocationOpenHours",openHoursList);
+        modelMap.put("LocationOpenHours",openHoursList);*/
         modelMap.put("locationid",id);
         return "openHours/listOpenHours";
     }
 
-    @PostMapping("/edit-open-hours")
+    @PostMapping("/edit")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched")
@@ -76,18 +87,18 @@ public class OpenHoursController {
         return "openHours/editOpenHours";
     }
 
-    @PostMapping("/update-open-hours")
+    @PostMapping("/update")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
     public String updateOpenHours(@ModelAttribute("id") String id,@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,@ModelAttribute("location") String location){
         openHoursService.updateOpenHours(id,day,startTime,endTime,location);
-        return "redirect:/open-hours/get-open-hours?locationid="+location+"&deactivate=";
+        return "redirect:/open-hours/get-all?locationid="+location+"&deactivate=";
     }
 
 
-    /*@PostMapping("/get-open-hoursById")
+    /*@PostMapping("/get-allById")
     @ApiOperation(value = "Get openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Fetched by Id")
@@ -96,7 +107,7 @@ public class OpenHoursController {
         return openHoursService.getOpenHoursById(id);
     }
 
-    @PostMapping("/get-open-hoursByZip")
+    @PostMapping("/get-allByZip")
     @ApiOperation(value = "Get openHours by ZipCode")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Fetched by Zip")
@@ -105,24 +116,24 @@ public class OpenHoursController {
         return openHoursService.getOpenHoursByZip(zipcode);
     }*/
 
-    @PostMapping("/deactivate-open-hours-by-id")
+    @PostMapping("/deactivate-by-id")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
     public String deactivateOpenHours(@ModelAttribute("id") String id){
         OpenHours openHours= openHoursService.deactivateOpenHours(id);
-        return "redirect:/open-hours/get-open-hours?locationid="+openHours.getLocation().getId()+"&deactivate=";
+        return "redirect:/open-hours/get-all?locationid="+openHours.getLocation().getId()+"&deactivate=";
 
     }
 
-    @PostMapping("/activate-open-hours-by-id")
+    @PostMapping("/activate-by-id")
     @ApiOperation(value = "Cancel openHours by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
     })
     public String activateOpenHours(@ModelAttribute("id") String id){
         OpenHours openHours= openHoursService.activateOpenHours(id);
-        return "redirect:/open-hours/get-open-hours?locationid="+openHours.getLocation().getId()+"&deactivate=";
+        return "redirect:/open-hours/get-all?locationid="+openHours.getLocation().getId()+"&deactivate=";
     }
 }

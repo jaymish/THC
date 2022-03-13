@@ -2,6 +2,7 @@ package com.org.THC.service.impl;
 
 
 import com.org.THC.model.Location;
+import com.org.THC.model.PageLocation;
 import com.org.THC.repo.LocationRepo;
 import com.org.THC.repo.PageLocationRepo;
 import com.org.THC.service.LocationService;
@@ -51,15 +52,15 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public Location cancelLocation(String id) {
-        //logic to check if cancel is possible
-        return locationRepo.locationCancel(id);
+    public Location deactivateLocation(String id) {
+        //logic to check if deactivate is possible
+        return locationRepo.locationDeactivate(id);
     }
 
     @Override
-    public Location activeLocation(String id) {
-        //logic to check if cancel is possible
-        return locationRepo.locationActive(id);
+    public Location activateLocation(String id) {
+        //logic to check if deactivate is possible
+        return locationRepo.locationActivate(id);
     }
 
     @Override
@@ -68,13 +69,24 @@ public class DefaultLocationService implements LocationService {
     }
 
     @Override
-    public List<Location> getAllpage(Integer pageNo, Integer pageSize, String sortBy){
+    public PageLocation getAllpage(Integer pageNo, Integer pageSize, String sortBy, String show){
         Pageable paging = PageRequest.of(pageNo, pageSize);
-        Page<Location> pagedResult = pageLocationRepo.findAll(paging);
+        Page<Location> pagedResult;
+        if(show.equals("all")) {
+            pagedResult = pageLocationRepo.findAll(paging);
+        }
+        else{
+            pagedResult = pageLocationRepo.findByStatus(show,paging);
+        }
+        PageLocation pageLocation = new PageLocation();
         if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
+            pageLocation.setLocationList(pagedResult.getContent());
+            pageLocation.setPages(pagedResult.getTotalPages());
+            return pageLocation;
         } else {
-            return new ArrayList<Location>();
+            pageLocation.setLocationList(null);
+            pageLocation.setPages(0);
+            return pageLocation;
         }
     }
 

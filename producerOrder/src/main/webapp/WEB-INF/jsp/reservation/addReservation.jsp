@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/reservation/add-reservation" method="post">
+    <form action="/reservation/add" method="post">
         <h1>Add Reservation</h1>
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>

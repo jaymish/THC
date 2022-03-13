@@ -1,8 +1,15 @@
 package com.org.THC.service.impl;
 
+import com.org.THC.model.Location;
 import com.org.THC.model.OpenHours;
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageOpenHours;
 import com.org.THC.repo.OpenHoursRepo;
+import com.org.THC.repo.PageOpenHoursRepo;
 import com.org.THC.service.OpenHoursService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +19,12 @@ public class DefaultOpenHoursService implements OpenHoursService {
 
     private OpenHoursRepo openHoursRepo;
     private EmailServiceImpl emailService;
+    private PageOpenHoursRepo pageOpenHoursRepo;
 
-    public DefaultOpenHoursService(OpenHoursRepo openHoursRepo, EmailServiceImpl emailService){
+    public DefaultOpenHoursService(OpenHoursRepo openHoursRepo, EmailServiceImpl emailService,PageOpenHoursRepo pageOpenHoursRepo){
         this.openHoursRepo = openHoursRepo;
         this.emailService = emailService;
+        this.pageOpenHoursRepo=pageOpenHoursRepo;
     }
     @Override
     public boolean createOpenHours(OpenHours openHours) {
@@ -39,19 +48,35 @@ public class DefaultOpenHoursService implements OpenHoursService {
 
 
     @Override
-    public OpenHours cancelOpenHours(String id) {
-        //logic to check if cancel is possible
-        return openHoursRepo.openHoursCancel(id);
+    public OpenHours deactivateOpenHours(String id) {
+        //logic to check if deactivate is possible
+        return openHoursRepo.openHoursDeactivate(id);
     }
 
     @Override
-    public OpenHours activeOpenHours(String id) {
-        //logic to check if cancel is possible
-        return openHoursRepo.openHoursActive(id);
+    public OpenHours activateOpenHours(String id) {
+        //logic to check if deactivate is possible
+        return openHoursRepo.openHoursActivate(id);
     }
 
     @Override
     public OpenHours updateOpenHours(OpenHours openHours) {
         return openHoursRepo.updateOpenHours(openHours);
+    }
+
+    @Override
+    public PageOpenHours getAllpage(Integer pageNo, Integer pageSize, String sortBy, String locationId){
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<OpenHours> pagedResult = pageOpenHoursRepo.findByLocation_Id(locationId,paging);
+        PageOpenHours pageOpenHours = new PageOpenHours();
+        if(pagedResult.hasContent()) {
+            pageOpenHours.setOpenHoursList(pagedResult.getContent());
+            pageOpenHours.setPages(pagedResult.getTotalPages());
+            return pageOpenHours;
+        } else {
+            pageOpenHours.setOpenHoursList(null);
+            pageOpenHours.setPages(0);
+            return pageOpenHours;
+        }
     }
 }

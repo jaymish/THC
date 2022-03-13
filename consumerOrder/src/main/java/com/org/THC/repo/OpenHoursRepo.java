@@ -8,7 +8,7 @@ public interface OpenHoursRepo {
     List<OpenHours> getAllOpenHours(String locationid);
     OpenHours getOpenHoursById(String openHoursId);
     OpenHours saveOpenHours(OpenHours openHours);
-    OpenHours openHoursCancel(String id);
-    OpenHours openHoursActive(String id);
+    OpenHours openHoursDeactivate(String id);
+    OpenHours openHoursActivate(String id);
     OpenHours updateOpenHours(OpenHours openHours);
 }

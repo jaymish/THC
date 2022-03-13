@@ -1,15 +1,14 @@
 package com.org.THC.controller;
 
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
 import com.org.THC.service.ReservationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,12 +32,12 @@ public class ReservationController {
     }
 
 
-    @PostMapping(path = "/get-all")
+    @GetMapping(path = "/get-all")
     @ApiOperation(value = "Get All reservations")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Reservations Fetched for client")
     })
-    public List<Reservation> getReservations(@RequestBody String locationid){
+    public List<Reservation> getReservations(@RequestParam("locationid") String locationid){
         List<Reservation> reservationList=reservationService.getAllReservations(locationid);
         return reservationList;
     }
@@ -53,30 +52,35 @@ public class ReservationController {
     }
 
 
-    @PostMapping("/cancel")
-    @ApiOperation(value = "Cancel reservations by ID")
+    @PostMapping("/deactivate")
+    @ApiOperation(value = "Deactivate reservations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
     })
-    public ResponseEntity<Reservation> cancelReservation(@RequestBody String id){
-        return ResponseEntity.ok(reservationService.cancelReservation(id));
+    public ResponseEntity<Reservation> deactivateReservation(@RequestBody String id){
+        return ResponseEntity.ok(reservationService.deactivateReservation(id));
     }
 
-    @PostMapping("/active")
-    @ApiOperation(value = "Cancel reservations by ID")
+    @PostMapping("/activate")
+    @ApiOperation(value = "Deactivate reservations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
     })
-    public Reservation activeReservation(@RequestBody String id){
-        return reservationService.activeReservation(id);
+    public Reservation activateReservation(@RequestBody String id){
+        return reservationService.activateReservation(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel reservations by ID")
+    @ApiOperation(value = "Deactivate reservations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Canceled by Id for client")
+            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
     })
     public Reservation updateReservation(@RequestBody Reservation reservation){
         return reservationService.updateReservation(reservation);
+    }
+
+    @GetMapping("/page")
+    public PageReservation getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid){
+        return reservationService.getAllpage(pageNo, pageSize, sortBy,locationid);
     }
 }

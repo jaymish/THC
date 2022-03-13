@@ -40,7 +40,7 @@ public class ReservationRepoImpl implements ReservationRepo {
 
 
     @Override
-    public Reservation reservationCancel(String id) {
+    public Reservation reservationDeactivate(String id) {
         Reservation reservation = getReservationById(id);
         reservation.setStatus("InActive");
         entityManager.merge(reservation);
@@ -48,7 +48,7 @@ public class ReservationRepoImpl implements ReservationRepo {
     }
 
     @Override
-    public Reservation reservationActive(String id) {
+    public Reservation reservationActivate(String id) {
         Reservation reservation = getReservationById(id);
         reservation.setStatus("Active");
         entityManager.merge(reservation);

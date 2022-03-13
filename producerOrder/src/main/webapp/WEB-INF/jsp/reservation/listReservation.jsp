@@ -20,7 +20,7 @@
 <body>
 <div class="container-fluid">
     <h1>Reservation List</h1>
-    <form name="activate" action="/reservation/add-reservation" method="get">
+    <form name="activate" action="/reservation/add" method="get">
         <input type="hidden" name="location" id="location" value="${locationid}">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Reservation</button>
     </form>
@@ -60,7 +60,7 @@
                 <td><c:out value="${var.date}"/></td>
                 <td><fmt:formatNumber type = "number" maxIntegerDigits = "2" minIntegerDigits="2" value = "${var.time.hours}" />:<fmt:formatNumber type = "number" maxIntegerDigits = "2" minIntegerDigits="2" value = "${var.time.minutes}" /> <c:out value="${fn:toUpperCase(var.time.amPm)}"/></td>
                 <td>
-                    <form name="edit" action="/reservation/edit-reservation" method="post">
+                    <form name="edit" action="/reservation/edit" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
                             <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                         <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
@@ -70,7 +70,7 @@
                     <c:choose>
                         <c:when test="${var.status=='Active'}">
 
-                            <form name="delete" action="/reservation/deactivate-reservation-by-id" method="post">
+                            <form name="delete" action="/reservation/deactivate-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                                 <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
@@ -79,7 +79,7 @@
                         </c:when>
                         <c:otherwise>
 
-                            <form name="activate" action="/reservation/activate-reservation-by-id" method="post">
+                            <form name="activate" action="/reservation/activate-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
                                     <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
                                 <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>
@@ -93,6 +93,19 @@
         </tbody>
     </table>
     <!--% for%-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <c:choose><c:when test="${currentpage=='0'}">disabled</c:when></c:choose>">
+                <a class="page-link" href="/reservation/get-all?locationid=${locationid}&pageNo=${currentpage-1}&pageSize=5" >Previous</a>
+            </li>
+            <c:forEach begin="0" end="${pages}" varStatus="counter">
+                <li class="page-item <c:choose><c:when test="${currentpage==counter.index}">active</c:when></c:choose>"><a class="page-link" href="/reservation/get-all?locationid=${locationid}&pageNo=${counter.index}&pageSize=5" >${counter.count}<br></a></li>
+            </c:forEach>
+            <li class="page-item <c:choose><c:when test="${currentpage==pages}">disabled </c:when></c:choose>">
+                <a class="page-link" href="/reservation/get-all?locationid=${locationid}&pageNo=${currentpage+1}&pageSize=5" >Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <script>
     function myFunction() {

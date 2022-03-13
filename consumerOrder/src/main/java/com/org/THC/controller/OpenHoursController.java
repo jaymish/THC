@@ -1,15 +1,14 @@
 package com.org.THC.controller;
 
 import com.org.THC.model.OpenHours;
+import com.org.THC.model.PageLocation;
+import com.org.THC.model.PageOpenHours;
 import com.org.THC.service.OpenHoursService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,12 +32,12 @@ public class OpenHoursController {
     }
 
 
-    @PostMapping(path = "/get-all")
+    @GetMapping(path = "/get-all")
     @ApiOperation(value = "Get All openHours")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All OpenHours Fetched for client")
     })
-    public List<OpenHours> getOpenHours(@RequestBody String locationid){
+    public List<OpenHours> getOpenHours(@RequestParam("locationid") String locationid){
         List<OpenHours> openHoursList=openHoursService.getAllOpenHours(locationid);
         return openHoursList;
     }
@@ -53,30 +52,35 @@ public class OpenHoursController {
     }
 
 
-    @PostMapping("/cancel")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @PostMapping("/deactivate")
+    @ApiOperation(value = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id for client")
+            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
     })
-    public ResponseEntity<OpenHours> cancelOpenHours(@RequestBody String id){
-        return ResponseEntity.ok(openHoursService.cancelOpenHours(id));
+    public ResponseEntity<OpenHours> deactivateOpenHours(@RequestBody String id){
+        return ResponseEntity.ok(openHoursService.deactivateOpenHours(id));
     }
 
-    @PostMapping("/active")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @PostMapping("/activate")
+    @ApiOperation(value = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id for client")
+            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
     })
-    public OpenHours activeOpenHours(@RequestBody String id){
-        return openHoursService.activeOpenHours(id);
+    public OpenHours activateOpenHours(@RequestBody String id){
+        return openHoursService.activateOpenHours(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @ApiOperation(value = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Canceled by Id for client")
+            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
     })
     public OpenHours updateOpenHours(@RequestBody OpenHours openHours){
         return openHoursService.updateOpenHours(openHours);
+    }
+
+    @GetMapping("/page")
+    public PageOpenHours getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid){
+        return openHoursService.getAllpage(pageNo, pageSize, sortBy,locationid);
     }
 }

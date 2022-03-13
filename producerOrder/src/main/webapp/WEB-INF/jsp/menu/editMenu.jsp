@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/menu/update-menu" method="post">
+    <form action="/menu/update" method="post">
         <h1>Edit Menu</h1>
         <%--<c: var="var" items="${Menus}" varStatus="counter">--%>
         <input type="hidden" name="id" id="id" value="${Menus.id}">

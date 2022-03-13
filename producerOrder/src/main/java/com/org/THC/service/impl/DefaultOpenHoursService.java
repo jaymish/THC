@@ -2,6 +2,8 @@ package com.org.THC.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.THC.model.OpenHours;
+import com.org.THC.model.PageMenu;
+import com.org.THC.model.PageOpenHours;
 import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.OpenHoursService;
@@ -69,7 +71,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
 
     @Override
     public List<OpenHours> getAllOpenHours(String id) {
-        List<OpenHours> openHoursList= restTemplate.postForObject(url+"get-all",id, listOpenHours.getClass());
+        List<OpenHours> openHoursList= restTemplate.getForObject(url+"get-all?locationid="+id, listOpenHours.getClass());
 
         return openHoursList;
     }
@@ -130,5 +132,11 @@ public class DefaultOpenHoursService implements OpenHoursService {
         openHours.setStartTime(start);
         openHours.setEndTime(end);
         return restTemplate.postForObject(url+"update", openHours, OpenHours.class);
+    }
+
+    @Override
+    public PageOpenHours getAllpage(Integer pageNo, Integer pageSize, String locationId) {
+        PageOpenHours pageOpenHours=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageOpenHours.class);
+        return pageOpenHours;
     }
 }

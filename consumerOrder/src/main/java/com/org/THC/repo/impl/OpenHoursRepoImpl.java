@@ -40,7 +40,7 @@ public class OpenHoursRepoImpl implements OpenHoursRepo {
 
 
     @Override
-    public OpenHours openHoursCancel(String id) {
+    public OpenHours openHoursDeactivate(String id) {
         OpenHours openHours = getOpenHoursById(id);
         openHours.setStatus("InActive");
         entityManager.merge(openHours);
@@ -48,7 +48,7 @@ public class OpenHoursRepoImpl implements OpenHoursRepo {
     }
 
     @Override
-    public OpenHours openHoursActive(String id) {
+    public OpenHours openHoursActivate(String id) {
         OpenHours openHours = getOpenHoursById(id);
         openHours.setStatus("Active");
         entityManager.merge(openHours);

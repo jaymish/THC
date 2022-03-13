@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container-fluid">
-<form action="/location/update-location" method="post">
+<form action="/location/update" method="post">
     <h1>Edit Location</h1>
 <%--<c: var="var" items="${Locations}" varStatus="counter">--%>
     <input type="hidden" name="id" id="id" value="${Locations.id}">

@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="/menu/add-menu" method="post">
+    <form action="/menu/add" method="post">
         <h1>Add Menu</h1>
         <div class="mb-3">
             <label for="itemName" class="form-label">Name</label>

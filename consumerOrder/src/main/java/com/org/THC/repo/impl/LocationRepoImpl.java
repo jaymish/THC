@@ -45,7 +45,7 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
-    public Location locationCancel(String id) {
+    public Location locationDeactivate(String id) {
         Location location = getLocationById(id);
         location.setStatus("InActive");
         entityManager.merge(location);
@@ -53,7 +53,7 @@ public class LocationRepoImpl implements LocationRepo {
     }
 
     @Override
-    public Location locationActive(String id) {
+    public Location locationActivate(String id) {
         Location location = getLocationById(id);
         location.setStatus("Active");
         entityManager.merge(location);

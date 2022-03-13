@@ -18,7 +18,7 @@
 <body>
 <div class="container-fluid">
     <h1>Menu List</h1>
-    <form name="activate" action="/menu/add-menu" method="get">
+    <form name="activate" action="/menu/add" method="get">
         <input type="hidden" name="location" id="location" value="${locationid}">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Menu</button>
     </form>
@@ -52,7 +52,7 @@
                 <td><c:out value="${var.description}"/></td>
                 <td><c:out value="${var.price}"/></td>
                 <td>
-                    <form name="edit" action="/menu/edit-menu" method="post">
+                    <form name="edit" action="/menu/edit" method="post">
                         <input type="hidden" name="id" id="id" value="${var.id}">
                             <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                         <button id="deactivate" name="deactivate" type="submit" class="btn btn-warning" style="width: 100%">Edit</button>
@@ -62,8 +62,9 @@
                     <c:choose>
                         <c:when test="${var.status=='Active'}">
 
-                            <form name="delete" action="/menu/deactivate-menu-by-id" method="post">
+                            <form name="delete" action="/menu/deactivate-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
+                                <input type="hidden" name="show" id="show" value="${show}">
                                     <%--                    <input id="delete" type="submit" name="delete" value="Deactivate" />--%>
                                 <button id="deactivate" name="deactivate" type="submit" class="btn btn-danger" style="width: 100%">DeActivate</button>
                             </form>
@@ -71,8 +72,9 @@
                         </c:when>
                         <c:otherwise>
 
-                            <form name="activate" action="/menu/activate-menu-by-id" method="post">
+                            <form name="activate" action="/menu/activate-by-id" method="post">
                                 <input type="hidden" name="id" id="id" value="${var.id}">
+                                <input type="hidden" name="show" id="show" value="${show}">
                                     <%--                        <input id="activate" type="submit" name="activate" value="Activate" />--%>
                                 <button id="activate" name="activate" type="submit" class="btn btn-success" style="width: 100%" >Activate</button>
                             </form>
@@ -85,6 +87,26 @@
         </tbody>
     </table>
     <!--% for%-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item <c:choose><c:when test="${show=='all'}">active</c:when></c:choose>"><a class="page-link" href="/menu/get-all?pageNo=0&pageSize=5&show=all&locationid=${locationid}">Show All</a></li>
+            <li class="page-item <c:choose><c:when test="${show=='Active'}">active</c:when></c:choose>"><a class="page-link" href="/menu/get-all?pageNo=0&pageSize=5&show=Active&locationid=${locationid}">Show Active</a></li>
+            <li class="page-item <c:choose><c:when test="${show=='InActive'}">active</c:when></c:choose>"><a class="page-link" href="/menu/get-all?pageNo=0&pageSize=5&show=InActive&locationid=${locationid}">Show Inactive</a></li>
+        </ul>
+    </nav>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <c:choose><c:when test="${currentpage=='0'}">disabled</c:when></c:choose>">
+                <a class="page-link" href="/menu/get-all?locationid=${locationid}&pageNo=${currentpage-1}&pageSize=5&show=${show}" >Previous</a>
+            </li>
+            <c:forEach begin="0" end="${pages}" varStatus="counter">
+                <li class="page-item <c:choose><c:when test="${currentpage==counter.index}">active</c:when></c:choose>"><a class="page-link" href="/menu/get-all?locationid=${locationid}&pageNo=${counter.index}&pageSize=5&show=${show}" >${counter.count}<br></a></li>
+            </c:forEach>
+            <li class="page-item <c:choose><c:when test="${currentpage==pages}">disabled </c:when></c:choose>">
+                <a class="page-link" href="/menu/get-all?locationid=${locationid}&pageNo=${currentpage+1}&pageSize=5&show=${show}" >Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <script>
     function myFunction() {

@@ -40,7 +40,7 @@ public class MenuRepoImpl implements MenuRepo {
 
 
     @Override
-    public Menu menuCancel(String id) {
+    public Menu menuDeactivate(String id) {
         Menu menu = getMenuById(id);
         menu.setStatus("InActive");
         entityManager.merge(menu);
@@ -48,7 +48,7 @@ public class MenuRepoImpl implements MenuRepo {
     }
 
     @Override
-    public Menu menuActive(String id) {
+    public Menu menuActivate(String id) {
         Menu menu = getMenuById(id);
         menu.setStatus("Active");
         entityManager.merge(menu);

@@ -8,7 +8,7 @@ public interface ReservationRepo {
     List<Reservation> getAllReservations(String locationid);
     Reservation getReservationById(String reservationId);
     Reservation saveReservation(Reservation reservation);
-    Reservation reservationCancel(String id);
-    Reservation reservationActive(String id);
+    Reservation reservationDeactivate(String id);
+    Reservation reservationActivate(String id);
     Reservation updateReservation(Reservation reservation);
 }

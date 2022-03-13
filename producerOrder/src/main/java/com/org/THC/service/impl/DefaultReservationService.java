@@ -1,6 +1,8 @@
 package com.org.THC.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.org.THC.model.PageOpenHours;
+import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
 import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
@@ -59,7 +61,7 @@ public class DefaultReservationService implements ReservationService {
 
     @Override
     public List<Reservation> getAllReservations(String id) {
-        List<Reservation> reservationsList= restTemplate.postForObject(url+"get-all",id, reservationList.getClass());
+        List<Reservation> reservationsList= restTemplate.getForObject(url+"get-all?locationid="+id, reservationList.getClass());
 
         return reservationsList;
     }
@@ -111,5 +113,11 @@ public class DefaultReservationService implements ReservationService {
         reservation.setNoOfPeople(noOfPeople);
         reservation.setStatus(status);
         return restTemplate.postForObject(url+"update", reservation, Reservation.class);
+    }
+
+    @Override
+    public PageReservation getAllpage(Integer pageNo, Integer pageSize, String locationId) {
+        PageReservation pageReservation=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageReservation.class);
+        return pageReservation;
     }
 }

@@ -4,6 +4,7 @@ package com.org.THC.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.THC.model.Location;
+import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,5 +78,11 @@ public class DefaultLocationService implements LocationService {
         location.setStatus(status);
         location.setZip(zip);
         return restTemplate.postForObject(url+"update", location, Location.class);
+    }
+
+    @Override
+    public PageLocation getAllpage(Integer pageNo, Integer pageSize,String show) {
+        PageLocation pageLocation=restTemplate.getForObject(url+"page?pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageLocation.class);
+        return pageLocation;
     }
 }

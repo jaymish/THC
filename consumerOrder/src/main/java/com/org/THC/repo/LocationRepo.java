@@ -10,7 +10,7 @@ public interface LocationRepo {
     Location getLocationById(String locationId);
     Location saveLocation(Location location);
     List<Location> getLocationByZip(int zip);
-    Location locationCancel(String id);
-    Location locationActive(String id);
+    Location locationDeactivate(String id);
+    Location locationActivate(String id);
     Location updateLocation(Location location);
 }
