@@ -48,7 +48,7 @@ public class DefaultLocationService implements LocationService {
 
     @Override
     public Location getLocationsById(String id) {
-        return restTemplate.postForObject(url+"get-by-id", id, Location.class);
+        return restTemplate.postForObject(url+"get-by-d", id, Location.class);
     }
 
     @Override

@@ -13,6 +13,12 @@
 <body>
 <div class="container-fluid">
     <h1>Location List</h1>
+    <c:choose><c:when test="${message!=''}">
+        <div class="alert alert-danger hide-child" role="alert">
+                ${message}
+        </div>
+    </c:when></c:choose>
+
     <form name="activate" action="/location/add" method="get">
         <button id="Add" type="submit" class="btn btn-primary" style="width: 20%" >Add Location</button>
     </form>

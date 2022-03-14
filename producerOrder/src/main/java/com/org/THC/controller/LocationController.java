@@ -53,7 +53,7 @@ public class LocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All Locations Fetched")
     })
-    public String getAll(@RequestParam(defaultValue = "all") String show,@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,ModelMap modelMap){
+    public String getAll(@RequestParam(defaultValue = "all") String show,@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam(defaultValue = "") String message,ModelMap modelMap){
         //List<Location> locationList = locationService.getAllLocations();
         PageLocation pageLocation=locationService.getAllpage(pageNo,pageSize,show);
         modelMap.put("Locations",pageLocation.getLocationList());
@@ -65,6 +65,7 @@ public class LocationController {
         }
         modelMap.put("currentpage",pageNo);
         modelMap.put("show",show);
+        modelMap.put("message",message);
         return "location/listLocation";
     }
 
