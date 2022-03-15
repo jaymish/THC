@@ -24,9 +24,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //    public static void main(String a[]) {
 //        BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
 //        String pwd = bcryptPasswordEncoder.encode("password");
-//        System.out.println("pass");
-//        System.out.println(pwd);
-//        System.out.println("pass");
 //    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {  // (2)
@@ -41,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() // (4)
                 .and()
                 .formLogin() // (5)
+                .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/location/get-all")
                 .and()

@@ -1,22 +1,28 @@
 package com.org.THC.service;
 
 import com.org.THC.model.User;
-import com.org.THC.repo.UserRepository;
+import com.org.THC.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+
     @Autowired
-    private UserRepository repository;
+    private RestTemplate restTemplate;
+    String url="http://localhost:8081/";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = repository.findByUsername(username);
+        Users users=restTemplate.postForObject(url+"login", username, Users.class);
+        User user = new User();
+        user.setId(users.getId());
+        user.setUsername(users.getUsername());
+        user.setPassword(users.getPassword());
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -26,12 +32,13 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
     public String saveUser(String name,String password){
-        User user=new User();
+        Users user=new Users();
         BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
         String pwd = bcryptPasswordEncoder.encode(password);
         user.setUsername(name);
         user.setPassword(pwd);
-        repository.save(user);
-        return "";
+        String result=restTemplate.postForObject(url+"saveUser", user, String.class);
+        //repository.save(user);
+        return result;
     }
 }

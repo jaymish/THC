@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,10 @@ public class DefaultController implements ErrorController {
         return "index";
     }
 
+    @GetMapping(path = "/login")
+    public String loginPage(){
+        return "login";
+    }
 
     @RequestMapping(path = "/error")
     public String thcError(ModelMap modelMap) {

@@ -13,22 +13,37 @@
 </head>
 <body>
 <div class="container-fluid">
-    <%@include file="header.html" %>
-    <form action="/register" method="post">
-        <h1>Add Location</h1>
-        <div class="mb-3">
-            <label for="name" class="form-label">User Name</label>
-            <input type="text" class="form-control" id="name" name="name" >
+    <br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary" type="button" onclick="location.href='/';">Home</button>
+    </div>
+    <form action="/register" method="post" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-12">
+            <label for="validationCustomUsername" class="form-label">Username</label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required name="name">
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" >
+        <div class="col-md-12">
+            <label for="validationCustom04" class="form-label">Password</label>
+            <input type="password" class="form-control" id="validationCustom04" required name="password">
+            <div class="invalid-feedback">
+                Please provide a valid password.
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="confirm_password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" >
+        <div class="col-md-12">
+            <label for="validationCustom05" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="validationCustom05" required>
+            <div class="invalid-feedback">
+                Please provide a valid password.
+            </div>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 15%">Register</button>
+        <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login" class="fw-bold text-body"><u>Login here</u></a></p>
     </form>
 </div>
 </body>

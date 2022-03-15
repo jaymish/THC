@@ -1,4 +1,4 @@
-package com.org.THC.exception;
+/*package com.org.THC.exception;
 
 import com.org.THC.model.ErrorExceptionMessage;
 import lombok.Data;
@@ -26,6 +26,6 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         System.out.println(errorExceptionMessageResponseEntity);
         return "redirect:/error";
     }
-}
+}*/
 
 
