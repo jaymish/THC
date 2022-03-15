@@ -31,6 +31,13 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     runtimeOnly 'org.postgresql:postgresql'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.4'
+
+
+
+
+
 }
 
 tasks.named('test') {

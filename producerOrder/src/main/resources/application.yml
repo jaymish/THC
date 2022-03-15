@@ -13,7 +13,7 @@ spring:
     password: ${SPRING_DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
   profiles:
     activate: local
   application:
@@ -29,16 +29,14 @@ spring:
           auth: true
           starttls:
             enable: true
-
+security:
+  enable-csrf: false
 
 server:
   port: 8080
-
-logging:
-  level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: error
-        internal:
-          InstanceMetadataServiceResourceFetcher: error
+bezkoder:
+  app:
+    jwtSecret:
+      bezKoderSecretKey
+    jwtExpirationMs:
+      86400000
