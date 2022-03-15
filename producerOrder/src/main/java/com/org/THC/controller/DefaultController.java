@@ -40,7 +40,6 @@ public class DefaultController implements ErrorController {
 
     @PostMapping(path = "/register")
     public String addUser(@ModelAttribute("name") String name,@ModelAttribute("password") String password,ModelMap modelMap){
-        System.out.println(name+password);
         userDetailsService.saveUser(name,password);
         modelMap.put("message", "");
         return "index";

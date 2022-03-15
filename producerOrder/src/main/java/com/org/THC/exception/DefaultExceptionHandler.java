@@ -23,7 +23,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorExceptionMessage errorMessage=new ErrorExceptionMessage(exception.getMessage());
         ResponseEntity<ErrorExceptionMessage> errorExceptionMessageResponseEntity= new ResponseEntity<ErrorExceptionMessage>(errorMessage,new HttpHeaders(),HttpStatus.INTERNAL_SERVER_ERROR);
         //log errorExceptionMessageResponseEntity and return user to default page
-        System.out.println(errorExceptionMessageResponseEntity);
+
         return "redirect:/error";
     }
 }*/
