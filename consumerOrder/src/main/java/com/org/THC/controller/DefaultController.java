@@ -24,7 +24,7 @@ public class DefaultController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Saved on DB")
     })
-    public Users createLocations(@RequestBody String username){
+    public Users login(@RequestBody String username){
         Users user =userDetailsService.loadUserByUsername(username);
         return user;
         //return "true";
@@ -35,7 +35,7 @@ public class DefaultController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Location Saved on DB")
     })
-    public String login(@RequestBody Users user){
+    public String createUser(@RequestBody Users user){
 
         return userDetailsService.saveUser(user);
         //return "true";

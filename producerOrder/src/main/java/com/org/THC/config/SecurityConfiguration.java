@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/menu/**").authenticated()
                 .antMatchers("/open-hours/**").authenticated()
                 .antMatchers("/reservation/**").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .antMatchers("/**").permitAll() // (3)
                 .anyRequest().authenticated() // (4)
                 .and()
