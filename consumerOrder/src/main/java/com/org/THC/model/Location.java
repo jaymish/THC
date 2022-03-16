@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class Location {
+public class    Location {
 
     @Id
     private String id;
