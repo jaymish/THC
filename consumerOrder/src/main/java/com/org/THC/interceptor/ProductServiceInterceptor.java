@@ -44,7 +44,13 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
         long startTime = (Long)request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
-        String nameOfAPI=handler.toString().split("#")[1].split("\\(")[0];
+        String nameOfAPI;
+//        if(handler.toString().contains("#")) {
+//            nameOfAPI = handler.toString().split("#")[1].split("\\(")[0];
+//        }
+//        else{
+        nameOfAPI = handler.toString();
+
         APIExecutionTime apiExecutionTime=new APIExecutionTime();
         APIName apiName=new APIName();
         apiName.setName(nameOfAPI);

@@ -1,7 +1,7 @@
 package com.org.THC.config;
 
 
-import com.org.THC.model.Order;
+import com.org.THC.model.Orders;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,8 +78,8 @@ public class KafkaConsumerConfiguration {
 
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory <String, Order> jsonKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Order> factory =new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory <String, Orders> jsonKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Orders> factory =new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactoryJson());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         factory.getContainerProperties().setSyncCommits(true);
@@ -106,7 +106,7 @@ public class KafkaConsumerConfiguration {
 
         return new DefaultKafkaConsumerFactory(props,
                 new StringDeserializer(),
-                new JsonDeserializer<>(Order.class));
+                new JsonDeserializer<>(Orders.class));
     }
 
     @Bean

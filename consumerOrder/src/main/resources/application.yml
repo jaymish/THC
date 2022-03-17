@@ -25,18 +25,6 @@ spring:
           starttls:
             enable: true
   kafka:
-    producer:
-      bootstrap-servers: ${bootstrap_servers}
-      client-id: NotifierClient
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      acks: all
-      retries: 5
-      batch-size: 16384
-      buffer-memory: 335544432
-      linger-ms: 1
-      enable-Idempoyence: true
-      transactionalId: NotificationTransId
     consumer:
       bootstrap-servers: ${bootstrap_servers}
       client-id: NotifierClient
