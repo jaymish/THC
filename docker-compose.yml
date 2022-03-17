@@ -1,0 +1,117 @@
+version: '3.2'
+
+services:
+  zoo:
+    # build from Dockerfile
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    restart: unless-stopped
+    ports:
+      - "2182:2182"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: server.1=zoo:2888:3888
+      TZ: America/Los_Angeles
+    volumes:
+      - ./bootcamp/zoo/data:/data
+      - ./bootcamp/zoo/datalog:/datalog
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:29092,INTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL_SAME_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo:2182"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      TZ: America/Los_Angeles
+    volumes:
+      - ./bootcamp/kafka/data:/lib/kafka/data
+    depends_on:
+      - zoo
+
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: THCdb
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=thc
+      - TZ=America/Los_Angeles
+
+  clientthc:
+    # build from Dockerfile
+    container_name: clientTHC
+    image: clientthc
+    build: ./ClientTHC/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - serverthc
+    environment:
+      - SPRING_DATABASE_URL=jdbc:postgresql://db:5432/thc
+      - SPRING_DATABASE_USERNAME=postgres
+      - SPRING_DATABASE_PASSWORD=123456
+      - GMAIL_USER=jaymishptl@gmail.com
+      - GMAIL_PASSWORD=dubxclrrxluaiimd
+      - URL_TO_CONSUMER=http://serverthc:8081/
+      - TZ=America/Los_Angeles
+
+  serverthc:
+    # build from Dockerfile
+    container_name: serverTHC
+    image: serverthc
+    build: ./ServerTHC/
+    ports:
+      - "8081:808"
+    depends_on:
+      - db
+      - kafka
+    environment:
+      - SPRING_DATABASE_URL=jdbc:postgresql://db:5432/thc
+      - SPRING_DATABASE_USERNAME=postgres
+      - SPRING_DATABASE_PASSWORD=123456
+      - GMAIL_USER=jaymishptl@gmail.com
+      - GMAIL_PASSWORD=dubxclrrxluaiimd
+      - bootstrap_servers=kafka:9092
+      - KAFKA_JSON_GROUPID=orderjsongroup
+      - KAFKA_JSON_NAME=order-json
+      - TZ=America/Los_Angeles
+
+
+  clientorderkafka:
+    # build from Dockerfile
+    container_name: clientOrderKafka
+    image: clientorderkafka
+    build: ./ClientOrderKafka/
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+      - kafka
+      - serverthc
+    environment:
+      - SPRING_DATABASE_URL=jdbc:postgresql://db:5432/thc
+      - SPRING_DATABASE_USERNAME=postgres
+      - SPRING_DATABASE_PASSWORD=123456
+      - GMAIL_USER=jaymishptl@gmail.com
+      - GMAIL_PASSWORD=dubxclrrxluaiimd
+      - bootstrap_servers=kafka:9092
+      - KAFKA_JSON_GROUPID=orderjsongroup
+      - KAFKA_JSON_NAME=order-json
+      - TZ=America/Los_Angeles
+  
