@@ -8,6 +8,7 @@ import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +21,10 @@ public class DefaultReservationService implements ReservationService {
     private ObjectMapper objectMapper;
     private List<Reservation> reservationList;
     private LocationService locationService;
-    String url="http://localhost:8081/reservation/";
+    @Value("${url.to.serverthc}")
+    private String serverURL;
+
+    String url="reservation/";
 
     @Autowired
     public DefaultReservationService(RestTemplate restTemplate, ObjectMapper objectMapper, List<Reservation> reservationList,LocationService locationService){
@@ -55,35 +59,35 @@ public class DefaultReservationService implements ReservationService {
         reservation.setEmailId(emailId);
         reservation.setNoOfPeople(noOfPeople);
         reservation.setLocation(locationService.getLocationsById(locationId));
-        return restTemplate.postForObject(url+"create", reservation, boolean.class);
+        return restTemplate.postForObject(serverURL+url+"create", reservation, boolean.class);
 
     }
 
     @Override
     public List<Reservation> getAllReservations(String id) {
-        List<Reservation> reservationsList= restTemplate.getForObject(url+"get-all?locationid="+id, reservationList.getClass());
+        List<Reservation> reservationsList= restTemplate.getForObject(serverURL+url+"get-all?locationid="+id, reservationList.getClass());
 
         return reservationsList;
     }
 
     @Override
     public Reservation getReservationsById(String id) {
-        return restTemplate.postForObject(url+"get-by-id", id, Reservation.class);
+        return restTemplate.postForObject(serverURL+url+"get-by-id", id, Reservation.class);
     }
 
     @Override
     public List<Reservation> getReservationsByZip(int zip) {
-        return restTemplate.postForObject(url+"getByzip", zip, reservationList.getClass());
+        return restTemplate.postForObject(serverURL+url+"getByzip", zip, reservationList.getClass());
     }
 
     @Override
     public Reservation deactivateReservation(String id) {
-        return restTemplate.postForObject(url+"deactivate", id, Reservation.class);
+        return restTemplate.postForObject(serverURL+url+"deactivate", id, Reservation.class);
     }
 
     @Override
     public Reservation activateReservation(String id) {
-        return restTemplate.postForObject(url+"activate", id, Reservation.class);
+        return restTemplate.postForObject(serverURL+url+"activate", id, Reservation.class);
     }
 
     @Override
@@ -112,12 +116,12 @@ public class DefaultReservationService implements ReservationService {
         reservation.setEmailId(emailId);
         reservation.setNoOfPeople(noOfPeople);
         reservation.setStatus(status);
-        return restTemplate.postForObject(url+"update", reservation, Reservation.class);
+        return restTemplate.postForObject(serverURL+url+"update", reservation, Reservation.class);
     }
 
     @Override
     public PageReservation getAllpage(Integer pageNo, Integer pageSize, String locationId) {
-        PageReservation pageReservation=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageReservation.class);
+        PageReservation pageReservation=restTemplate.getForObject(serverURL+url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageReservation.class);
         return pageReservation;
     }
 }

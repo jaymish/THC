@@ -3,6 +3,7 @@ package com.org.THC.service;
 import com.org.THC.model.User;
 import com.org.THC.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +15,14 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Autowired
     private RestTemplate restTemplate;
-    String url="http://localhost:8081/home/";
+    @Value("${url.to.serverthc}")
+    private String serverURL;
+
+    String url="home/";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users users=restTemplate.postForObject(url+"login", username, Users.class);
+        Users users=restTemplate.postForObject(serverURL+url+"login", username, Users.class);
         User user = new User();
         user.setId(users.getId());
         user.setUsername(users.getUsername());
@@ -37,7 +41,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         String pwd = bcryptPasswordEncoder.encode(password);
         user.setUsername(name);
         user.setPassword(pwd);
-        String result=restTemplate.postForObject(url+"saveUser", user, String.class);
+        String result=restTemplate.postForObject(serverURL+url+"saveUser", user, String.class);
         //repository.save(user);
         return result;
     }

@@ -7,6 +7,7 @@ import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +19,10 @@ public class DefaultLocationService implements LocationService {
     private RestTemplate restTemplate;
     private ObjectMapper objectMapper;
     private List<Location> locationList;
-    String url="http://localhost:8081/location/";
+    @Value("${url.to.serverthc}")
+    private String serverURL;
+
+    String url="location/";
 
     @Autowired
     public DefaultLocationService(RestTemplate restTemplate, ObjectMapper objectMapper, List<Location> locationList){
@@ -36,34 +40,34 @@ public class DefaultLocationService implements LocationService {
         location.setCity(city);
         location.setState(state);
         location.setZip(zip);
-        return restTemplate.postForObject(url+"create", location, boolean.class);
+        return restTemplate.postForObject(serverURL+url+"create", location, boolean.class);
 
     }
 
     @Override
     public List<Location> getAllLocations() {
         //List<Locations> locationsList= (List<Locations>) locationRepository.findAll();
-        return restTemplate.getForObject(url+"get-all", locationList.getClass());
+        return restTemplate.getForObject(serverURL+url+"get-all", locationList.getClass());
     }
 
     @Override
     public Location getLocationsById(String id) {
-        return restTemplate.postForObject(url+"get-by-d", id, Location.class);
+        return restTemplate.postForObject(serverURL+url+"get-by-d", id, Location.class);
     }
 
     @Override
     public List<Location> getLocationsByZip(int zip) {
-        return restTemplate.postForObject(url+"getByzip", zip, locationList.getClass());
+        return restTemplate.postForObject(serverURL+url+"getByzip", zip, locationList.getClass());
     }
 
     @Override
     public Location deactivateLocation(String id) {
-        return restTemplate.postForObject(url+"deactivate", id, Location.class);
+        return restTemplate.postForObject(serverURL+url+"deactivate", id, Location.class);
     }
 
     @Override
     public Location activateLocation(String id) {
-        return restTemplate.postForObject(url+"activate", id, Location.class);
+        return restTemplate.postForObject(serverURL+url+"activate", id, Location.class);
     }
 
     @Override
@@ -77,12 +81,12 @@ public class DefaultLocationService implements LocationService {
         location.setState(state);
         location.setStatus(status);
         location.setZip(zip);
-        return restTemplate.postForObject(url+"update", location, Location.class);
+        return restTemplate.postForObject(serverURL+url+"update", location, Location.class);
     }
 
     @Override
     public PageLocation getAllpage(Integer pageNo, Integer pageSize,String show) {
-        PageLocation pageLocation=restTemplate.getForObject(url+"page?pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageLocation.class);
+        PageLocation pageLocation=restTemplate.getForObject(serverURL+url+"page?pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageLocation.class);
         return pageLocation;
     }
 }

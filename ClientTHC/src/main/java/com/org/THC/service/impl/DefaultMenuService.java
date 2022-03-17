@@ -7,6 +7,7 @@ import com.org.THC.model.PageMenu;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +19,10 @@ public class DefaultMenuService implements MenuService {
     private ObjectMapper objectMapper;
     private List<Menu> menuList;
     private LocationService locationService;
-    String url="http://localhost:8081/menu/";
+    @Value("${url.to.serverthc}")
+    private String serverURL;
+
+    String url="menu/";
 
     @Autowired
     public DefaultMenuService(RestTemplate restTemplate, ObjectMapper objectMapper, List<Menu> menuList,LocationService locationService){
@@ -35,35 +39,35 @@ public class DefaultMenuService implements MenuService {
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setLocation(locationService.getLocationsById(locationId));
-        return restTemplate.postForObject(url+"create", menu, boolean.class);
+        return restTemplate.postForObject(serverURL+url+"create", menu, boolean.class);
 
     }
 
     @Override
     public List<Menu> getAllMenus(String id) {
-        List<Menu> menusList= restTemplate.getForObject(url+"get-all?locationid="+id, menuList.getClass());
+        List<Menu> menusList= restTemplate.getForObject(serverURL+url+"get-all?locationid="+id, menuList.getClass());
 
         return menusList;
     }
 
     @Override
     public Menu getMenusById(String id) {
-        return restTemplate.postForObject(url+"get-by-id", id, Menu.class);
+        return restTemplate.postForObject(serverURL+url+"get-by-id", id, Menu.class);
     }
 
     @Override
     public List<Menu> getMenusByZip(int zip) {
-        return restTemplate.postForObject(url+"getByzip", zip, menuList.getClass());
+        return restTemplate.postForObject(serverURL+url+"getByzip", zip, menuList.getClass());
     }
 
     @Override
     public Menu deactivateMenu(String id) {
-        return restTemplate.postForObject(url+"deactivate", id, Menu.class);
+        return restTemplate.postForObject(serverURL+url+"deactivate", id, Menu.class);
     }
 
     @Override
     public Menu activateMenu(String id) {
-        return restTemplate.postForObject(url+"activate", id, Menu.class);
+        return restTemplate.postForObject(serverURL+url+"activate", id, Menu.class);
     }
 
     @Override
@@ -74,12 +78,12 @@ public class DefaultMenuService implements MenuService {
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setStatus(status);
-        return restTemplate.postForObject(url+"update", menu, Menu.class);
+        return restTemplate.postForObject(serverURL+url+"update", menu, Menu.class);
     }
 
     @Override
     public PageMenu getAllpage(Integer pageNo, Integer pageSize, String locationId,String show) {
-        PageMenu pageMenu=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageMenu.class);
+        PageMenu pageMenu=restTemplate.getForObject(serverURL+url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&show="+show,PageMenu.class);
         return pageMenu;
     }
 }

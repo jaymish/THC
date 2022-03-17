@@ -40,3 +40,7 @@ bezkoder:
       bezKoderSecretKey
     jwtExpirationMs:
       86400000
+
+url:
+  to:
+    serverthc: ${URL_TO_CONSUMER}

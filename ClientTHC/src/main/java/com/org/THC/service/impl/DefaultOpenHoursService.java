@@ -8,6 +8,7 @@ import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.OpenHoursService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +21,10 @@ public class DefaultOpenHoursService implements OpenHoursService {
     private ObjectMapper objectMapper;
     private List<OpenHours> listOpenHours;
     private LocationService locationService;
-    String url="http://localhost:8081/open-hours/";
+    @Value("${url.to.serverthc}")
+    private String serverURL;
+
+    String url="open-hours/";
 
     @Autowired
     public DefaultOpenHoursService(RestTemplate restTemplate, ObjectMapper objectMapper, List<OpenHours> listOpenHours,LocationService locationService){
@@ -65,35 +69,35 @@ public class DefaultOpenHoursService implements OpenHoursService {
         openHours.setStartTime(start);
         openHours.setEndTime(end);
         openHours.setLocation(locationService.getLocationsById(locationId));
-        return restTemplate.postForObject(url+"create", openHours, boolean.class);
+        return restTemplate.postForObject(serverURL+url+"create", openHours, boolean.class);
 
     }
 
     @Override
     public List<OpenHours> getAllOpenHours(String id) {
-        List<OpenHours> openHoursList= restTemplate.getForObject(url+"get-all?locationid="+id, listOpenHours.getClass());
+        List<OpenHours> openHoursList= restTemplate.getForObject(serverURL+url+"get-all?locationid="+id, listOpenHours.getClass());
 
         return openHoursList;
     }
 
     @Override
     public OpenHours getOpenHoursById(String id) {
-        return restTemplate.postForObject(url+"get-by-id", id, OpenHours.class);
+        return restTemplate.postForObject(serverURL+url+"get-by-id", id, OpenHours.class);
     }
 
     @Override
     public List<OpenHours> getOpenHoursByZip(int zip) {
-        return restTemplate.postForObject(url+"getByzip", zip, listOpenHours.getClass());
+        return restTemplate.postForObject(serverURL+url+"getByzip", zip, listOpenHours.getClass());
     }
 
     @Override
     public OpenHours deactivateOpenHours(String id) {
-        return restTemplate.postForObject(url+"deactivate", id, OpenHours.class);
+        return restTemplate.postForObject(serverURL+url+"deactivate", id, OpenHours.class);
     }
 
     @Override
     public OpenHours activateOpenHours(String id) {
-        return restTemplate.postForObject(url+"activate", id, OpenHours.class);
+        return restTemplate.postForObject(serverURL+url+"activate", id, OpenHours.class);
     }
 
     @Override
@@ -131,12 +135,12 @@ public class DefaultOpenHoursService implements OpenHoursService {
         }
         openHours.setStartTime(start);
         openHours.setEndTime(end);
-        return restTemplate.postForObject(url+"update", openHours, OpenHours.class);
+        return restTemplate.postForObject(serverURL+url+"update", openHours, OpenHours.class);
     }
 
     @Override
     public PageOpenHours getAllpage(Integer pageNo, Integer pageSize, String locationId) {
-        PageOpenHours pageOpenHours=restTemplate.getForObject(url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageOpenHours.class);
+        PageOpenHours pageOpenHours=restTemplate.getForObject(serverURL+url+"page?locationid="+locationId+"&pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id",PageOpenHours.class);
         return pageOpenHours;
     }
 }
