@@ -45,12 +45,12 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
         String nameOfAPI;
-//        if(handler.toString().contains("#")) {
-//            nameOfAPI = handler.toString().split("#")[1].split("\\(")[0];
-//        }
-//        else{
-        nameOfAPI = handler.toString();
-
+        if(handler.toString().contains("#")) {
+            nameOfAPI = handler.toString().split("#")[1].split("\\(")[0];
+        }
+        else {
+            nameOfAPI = handler.toString();
+        }
         APIExecutionTime apiExecutionTime=new APIExecutionTime();
         APIName apiName=new APIName();
         apiName.setName(nameOfAPI);
@@ -60,6 +60,7 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
         else {
             apiExecutionTime.setApiName(apiName);
         }
+        System.out.println(nameOfAPI);
         Date date=Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         apiExecutionTime.setExecutionTime(executeTime);

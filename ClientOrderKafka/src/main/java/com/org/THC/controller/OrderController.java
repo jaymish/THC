@@ -4,6 +4,7 @@ package com.org.THC.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.THC.model.Orders;
 import com.org.THC.repo.OrderRepository;
+import com.org.THC.service.AutoKafkaService;
 import com.org.THC.service.KafkaProducerService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -17,13 +18,15 @@ public class OrderController {
 
     private KafkaProducerService kafkaProducerService;
     private OrderRepository orderRepository;
+    private AutoKafkaService autoKafkaService;
 
 
 
     @Autowired
-    public OrderController(KafkaProducerService kafkaProducerService,OrderRepository orderRepository){
+    public OrderController(AutoKafkaService autoKafkaService,KafkaProducerService kafkaProducerService,OrderRepository orderRepository){
         this.kafkaProducerService = kafkaProducerService;
         this.orderRepository=orderRepository;
+        this.autoKafkaService=autoKafkaService;
     }
 
 
@@ -40,6 +43,12 @@ public class OrderController {
         return true;
     }
 
+
+    @GetMapping("/send")
+    public boolean send(){
+        autoKafkaService.autoKafka();
+        return true;
+    }
 
 
 }

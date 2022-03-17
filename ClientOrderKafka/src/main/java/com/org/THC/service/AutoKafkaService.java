@@ -21,7 +21,7 @@ public class AutoKafkaService {
 
 
     @Transactional
-    @Scheduled(fixedRate = 60000)
+    //@Scheduled(fixedRate = 60000)
     public void autoKafka(){
         Iterable<Orders> ordersList=orderRepository.findAll();
         for(Orders orders: ordersList){

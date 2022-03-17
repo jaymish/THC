@@ -13,6 +13,6 @@ public class ProductServiceInterceptorAppConfig extends WebMvcConfigurerAdapter 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(productServiceInterceptor);
+        registry.addInterceptor(productServiceInterceptor).addPathPatterns("/home/**","/api/**","/location/**","/menu/**","/open-hours/**","/reservation/**");
     }
 }

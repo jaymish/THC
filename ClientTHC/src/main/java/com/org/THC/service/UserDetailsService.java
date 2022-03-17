@@ -14,7 +14,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Autowired
     private RestTemplate restTemplate;
-    String url="http://localhost:8081/";
+    String url="http://localhost:8081/home/";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
