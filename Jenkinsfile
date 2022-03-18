@@ -3,7 +3,7 @@ node{
     def DOCKER_IMAGE_VERSION = ""
 
     stage("clean workspace") {
-        deleteDir()
+
     }
 
     stage("git checkout") {
@@ -14,7 +14,7 @@ node{
     }
    stage('Run Container on Server'){
    try{
-    
+
     sh "docker system prune"
     sh "docker-compose up --build"
    }
