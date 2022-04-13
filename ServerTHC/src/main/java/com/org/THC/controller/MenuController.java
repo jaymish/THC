@@ -1,12 +1,11 @@
 package com.org.THC.controller;
 
 import com.org.THC.model.Menu;
-import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageMenu;
 import com.org.THC.service.MenuService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +21,11 @@ public class MenuController {
     }
 
     @PostMapping("/create")
-    @ApiOperation(value = "Create Menu received from client service")
+    @Operation(summary = "Create Menu received from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Saved on DB")
+            @ApiResponse(responseCode = "200", description = "Menu Saved for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createMenus(@RequestBody Menu menu){
         menuService.createMenu(menu);
@@ -33,9 +34,11 @@ public class MenuController {
 
 
     @GetMapping(path = "/get-all")
-    @ApiOperation(value = "Get All menus")
+    @Operation(summary = "Get All menus for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Menus Fetched for client")
+            @ApiResponse(responseCode = "200", description = "All Menus Fetched for the location  for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public List<Menu> getMenus(@RequestParam("locationid") String locationid){
         List<Menu> menuList=menuService.getAllMenus(locationid);
@@ -43,9 +46,11 @@ public class MenuController {
     }
 
     @PostMapping("/get-by-id")
-    @ApiOperation(value = "Get menus by ID")
+    @Operation(summary = "Get menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Fetched by Id for client" )
+            @ApiResponse(responseCode = "200", description = "Menu Fetched by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Menu menusById(@RequestBody String id){
         return menuService.getMenusById(id);
@@ -53,33 +58,45 @@ public class MenuController {
 
 
     @PostMapping("/deactivate")
-    @ApiOperation(value = "Deactivate menus by ID")
+    @Operation(summary = "Deactivate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Menu Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Menu> deactivateMenu(@RequestBody String id){
         return ResponseEntity.ok(menuService.deactivateMenu(id));
     }
 
     @PostMapping("/activate")
-    @ApiOperation(value = "Deactivate menus by ID")
+    @Operation(summary = "Activate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Menu activated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Menu activateMenu(@RequestBody String id){
         return menuService.activateMenu(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Deactivate menus by ID")
+    @Operation(summary = "Update Menu from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Menu updated for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Menu updateMenu(@RequestBody Menu menu){
         return menuService.updateMenu(menu);
     }
 
     @GetMapping("/page")
+    @Operation(summary = "Get All Menu for the location page-vise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All menu for the location Fetched for client page-vise"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
     public PageMenu getAllMenu(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid,@RequestParam(defaultValue = "all") String show){
         return menuService.getAllpage(pageNo, pageSize, sortBy,locationid,show);
     }

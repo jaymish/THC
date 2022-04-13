@@ -1,3 +1,4 @@
+/*
 package com.org.THC.config;
 
 
@@ -22,3 +23,4 @@ public class SwaggerConfig {
     }
 }
 
+*/

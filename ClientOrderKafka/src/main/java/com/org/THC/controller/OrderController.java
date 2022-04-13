@@ -5,10 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.THC.model.Orders;
 import com.org.THC.repo.OrderRepository;
 import com.org.THC.service.AutoKafkaService;
-import com.org.THC.service.KafkaProducerService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,35 +15,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/Order")
 public class OrderController {
 
-    private KafkaProducerService kafkaProducerService;
+    //private KafkaProducerService kafkaProducerService;
     private OrderRepository orderRepository;
     private AutoKafkaService autoKafkaService;
 
 
 
     @Autowired
-    public OrderController(AutoKafkaService autoKafkaService,KafkaProducerService kafkaProducerService,OrderRepository orderRepository){
-        this.kafkaProducerService = kafkaProducerService;
+    public OrderController(AutoKafkaService autoKafkaService,OrderRepository orderRepository){
         this.orderRepository=orderRepository;
         this.autoKafkaService=autoKafkaService;
     }
 
 
     @PostMapping("/CreateOrder")
-    @ApiOperation(value = "Order created by Client")
+    @Operation(summary = "Order created by Client and saved on the temporary memory")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Order Created")
+            @ApiResponse(responseCode = "200", description = "Order Created Successfully"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createOrder(@RequestBody Orders orders) throws JsonProcessingException {
-        System.out.println(orders);
         orderRepository.save(orders);
-        System.out.println(orders);
-        //kafkaProducerService.sendMessageJson(orders);
         return true;
     }
 
 
     @GetMapping("/send")
+    @Operation(summary = "Order from temporary memory sent to kafka")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order Sent Successfully"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
     public boolean send(){
         autoKafkaService.autoKafka();
         return true;

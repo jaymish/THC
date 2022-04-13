@@ -4,9 +4,9 @@ import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
 import com.org.THC.service.ReservationService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +22,11 @@ public class ReservationController {
     }
 
     @PostMapping("/create")
-    @ApiOperation(value = "Create Reservation received from client service")
+    @Operation(summary = "Create Reservation received from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Saved on DB")
+            @ApiResponse(responseCode = "200", description = "Reservation Saved for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createReservations(@RequestBody Reservation reservation){
         reservationService.createReservation(reservation);
@@ -33,9 +35,11 @@ public class ReservationController {
 
 
     @GetMapping(path = "/get-all")
-    @ApiOperation(value = "Get All reservations")
+    @Operation(summary = "Get All openHours")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Reservations Fetched for client")
+            @ApiResponse(responseCode = "200", description = "All Reservation Fetched for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public List<Reservation> getReservations(@RequestParam("locationid") String locationid){
         List<Reservation> reservationList=reservationService.getAllReservations(locationid);
@@ -43,9 +47,11 @@ public class ReservationController {
     }
 
     @PostMapping("/get-by-id")
-    @ApiOperation(value = "Get reservations by ID")
+    @Operation(summary = "Get openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Fetched by Id for client" )
+            @ApiResponse(responseCode = "200", description = "Reservation Fetched by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation reservationsById(@RequestBody String id){
         return reservationService.getReservationsById(id);
@@ -53,33 +59,45 @@ public class ReservationController {
 
 
     @PostMapping("/deactivate")
-    @ApiOperation(value = "Deactivate reservations by ID")
+    @Operation(summary = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Reservation Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Reservation> deactivateReservation(@RequestBody String id){
         return ResponseEntity.ok(reservationService.deactivateReservation(id));
     }
 
     @PostMapping("/activate")
-    @ApiOperation(value = "Deactivate reservations by ID")
+    @Operation(summary = "Activate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Reservation Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation activateReservation(@RequestBody String id){
         return reservationService.activateReservation(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Deactivate reservations by ID")
+    @Operation(summary = "Update Reservation received from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Reservation Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "Reservation updated for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation updateReservation(@RequestBody Reservation reservation){
         return reservationService.updateReservation(reservation);
     }
 
     @GetMapping("/page")
+    @Operation(summary = "Get All Reservation for the location page-vise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Reservation for the location Fetched for client page-vise"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
     public PageReservation getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid){
         return reservationService.getAllpage(pageNo, pageSize, sortBy,locationid);
     }

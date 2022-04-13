@@ -2,6 +2,7 @@ package com.org.THC.service;
 
 import com.org.THC.model.Orders;
 import com.org.THC.repo.OrderRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class AutoKafkaService {
 
     @Transactional
     //@Scheduled(fixedRate = 60000)
-    public void autoKafka(){
+    public boolean autoKafka(){
         Iterable<Orders> ordersList=orderRepository.findAll();
         for(Orders orders: ordersList){
             System.out.println(orders);
@@ -30,5 +31,6 @@ public class AutoKafkaService {
             orderRepository.deleteAllById(orders.getId());
         }
         System.out.println("schedule");
+        return true;
     }
 }

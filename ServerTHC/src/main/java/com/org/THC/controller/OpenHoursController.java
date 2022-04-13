@@ -4,9 +4,9 @@ import com.org.THC.model.OpenHours;
 import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageOpenHours;
 import com.org.THC.service.OpenHoursService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +22,11 @@ public class OpenHoursController {
     }
 
     @PostMapping("/create")
-    @ApiOperation(value = "Create OpenHours received from client service")
+    @Operation(summary = "Create OpenHours received from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Saved on DB")
+            @ApiResponse(responseCode = "200", description = "OpenHours Saved for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createOpenHours(@RequestBody OpenHours openHours){
         openHoursService.createOpenHours(openHours);
@@ -33,9 +35,11 @@ public class OpenHoursController {
 
 
     @GetMapping(path = "/get-all")
-    @ApiOperation(value = "Get All openHours")
+    @Operation(summary = "Get All openHours")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All OpenHours Fetched for client")
+            @ApiResponse(responseCode = "200", description = "All OpenHours Fetched for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public List<OpenHours> getOpenHours(@RequestParam("locationid") String locationid){
         List<OpenHours> openHoursList=openHoursService.getAllOpenHours(locationid);
@@ -43,9 +47,11 @@ public class OpenHoursController {
     }
 
     @PostMapping("/get-by-id")
-    @ApiOperation(value = "Get openHours by ID")
+    @Operation(summary = "Get openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Fetched by Id for client" )
+            @ApiResponse(responseCode = "200", description = "OpenHours Fetched by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public OpenHours openHoursById(@RequestBody String id){
         return openHoursService.getOpenHoursById(id);
@@ -53,33 +59,45 @@ public class OpenHoursController {
 
 
     @PostMapping("/deactivate")
-    @ApiOperation(value = "Deactivate openHours by ID")
+    @Operation(summary = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "OpenHours Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<OpenHours> deactivateOpenHours(@RequestBody String id){
         return ResponseEntity.ok(openHoursService.deactivateOpenHours(id));
     }
 
     @PostMapping("/activate")
-    @ApiOperation(value = "Deactivate openHours by ID")
+    @Operation(summary = "Activate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "OpenHours Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public OpenHours activateOpenHours(@RequestBody String id){
         return openHoursService.activateOpenHours(id);
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Deactivate openHours by ID")
+    @Operation(summary = "Update OpenHours received from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivateed by Id for client")
+            @ApiResponse(responseCode = "200", description = "OpenHours updated for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public OpenHours updateOpenHours(@RequestBody OpenHours openHours){
         return openHoursService.updateOpenHours(openHours);
     }
 
     @GetMapping("/page")
+    @Operation(summary = "Get All OpenHours for the location page-vise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All OpenHours for the location Fetched for client page-vise"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
     public PageOpenHours getAllLocation(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,@RequestParam("locationid") String locationid){
         return openHoursService.getAllpage(pageNo, pageSize, sortBy,locationid);
     }
