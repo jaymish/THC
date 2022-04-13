@@ -23,7 +23,7 @@ public class APIController {
     }
 
     @GetMapping("/page")
-    @Operation(summary = "Get all api names page-vise")
+    @Operation(summary = "Get all api details page-vise")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Get all apis Successfully"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),

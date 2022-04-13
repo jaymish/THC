@@ -4,9 +4,9 @@ import com.org.THC.model.APIName;
 import com.org.THC.model.PageAPIExecuation;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.APIService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +24,11 @@ public class APIController {
     }
 
     @GetMapping("/get-all")
-    @ApiOperation(value = "Get All locations")
+    @Operation(summary = "Get all api details page-vise")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Locations Fetched")
+            @ApiResponse(responseCode = "200", description = "Get all apis Successfully"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String getAll(@RequestParam(defaultValue = "all") String showbydate,@RequestParam(defaultValue = "all") String showbyname, @RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(defaultValue = "") String message, ModelMap modelMap){
         //List<Location> locationList = locationService.getAllLocations();

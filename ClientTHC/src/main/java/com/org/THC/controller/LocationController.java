@@ -5,9 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,9 +29,11 @@ public class LocationController {
     }
 
     @GetMapping("/add")
-    @ApiOperation(value = "Location created by Client")
+    @Operation(summary = "Add new Location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Created")
+            @ApiResponse(responseCode = "200", description = "Add Location requested"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addLocation() {
         return "location/addLocation";
@@ -39,9 +41,11 @@ public class LocationController {
 
 
     @PostMapping("/add")
-    @ApiOperation(value = "Location created by Client")
+    @Operation(summary = "Create Location received by user")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Created")
+            @ApiResponse(responseCode = "200", description = "Location Saved"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addLocation(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
         locationService.createLocations(name,addressline1,addressline2,city,state,zip);
@@ -49,9 +53,11 @@ public class LocationController {
     }
 
     @GetMapping("/get-all")
-    @ApiOperation(value = "Get All locations")
+    @Operation(summary = "Get All locations")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Locations Fetched")
+            @ApiResponse(responseCode = "200", description = "All Locations Fetched"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String getAll(@RequestParam(defaultValue = "all") String show,@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam(defaultValue = "") String message,ModelMap modelMap){
         //List<Location> locationList = locationService.getAllLocations();
@@ -70,9 +76,11 @@ public class LocationController {
     }
 
     @PostMapping("/edit")
-    @ApiOperation(value = "Get All locations")
+    @Operation(summary = "Edit Location Details")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Locations Fetched")
+            @ApiResponse(responseCode = "200", description = "Updated location sent to save"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String editLocation(@ModelAttribute("id") String id,ModelMap modelMap){
         Location location= locationService.getLocationsById(id);
@@ -81,9 +89,11 @@ public class LocationController {
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel locations by ID")
+    @Operation(summary = "Update Location Details")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Updated location details Successfully"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
         locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
@@ -110,9 +120,11 @@ public class LocationController {
     }*/
 
     @PostMapping("/deactivate-by-id")
-    @ApiOperation(value = "Cancel locations by ID")
+    @Operation(summary = "Deactivate locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Location Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         locationService.deactivateLocation(id);
@@ -120,9 +132,11 @@ public class LocationController {
     }
 
     @PostMapping("/activate-by-id")
-    @ApiOperation(value = "Cancel locations by ID")
+    @Operation(summary = "Activate locations by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Location Activated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         locationService.activateLocation(id);

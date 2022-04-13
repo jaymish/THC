@@ -1,13 +1,12 @@
 package com.org.THC.controller;
 
 import com.org.THC.model.OpenHours;
-import com.org.THC.model.PageMenu;
 import com.org.THC.model.PageOpenHours;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.OpenHoursService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,9 +30,11 @@ public class OpenHoursController {
     }
 
     @GetMapping("/add")
-    @ApiOperation(value = "OpenHours created by Client")
+    @Operation(summary = "Add new openHours")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Created")
+            @ApiResponse(responseCode = "200", description = "Add openHours requested"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addHours(@RequestParam("location") String locationId, ModelMap modelMap) {
 
@@ -43,9 +44,11 @@ public class OpenHoursController {
 
 
     @PostMapping("/add")
-    @ApiOperation(value = "OpenHours created by Client")
+    @Operation(summary = "Create openHours received by user for given Location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Created")
+            @ApiResponse(responseCode = "200", description = "openHours Saved"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addHours(@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
         openHoursService.createOpenHours(day,startTime,endTime,locationId);
@@ -54,9 +57,11 @@ public class OpenHoursController {
     }
 
     @GetMapping("/get-all")
-    @ApiOperation(value = "Get All openHours")
+    @Operation(summary = "Get All openHours for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All OpenHours Fetched")
+            @ApiResponse(responseCode = "200", description = "All openHourss Fetched for the location  for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String getAll(@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam("locationid") String id,ModelMap modelMap){
         PageOpenHours pageOpenHours=openHoursService.getAllpage(pageNo,pageSize,id);
@@ -76,9 +81,11 @@ public class OpenHoursController {
     }
 
     @PostMapping("/edit")
-    @ApiOperation(value = "Get All openHours")
+    @Operation(summary = "Edit openHours Details")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All OpenHours Fetched")
+            @ApiResponse(responseCode = "200", description = "Updated menu sent to save"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String editOpenHours(@ModelAttribute("id") String id,ModelMap modelMap){
         OpenHours openHours= openHoursService.getOpenHoursById(id);
@@ -88,9 +95,11 @@ public class OpenHoursController {
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @Operation(summary = "Update openHours from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "openHours updated for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateOpenHours(@ModelAttribute("id") String id,@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,@ModelAttribute("location") String location){
         openHoursService.updateOpenHours(id,day,startTime,endTime,location);
@@ -117,9 +126,11 @@ public class OpenHoursController {
     }*/
 
     @PostMapping("/deactivate-by-id")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @Operation(summary = "Deactivate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "openHours Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateOpenHours(@ModelAttribute("id") String id){
         OpenHours openHours= openHoursService.deactivateOpenHours(id);
@@ -128,9 +139,11 @@ public class OpenHoursController {
     }
 
     @PostMapping("/activate-by-id")
-    @ApiOperation(value = "Cancel openHours by ID")
+    @Operation(summary = "Activate openHours by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OpenHours Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "openHours activated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateOpenHours(@ModelAttribute("id") String id){
         OpenHours openHours= openHoursService.activateOpenHours(id);

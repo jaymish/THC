@@ -5,9 +5,9 @@ import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageMenu;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.MenuService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,9 +31,11 @@ public class MenuController {
     }
 
     @GetMapping("/add")
-    @ApiOperation(value = "Menu created by Client")
+    @Operation(summary = "Add new Menu")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Created")
+            @ApiResponse(responseCode = "200", description = "Add Menu requested"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addMenu(@RequestParam("location") String locationId,ModelMap modelMap) {
 
@@ -43,9 +45,11 @@ public class MenuController {
 
 
     @PostMapping("/add")
-    @ApiOperation(value = "Menu created by Client")
+    @Operation(summary = "Create Menu received by user for given Location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Created")
+            @ApiResponse(responseCode = "200", description = "Menu Saved"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addMenu(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
         menuService.createMenus(itemName, description, price,locationId);
@@ -54,9 +58,11 @@ public class MenuController {
     }
 
     @GetMapping("/get-all")
-    @ApiOperation(value = "Get All menus")
+    @Operation(summary = "Get All menus for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Menus Fetched")
+            @ApiResponse(responseCode = "200", description = "All Menus Fetched for the location  for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String getAll(@RequestParam(defaultValue = "all") String show,@RequestParam(defaultValue = "0") Integer pageNo,@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam("locationid") String id,ModelMap modelMap){
         PageMenu pageMenu=menuService.getAllpage(pageNo,pageSize,id,show);
@@ -79,9 +85,11 @@ public class MenuController {
     }
 
     @PostMapping("/edit")
-    @ApiOperation(value = "Get All menus")
+    @Operation(summary = "Edit Menu Details")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "All Menus Fetched")
+            @ApiResponse(responseCode = "200", description = "Updated menu sent to save"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String editMenu(@ModelAttribute("id") String id,ModelMap modelMap){
         Menu menu= menuService.getMenusById(id);
@@ -91,9 +99,11 @@ public class MenuController {
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "Cancel menus by ID")
+    @Operation(summary = "Update Menu from client service for the location")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Menu updated for the location Fetched for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
         menuService.updateMenu(id,itemName,description,price,status,location);
@@ -120,9 +130,11 @@ public class MenuController {
     }*/
 
     @PostMapping("/deactivate-by-id")
-    @ApiOperation(value = "Cancel menus by ID")
+    @Operation(summary = "Deactivate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Menu Deactivated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateMenu(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         Menu menu= menuService.deactivateMenu(id);
@@ -131,9 +143,11 @@ public class MenuController {
     }
 
     @PostMapping("/activate-by-id")
-    @ApiOperation(value = "Cancel menus by ID")
+    @Operation(summary = "Activate menus by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Menu Deactivated by Id")
+            @ApiResponse(responseCode = "200", description = "Menu activated by Id for client"),
+            @ApiResponse(responseCode = "404", description = "Error page not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateMenu(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
         Menu menu= menuService.activateMenu(id);
