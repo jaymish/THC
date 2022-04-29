@@ -64,7 +64,6 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
         else {
             apiExecutionTime.setApiName(apiName);
         }
-        System.out.println(nameOfAPI);
         Date date=Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         apiExecutionTime.setExecutionTime(executeTime);
