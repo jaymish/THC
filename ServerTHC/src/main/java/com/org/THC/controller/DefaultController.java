@@ -1,5 +1,6 @@
 package com.org.THC.controller;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.User;
 import com.org.THC.model.Users;
 import com.org.THC.service.UserDetailsService;
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @RestController
 @RequestMapping(path = "/home")
 public class DefaultController {
 
     private UserDetailsService userDetailsService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public DefaultController(UserDetailsService userDetailsService){
         this.userDetailsService=userDetailsService;
     }
@@ -42,7 +46,7 @@ public class DefaultController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String createUser(@RequestBody Users user){
-
+        logger.info("Controller:User "+user.getUsername()+" trying to save");
         return userDetailsService.saveUser(user);
         //return "true";
     }

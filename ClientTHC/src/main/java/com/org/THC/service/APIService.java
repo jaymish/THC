@@ -1,8 +1,11 @@
 package com.org.THC.service;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.APIName;
 import com.org.THC.model.PageAPIExecuation;
 import com.org.THC.model.PageLocation;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +19,7 @@ public class APIService {
     List<APIName> apiNameList;
     @Value("${url.to.serverthc}")
     private String serverURL;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     String url="api/";
 

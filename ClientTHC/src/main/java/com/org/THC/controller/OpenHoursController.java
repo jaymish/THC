@@ -1,5 +1,6 @@
 package com.org.THC.controller;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.OpenHours;
 import com.org.THC.model.PageOpenHours;
 import com.org.THC.service.LocationService;
@@ -7,6 +8,8 @@ import com.org.THC.service.OpenHoursService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +23,7 @@ public class OpenHoursController {
 
     private OpenHoursService openHoursService;
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
 
 
@@ -51,6 +55,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addHours(@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
+        logger.info("Controller:User trying to save openHours "+day+" "+startTime+" "+endTime);
         openHoursService.createOpenHours(day,startTime,endTime,locationId);
         modelMap.put("locationid",locationId);
         return "redirect:/open-hours/get-all?locationid="+locationId+"&deactivate=";
@@ -83,13 +88,13 @@ public class OpenHoursController {
     @PostMapping("/edit")
     @Operation(summary = "Edit openHours Details")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Updated menu sent to save"),
+            @ApiResponse(responseCode = "200", description = "Updated openHours sent to save"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String editOpenHours(@ModelAttribute("id") String id,ModelMap modelMap){
         OpenHours openHours= openHoursService.getOpenHoursById(id);
-
+        logger.info("Controller:User trying to edit openHours with id: "+id);
         modelMap.put("OpenHours",openHours);
         return "openHours/editOpenHours";
     }
@@ -102,6 +107,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateOpenHours(@ModelAttribute("id") String id,@ModelAttribute("day") String day, @ModelAttribute("startTime") String startTime, @ModelAttribute("endTime") String endTime,@ModelAttribute("location") String location){
+        logger.info("Controller:User trying to update and save openHours with id: "+id);
         openHoursService.updateOpenHours(id,day,startTime,endTime,location);
         return "redirect:/open-hours/get-all?locationid="+location+"&deactivate=";
     }
@@ -133,6 +139,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateOpenHours(@ModelAttribute("id") String id){
+        logger.info("Controller:User trying to deactivate openHours with id: "+id);
         OpenHours openHours= openHoursService.deactivateOpenHours(id);
         return "redirect:/open-hours/get-all?locationid="+openHours.getLocation().getId()+"&deactivate=";
 
@@ -146,6 +153,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateOpenHours(@ModelAttribute("id") String id){
+        logger.info("Controller:User trying to activate openHours with id: "+id);
         OpenHours openHours= openHoursService.activateOpenHours(id);
         return "redirect:/open-hours/get-all?locationid="+openHours.getLocation().getId()+"&deactivate=";
     }

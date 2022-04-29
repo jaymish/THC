@@ -1,10 +1,13 @@
 package com.org.THC.service;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.APIExecutionTime;
 import com.org.THC.model.APIName;
 import com.org.THC.model.PageAPIExecuation;
 import com.org.THC.repo.APIExecutionTimeRepo;
 import com.org.THC.repo.APINameRepo;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,7 @@ import java.util.List;
 public class APIExecutionService {
     private APIExecutionTimeRepo apiExecutionTimeRepo;
     private APINameRepo apiNameRepo;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     public APIExecutionService(APIExecutionTimeRepo apiExecutionTimeRepo,APINameRepo apiNameRepo){
         this.apiExecutionTimeRepo=apiExecutionTimeRepo;

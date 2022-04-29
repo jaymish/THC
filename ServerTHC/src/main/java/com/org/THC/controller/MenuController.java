@@ -1,11 +1,14 @@
 package com.org.THC.controller;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.Menu;
 import com.org.THC.model.PageMenu;
 import com.org.THC.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,7 @@ import java.util.List;
 public class MenuController {
 
     private MenuService menuService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public MenuController(MenuService menuService){
         this.menuService = menuService;
     }
@@ -28,6 +32,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createMenus(@RequestBody Menu menu){
+        logger.info("Controller:User trying to save menu "+menu.getItemName());
         menuService.createMenu(menu);
         return true;
     }
@@ -65,6 +70,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Menu> deactivateMenu(@RequestBody String id){
+        logger.info("Controller:User trying to deactivate menu with id: "+id);
         return ResponseEntity.ok(menuService.deactivateMenu(id));
     }
 
@@ -76,6 +82,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Menu activateMenu(@RequestBody String id){
+        logger.info("Controller:User trying to activate menu with id: "+id);
         return menuService.activateMenu(id);
     }
 
@@ -87,6 +94,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Menu updateMenu(@RequestBody Menu menu){
+        logger.info("Controller:User trying to update and save menu with id: "+menu.getId());
         return menuService.updateMenu(menu);
     }
 

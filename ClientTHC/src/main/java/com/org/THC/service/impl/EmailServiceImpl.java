@@ -1,6 +1,9 @@
 package com.org.THC.service.impl;
 
+import com.org.THC.THCApplication;
 import com.org.THC.service.EmailService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,6 +20,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender emailSender;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     @Override
     public void sendSimpleMessage(String to, String subject, String text) {

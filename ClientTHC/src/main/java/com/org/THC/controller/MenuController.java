@@ -1,5 +1,6 @@
 package com.org.THC.controller;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.Menu;
 import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageMenu;
@@ -8,6 +9,8 @@ import com.org.THC.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +24,7 @@ public class MenuController {
 
     private MenuService menuService;
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
 
 
@@ -52,6 +56,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addMenu(@ModelAttribute("itemName") String itemName, @ModelAttribute("description") String description, @ModelAttribute("price") String price,  @ModelAttribute("location") String locationId,ModelMap modelMap) {
+        logger.info("Controller:User trying to save menu "+itemName);
         menuService.createMenus(itemName, description, price,locationId);
         modelMap.put("locationid",locationId);
         return "redirect:/menu/get-all?locationid="+locationId+"&deactivate=";
@@ -93,7 +98,7 @@ public class MenuController {
     })
     public String editMenu(@ModelAttribute("id") String id,ModelMap modelMap){
         Menu menu= menuService.getMenusById(id);
-
+        logger.info("Controller:User trying to edit menu with id: "+id);
         modelMap.put("Menus",menu);
         return "menu/editMenu";
     }
@@ -106,6 +111,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateMenu(@ModelAttribute("id") String id,@ModelAttribute("itemName") String itemName,@ModelAttribute("description") String description,@ModelAttribute("price") String price,@ModelAttribute("status") String status,@ModelAttribute("location") String location){
+        logger.info("Controller:User trying to update and save menu with id: "+id);
         menuService.updateMenu(id,itemName,description,price,status,location);
         return "redirect:/menu/get-all?locationid="+location+"&deactivate=";
     }
@@ -137,6 +143,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateMenu(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
+        logger.info("Controller:User trying to deactivate menu with id: "+id);
         Menu menu= menuService.deactivateMenu(id);
         return "redirect:/menu/get-all?show="+show+"&locationid="+menu.getLocation().getId()+"&deactivate=";
 
@@ -150,6 +157,7 @@ public class MenuController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateMenu(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
+        logger.info("Controller:User trying to activate menu with id: "+id);
         Menu menu= menuService.activateMenu(id);
         return "redirect:/menu/get-all?show="+show+"&locationid="+menu.getLocation().getId()+"&deactivate=";
     }

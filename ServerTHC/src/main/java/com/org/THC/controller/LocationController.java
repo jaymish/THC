@@ -1,12 +1,15 @@
 package com.org.THC.controller;
 
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class LocationController {
 
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public LocationController(LocationService locationService ){
         this.locationService = locationService;
     }
@@ -29,6 +33,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createLocations(@RequestBody Location location){
+        logger.info("Controller:User trying to save location"+location.getName()+" "+location.getAddressline1());
         locationService.createLocation(location);
         return true;
     }
@@ -75,6 +80,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Location> deactivateLocation(@RequestBody String id){
+        logger.info("Controller:User trying to deactivate location with id: "+id);
         return ResponseEntity.ok(locationService.deactivateLocation(id));
     }
 
@@ -86,6 +92,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Location> activateLocation(@RequestBody String id){
+        logger.info("Controller:User trying to deactivate location with id: "+id);
         return ResponseEntity.ok(locationService.activateLocation(id));
     }
 
@@ -97,6 +104,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Location> updateLocation(@RequestBody Location location){
+        logger.info("Controller:User trying to update and save location with id: "+location.getId());
         return ResponseEntity.ok(locationService.updateLocation(location));
     }
 

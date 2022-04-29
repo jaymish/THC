@@ -1,12 +1,15 @@
 package com.org.THC.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.org.THC.THCApplication;
 import com.org.THC.model.PageOpenHours;
 import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
 import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.ReservationService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ public class DefaultReservationService implements ReservationService {
     private ObjectMapper objectMapper;
     private List<Reservation> reservationList;
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     @Value("${url.to.serverthc}")
     private String serverURL;
 
@@ -59,6 +63,7 @@ public class DefaultReservationService implements ReservationService {
         reservation.setEmailId(emailId);
         reservation.setNoOfPeople(noOfPeople);
         reservation.setLocation(locationService.getLocationsById(locationId));
+        logger.info("Service:User trying to save reservation "+date+" "+firstName+" "+lastName+" "+phoneNumber+" using microservices");
         return restTemplate.postForObject(serverURL+url+"create", reservation, boolean.class);
 
     }
@@ -82,11 +87,13 @@ public class DefaultReservationService implements ReservationService {
 
     @Override
     public Reservation deactivateReservation(String id) {
+        logger.info("Service:User trying to deactivate reservation with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"deactivate", id, Reservation.class);
     }
 
     @Override
     public Reservation activateReservation(String id) {
+        logger.info("Service:User trying to activate reservation with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"activate", id, Reservation.class);
     }
 
@@ -116,6 +123,7 @@ public class DefaultReservationService implements ReservationService {
         reservation.setEmailId(emailId);
         reservation.setNoOfPeople(noOfPeople);
         reservation.setStatus(status);
+        logger.info("Service:User trying to update and save reservation with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"update", reservation, Reservation.class);
     }
 

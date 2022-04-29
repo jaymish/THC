@@ -1,12 +1,15 @@
 package com.org.THC.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.org.THC.THCApplication;
 import com.org.THC.model.OpenHours;
 import com.org.THC.model.PageMenu;
 import com.org.THC.model.PageOpenHours;
 import com.org.THC.model.TimeModel;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.OpenHoursService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
     private ObjectMapper objectMapper;
     private List<OpenHours> listOpenHours;
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     @Value("${url.to.serverthc}")
     private String serverURL;
 
@@ -69,6 +73,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
         openHours.setStartTime(start);
         openHours.setEndTime(end);
         openHours.setLocation(locationService.getLocationsById(locationId));
+        logger.info("Service:User trying to save openHours "+day+" "+startTime+" "+endTime+" using microservices");
         return restTemplate.postForObject(serverURL+url+"create", openHours, boolean.class);
 
     }
@@ -92,11 +97,13 @@ public class DefaultOpenHoursService implements OpenHoursService {
 
     @Override
     public OpenHours deactivateOpenHours(String id) {
+        logger.info("Service:User trying to deactivate openHours with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"deactivate", id, OpenHours.class);
     }
 
     @Override
     public OpenHours activateOpenHours(String id) {
+        logger.info("Service:User trying to activate openHours with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"activate", id, OpenHours.class);
     }
 
@@ -135,6 +142,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
         }
         openHours.setStartTime(start);
         openHours.setEndTime(end);
+        logger.info("Service:User trying to update and save openHours with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"update", openHours, OpenHours.class);
     }
 

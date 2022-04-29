@@ -1,5 +1,6 @@
 package com.org.THC.service.impl;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.Location;
 import com.org.THC.model.Menu;
 import com.org.THC.model.PageLocation;
@@ -7,6 +8,8 @@ import com.org.THC.model.PageMenu;
 import com.org.THC.repo.MenuRepo;
 import com.org.THC.repo.PageMenuRepo;
 import com.org.THC.service.MenuService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,7 @@ public class DefaultMenuService implements MenuService {
     private MenuRepo menuRepo;
     private EmailServiceImpl emailService;
     private PageMenuRepo pageMenuRepo;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     public DefaultMenuService(MenuRepo menuRepo, EmailServiceImpl emailService,PageMenuRepo pageMenuRepo){
         this.menuRepo = menuRepo;
@@ -28,6 +32,7 @@ public class DefaultMenuService implements MenuService {
     }
     @Override
     public boolean createMenu(Menu menu) {
+        logger.info("Service:User trying to save menu "+menu.getItemName());
         menuRepo.saveMenu(menu);
         //emailService.sendSimpleMessage(menus.getCustomer().getEmail_id(),"Menu Created","Thank you your menu was created. Here is the detail of your menu \n"+ menus.toString());
         return true;
@@ -50,17 +55,20 @@ public class DefaultMenuService implements MenuService {
     @Override
     public Menu deactivateMenu(String id) {
         //logic to check if deactivate is possible
+        logger.info("Service:User trying to deactivate menu with id: "+id);
         return menuRepo.menuDeactivate(id);
     }
 
     @Override
     public Menu activateMenu(String id) {
+        logger.info("Service:User trying to activate menu with id: "+id);
         //logic to check if deactivate is possible
         return menuRepo.menuActivate(id);
     }
 
     @Override
     public Menu updateMenu(Menu menu) {
+        logger.info("Service:User trying to update and save menu with id: "+menu.getId());
         return menuRepo.updateMenu(menu);
     }
 

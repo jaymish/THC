@@ -1,5 +1,6 @@
 package com.org.THC.controller;
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageReservation;
 import com.org.THC.model.Reservation;
@@ -7,6 +8,8 @@ import com.org.THC.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class ReservationController {
 
     private ReservationService reservationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public ReservationController(ReservationService reservationService){
         this.reservationService = reservationService;
     }
@@ -29,13 +33,14 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createReservations(@RequestBody Reservation reservation){
+        logger.info("Controller:User trying to save reservation "+reservation.getDate()+" "+reservation.getFirstName()+" "+reservation.getLastName()+" "+reservation.getPhoneNumber());
         reservationService.createReservation(reservation);
         return true;
     }
 
 
     @GetMapping(path = "/get-all")
-    @Operation(summary = "Get All openHours")
+    @Operation(summary = "Get All reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Reservation Fetched for the location Fetched for client"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),
@@ -47,7 +52,7 @@ public class ReservationController {
     }
 
     @PostMapping("/get-by-id")
-    @Operation(summary = "Get openHours by ID")
+    @Operation(summary = "Get reservation by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation Fetched by Id for client"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),
@@ -59,24 +64,26 @@ public class ReservationController {
 
 
     @PostMapping("/deactivate")
-    @Operation(summary = "Deactivate openHours by ID")
+    @Operation(summary = "Deactivate reservation by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation Deactivated by Id for client"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Reservation> deactivateReservation(@RequestBody String id){
+        logger.info("Controller:User trying to deactivate reservation with id: "+id);
         return ResponseEntity.ok(reservationService.deactivateReservation(id));
     }
 
     @PostMapping("/activate")
-    @Operation(summary = "Activate openHours by ID")
+    @Operation(summary = "Activate reservation by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation Deactivated by Id for client"),
             @ApiResponse(responseCode = "404", description = "Error page not found"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation activateReservation(@RequestBody String id){
+        logger.info("Controller:User trying to activate reservation with id: "+id);
         return reservationService.activateReservation(id);
     }
 
@@ -88,6 +95,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation updateReservation(@RequestBody Reservation reservation){
+        logger.info("Controller:User trying to update and save reservation with id: "+reservation.getId());
         return reservationService.updateReservation(reservation);
     }
 

@@ -1,11 +1,14 @@
 package com.org.THC.service.impl;
 
 
+import com.org.THC.THCApplication;
 import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.repo.LocationRepo;
 import com.org.THC.repo.PageLocationRepo;
 import com.org.THC.service.LocationService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,7 @@ public class DefaultLocationService implements LocationService {
     private LocationRepo locationRepo;
     private EmailServiceImpl emailService;
     private PageLocationRepo pageLocationRepo;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     public DefaultLocationService(LocationRepo locationRepo, EmailServiceImpl emailService,PageLocationRepo pageLocationRepo){
         this.locationRepo = locationRepo;
@@ -28,6 +32,7 @@ public class DefaultLocationService implements LocationService {
     }
     @Override
     public boolean createLocation(Location location) {
+        logger.info("Service:User trying to save location "+location.getName()+" " +location.getAddressline1());
         locationRepo.saveLocation(location);
         //emailService.sendSimpleMessage(locations.getCustomer().getEmail_id(),"Location Created","Thank you your location was created. Here is the detail of your location \n"+ locations.toString());
         return true;
@@ -54,17 +59,20 @@ public class DefaultLocationService implements LocationService {
     @Override
     public Location deactivateLocation(String id) {
         //logic to check if deactivate is possible
+        logger.info("Service:User trying to deactivate location with id: "+id);
         return locationRepo.locationDeactivate(id);
     }
 
     @Override
     public Location activateLocation(String id) {
         //logic to check if deactivate is possible
+        logger.info("Service:User trying to activate location with id: "+id);
         return locationRepo.locationActivate(id);
     }
 
     @Override
     public Location updateLocation(Location location) {
+        logger.info("Service:User trying to update and save location with id: "+location.getId());
         return locationRepo.updateLocation(location);
     }
 

@@ -2,12 +2,15 @@ package com.org.THC.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.org.THC.THCApplication;
 import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +23,7 @@ import java.util.List;
 public class LocationController {
 
     private LocationService locationService;
+    private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
 
 
@@ -48,6 +52,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addLocation(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
+        logger.info("Controller:User trying to save location"+name+" "+addressline1);
         locationService.createLocations(name,addressline1,addressline2,city,state,zip);
         return "redirect:/location/get-all";
     }
@@ -85,6 +90,7 @@ public class LocationController {
     public String editLocation(@ModelAttribute("id") String id,ModelMap modelMap){
         Location location= locationService.getLocationsById(id);
         modelMap.put("Locations",location);
+        logger.info("Controller:User trying to edit location with id: "+id);
         return "location/editLocation";
     }
 
@@ -96,28 +102,10 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
+        logger.info("Controller:User trying to update and save location with id: "+id);
         locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
         return "redirect:/location/get-all";
     }
-
-
-    /*@PostMapping("/get-location-by-id")
-    @ApiOperation(value = "Get locations by ID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Fetched by Id")
-    })
-    public Location getById(@RequestBody String id){
-        return locationService.getLocationsById(id);
-    }*/
-
-    /*@PostMapping("/getLocationByZip")
-    @ApiOperation(value = "Get locations by ZipCode")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Location Fetched by Zip")
-    })
-    public List<Location> getLocationsByZip(@RequestBody int zipcode){
-        return locationService.getLocationsByZip(zipcode);
-    }*/
 
     @PostMapping("/deactivate-by-id")
     @Operation(summary = "Deactivate locations by ID")
@@ -127,6 +115,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
+        logger.info("Controller:User trying to deactivate location with id: "+id);
         locationService.deactivateLocation(id);
         return "redirect:/location/get-all?show="+show;
     }
@@ -139,6 +128,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
+        logger.info("Controller:User trying to activate location with id: "+id);
         locationService.activateLocation(id);
         return "redirect:/location/get-all?show="+show;
     }
