@@ -8,8 +8,7 @@ import com.org.THC.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ import java.util.List;
 public class ReservationController {
 
     private ReservationService reservationService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public ReservationController(ReservationService reservationService){
         this.reservationService = reservationService;
     }
@@ -33,7 +32,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createReservations(@RequestBody Reservation reservation){
-        logger.info("Controller:User trying to save reservation "+reservation.getDate()+" "+reservation.getFirstName()+" "+reservation.getLastName()+" "+reservation.getPhoneNumber());
+        //logger.info("Controller:User trying to save reservation "+reservation.getDate()+" "+reservation.getFirstName()+" "+reservation.getLastName()+" "+reservation.getPhoneNumber());
         reservationService.createReservation(reservation);
         return true;
     }
@@ -71,7 +70,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<Reservation> deactivateReservation(@RequestBody String id){
-        logger.info("Controller:User trying to deactivate reservation with id: "+id);
+        //logger.info("Controller:User trying to deactivate reservation with id: "+id);
         return ResponseEntity.ok(reservationService.deactivateReservation(id));
     }
 
@@ -83,7 +82,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation activateReservation(@RequestBody String id){
-        logger.info("Controller:User trying to activate reservation with id: "+id);
+        //logger.info("Controller:User trying to activate reservation with id: "+id);
         return reservationService.activateReservation(id);
     }
 
@@ -95,7 +94,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public Reservation updateReservation(@RequestBody Reservation reservation){
-        logger.info("Controller:User trying to update and save reservation with id: "+reservation.getId());
+        //logger.info("Controller:User trying to update and save reservation with id: "+reservation.getId());
         return reservationService.updateReservation(reservation);
     }
 

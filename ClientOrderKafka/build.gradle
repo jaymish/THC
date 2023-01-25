@@ -35,10 +35,6 @@ dependencies {
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2'
-    configurations {
-        all*.exclude module : 'spring-boot-starter-logging'
-    }
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j', version: '1.3.8.RELEASE'
 }
 
 tasks.named('test') {

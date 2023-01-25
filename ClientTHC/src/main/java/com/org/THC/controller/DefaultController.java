@@ -5,8 +5,7 @@ import com.org.THC.service.UserDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ public class DefaultController implements ErrorController {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(DefaultController.class);
 
     @RequestMapping(path="/")
     @Operation(summary = "Main page")
@@ -50,7 +49,7 @@ public class DefaultController implements ErrorController {
     @Operation(summary = "Error page")
     public String thcError(ModelMap modelMap) {
         modelMap.put("message", "Something went wrong. Please try again.");
-        logger.error("Oops! Error found.");
+        //logger.error("Oops! Error found.");
         return "index";
     }
 
@@ -73,7 +72,7 @@ public class DefaultController implements ErrorController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String addUser(@ModelAttribute("name") String name,@ModelAttribute("password") String password,ModelMap modelMap){
-        logger.info("Controller:User "+name+" trying to register");
+        //logger.info("Controller:User "+name+" trying to register");
         userDetailsService.saveUser(name,password);
         modelMap.put("message", "");
         return "index";

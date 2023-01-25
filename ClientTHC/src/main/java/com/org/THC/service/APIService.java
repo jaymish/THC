@@ -4,8 +4,7 @@ import com.org.THC.THCApplication;
 import com.org.THC.model.APIName;
 import com.org.THC.model.PageAPIExecuation;
 import com.org.THC.model.PageLocation;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +18,7 @@ public class APIService {
     List<APIName> apiNameList;
     @Value("${url.to.serverthc}")
     private String serverURL;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    ////private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     String url="api/";
 
@@ -28,7 +27,6 @@ public class APIService {
         this.apiNameList=apiNameList;
     }
     public PageAPIExecuation getAllpage(Integer pageNo, Integer pageSize, String showbyname,String showbydate) {
-        System.out.print(url);
         PageAPIExecuation pageLocation=restTemplate.getForObject(serverURL+url+"page?pageNo="+pageNo+"&pageSize="+pageSize+"&sortBy=id&showbyname="+showbyname+"&showbydate="+showbydate,PageAPIExecuation.class);
         return pageLocation;
     }

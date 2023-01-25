@@ -3,9 +3,6 @@ package com.org.THC.service;
 
 import com.org.THC.ProducerOrderKafkaApplication;
 import com.org.THC.model.Orders;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,7 @@ public class KafkaProducerService {
 
 
     private final KafkaTemplate<String, Orders> ordersKafkaTemplate;
-    private static final Logger logger = LogManager.getLogger(ProducerOrderKafkaApplication.class);
+    // //private static final Logger logger = LogManager.getLogger(ProducerOrderKafkaApplication.class);
 
 
     @Value("${kafka.topic.json.name}")
@@ -32,7 +29,7 @@ public class KafkaProducerService {
 
 
     public void sendMessageJson(Orders orders){
-        logger.info("Order with id:"+orders.getId()+" sent to kafka");
+        // //logger.info("Order with id:"+orders.getId()+" sent to kafka");
 
         ordersKafkaTemplate.executeInTransaction(t -> {
             t.send(JSON_TOPIC, orders.getId(), orders);

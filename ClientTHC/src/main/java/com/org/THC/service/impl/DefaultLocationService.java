@@ -7,8 +7,7 @@ import com.org.THC.THCApplication;
 import com.org.THC.model.Location;
 import com.org.THC.model.PageLocation;
 import com.org.THC.service.LocationService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class DefaultLocationService implements LocationService {
     private RestTemplate restTemplate;
     private ObjectMapper objectMapper;
     private List<Location> locationList;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     @Value("${url.to.serverthc}")
     private String serverURL;
 
@@ -44,7 +43,7 @@ public class DefaultLocationService implements LocationService {
         location.setCity(city);
         location.setState(state);
         location.setZip(zip);
-        logger.info("Service:User trying to save location "+name+" " +addressline1+" using microservices");
+        //logger.info("Service:User trying to save location "+name+" " +addressline1+" using microservices");
         return restTemplate.postForObject(serverURL+url+"create", location, boolean.class);
 
     }
@@ -67,13 +66,13 @@ public class DefaultLocationService implements LocationService {
 
     @Override
     public Location deactivateLocation(String id) {
-        logger.info("Service:User trying to deactivate location with id: "+id+" using microservices");
+        //logger.info("Service:User trying to deactivate location with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"deactivate", id, Location.class);
     }
 
     @Override
     public Location activateLocation(String id) {
-        logger.info("Service:User trying to activate location with id: "+id+" using microservices");
+        //logger.info("Service:User trying to activate location with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"activate", id, Location.class);
     }
 
@@ -88,7 +87,7 @@ public class DefaultLocationService implements LocationService {
         location.setState(state);
         location.setStatus(status);
         location.setZip(zip);
-        logger.info("Service:User trying to update and save location with id: "+id+" using microservices");
+        //logger.info("Service:User trying to update and save location with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"update", location, Location.class);
     }
 

@@ -7,8 +7,6 @@ import com.org.THC.model.PageLocation;
 import com.org.THC.model.PageMenu;
 import com.org.THC.service.LocationService;
 import com.org.THC.service.MenuService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class DefaultMenuService implements MenuService {
     private ObjectMapper objectMapper;
     private List<Menu> menuList;
     private LocationService locationService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    ////private static final Logger logger = LogManager.getLogger(THCApplication.class);
     @Value("${url.to.serverthc}")
     private String serverURL;
 
@@ -43,7 +41,7 @@ public class DefaultMenuService implements MenuService {
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setLocation(locationService.getLocationsById(locationId));
-        logger.info("Service:User trying to save menu "+itemName+" using microservices");
+        //logger.info("Service:User trying to save menu "+itemName+" using microservices");
         return restTemplate.postForObject(serverURL+url+"create", menu, boolean.class);
 
     }
@@ -67,13 +65,13 @@ public class DefaultMenuService implements MenuService {
 
     @Override
     public Menu deactivateMenu(String id) {
-        logger.info("Service:User trying to deactivate menu with id: "+id+" using microservices");
+        //logger.info("Service:User trying to deactivate menu with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"deactivate", id, Menu.class);
     }
 
     @Override
     public Menu activateMenu(String id) {
-        logger.info("Service:User trying to activate menu with id: "+id+" using microservices");
+        //logger.info("Service:User trying to activate menu with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"activate", id, Menu.class);
     }
 
@@ -85,7 +83,7 @@ public class DefaultMenuService implements MenuService {
         menu.setDescription(description);
         menu.setPrice(price);
         menu.setStatus(status);
-        logger.info("Service:User trying to update and save menu with id: "+id+" using microservices");
+        //logger.info("Service:User trying to update and save menu with id: "+id+" using microservices");
         return restTemplate.postForObject(serverURL+url+"update", menu, Menu.class);
     }
 

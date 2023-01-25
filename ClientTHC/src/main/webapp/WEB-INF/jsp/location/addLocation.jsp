@@ -14,31 +14,31 @@
 <body>
 <div class="container-fluid">
     <%@include file="../Loginheader.html" %>
-    <form action="/location/add" method="post">
+    <form action="/location/add" method="post" modelAttribute="Location">
         <h1>Add Location</h1>
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" >
+            <input type="text" class="form-control" id="name" name="name" path="name">
         </div>
         <div class="mb-3">
             <label for="addressline1" class="form-label">Address Line 1</label>
-            <input type="text" class="form-control" id="addressline1" name="addressline1" >
+            <input type="text" class="form-control" id="addressline1" name="addressline1" path="addressline1">
         </div>
         <div class="mb-3">
             <label for="addressline2" class="form-label">Address Line 2</label>
-            <input type="text" class="form-control" id="addressline2" name="addressline2" >
+            <input type="text" class="form-control" id="addressline2" name="addressline2" path="addressline2">
         </div>
         <div class="mb-3">
             <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" >
+            <input type="text" class="form-control" id="city" name="city" path="city">
         </div>
         <div class="mb-3">
             <label for="state" class="form-label">State</label>
-            <input type="text" class="form-control" id="state" name="state" >
+            <input type="text" class="form-control" id="state" name="state" path="state">
         </div>
         <div class="mb-3">
             <label for="zip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="zip" name="zip" >
+            <input type="text" class="form-control" id="zip" name="zip" path="zip">
         </div>
         <button type="submit" class="btn btn-primary" style="width: 15%">Add</button>
     </form>

@@ -5,8 +5,7 @@ import com.org.THC.model.APIExecutionTime;
 import com.org.THC.model.APIName;
 import com.org.THC.repo.APIExecutionTimeRepo;
 import com.org.THC.repo.APINameRepo;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +20,7 @@ import java.util.Date;
 @Component
 public class ProductServiceInterceptor implements HandlerInterceptor {
     private APIExecutionTimeRepo apiExecutionTimeRepo;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     private APINameRepo apiNameRepo;
     public ProductServiceInterceptor(APINameRepo apiNameRepo,APIExecutionTimeRepo apiExecutionTimeRepo){
         this.apiExecutionTimeRepo=apiExecutionTimeRepo;

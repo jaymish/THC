@@ -4,8 +4,7 @@ import com.org.THC.THCApplication;
 import com.org.THC.model.User;
 import com.org.THC.model.Users;
 import com.org.THC.repo.UserRepository;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ public class UserDetailsService {
 
     @Autowired
     private UserRepository repository;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     public Users loadUserByUsername(String username){
         User user=repository.findByUsername(username);
@@ -32,7 +31,7 @@ public class UserDetailsService {
         User saveUser=new User();
         saveUser.setUsername(user.getUsername());
         saveUser.setPassword(user.getPassword());
-        logger.info("Service:User "+user.getUsername()+" trying to save");
+        //logger.info("Service:User "+user.getUsername()+" trying to save");
         repository.save(saveUser);
         return "User Successfully added";
     }

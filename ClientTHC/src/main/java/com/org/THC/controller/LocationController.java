@@ -9,8 +9,7 @@ import com.org.THC.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,7 +22,7 @@ import java.util.List;
 public class LocationController {
 
     private LocationService locationService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(LocationController.class);
 
 
 
@@ -51,9 +50,11 @@ public class LocationController {
             @ApiResponse(responseCode = "404", description = "Error page not found"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
-    public String addLocation(@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip) {
-        logger.info("Controller:User trying to save location"+name+" "+addressline1);
-        locationService.createLocations(name,addressline1,addressline2,city,state,zip);
+    public String addLocation(@ModelAttribute("Location") Location location /*@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip*/) {
+        //logger.info("Controller:User trying to save location"+name+" "+addressline1);
+
+        locationService.createLocations(location.getName(),location.getAddressline1(),location.getAddressline2(),location.getCity(),location.getState(),location.getZip());
+        //locationService.createLocations(name,addressline1,addressline2,city,state,zip);
         return "redirect:/location/get-all";
     }
 
@@ -90,7 +91,7 @@ public class LocationController {
     public String editLocation(@ModelAttribute("id") String id,ModelMap modelMap){
         Location location= locationService.getLocationsById(id);
         modelMap.put("Locations",location);
-        logger.info("Controller:User trying to edit location with id: "+id);
+        //logger.info("Controller:User trying to edit location with id: "+id);
         return "location/editLocation";
     }
 
@@ -102,7 +103,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String updateLocation(@ModelAttribute("id") String id,@ModelAttribute("name") String name,@ModelAttribute("addressline1") String addressline1,@ModelAttribute("addressline2") String addressline2,@ModelAttribute("city") String city,@ModelAttribute("state") String state,@ModelAttribute("zip") int zip,@ModelAttribute("status") String status){
-        logger.info("Controller:User trying to update and save location with id: "+id);
+        //logger.info("Controller:User trying to update and save location with id: "+id);
         locationService.updateLocation(id,name,addressline1,addressline2,city,state,zip,status);
         return "redirect:/location/get-all";
     }
@@ -115,7 +116,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String deactivateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
-        logger.info("Controller:User trying to deactivate location with id: "+id);
+        //logger.info("Controller:User trying to deactivate location with id: "+id);
         locationService.deactivateLocation(id);
         return "redirect:/location/get-all?show="+show;
     }
@@ -128,7 +129,7 @@ public class LocationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String activateLocation(@ModelAttribute("id") String id,@ModelAttribute("show") String show){
-        logger.info("Controller:User trying to activate location with id: "+id);
+        //logger.info("Controller:User trying to activate location with id: "+id);
         locationService.activateLocation(id);
         return "redirect:/location/get-all?show="+show;
     }

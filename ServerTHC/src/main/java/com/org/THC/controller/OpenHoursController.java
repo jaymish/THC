@@ -8,8 +8,7 @@ import com.org.THC.service.OpenHoursService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ import java.util.List;
 public class OpenHoursController {
 
     private OpenHoursService openHoursService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public OpenHoursController(OpenHoursService openHoursService){
         this.openHoursService = openHoursService;
     }
@@ -33,7 +32,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public boolean createOpenHours(@RequestBody OpenHours openHours){
-        logger.info("Controller:User trying to save openHours "+openHours.getDay()+" "+openHours.getStartTime()+" "+openHours.getEndTime());
+        //logger.info("Controller:User trying to save openHours "+openHours.getDay()+" "+openHours.getStartTime()+" "+openHours.getEndTime());
         openHoursService.createOpenHours(openHours);
         return true;
     }
@@ -71,7 +70,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public ResponseEntity<OpenHours> deactivateOpenHours(@RequestBody String id){
-        logger.info("Controller:User trying to deactivate openHours with id: "+id);
+        //logger.info("Controller:User trying to deactivate openHours with id: "+id);
         return ResponseEntity.ok(openHoursService.deactivateOpenHours(id));
     }
 
@@ -83,7 +82,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public OpenHours activateOpenHours(@RequestBody String id){
-        logger.info("Controller:User trying to activate openHours with id: "+id);
+        //logger.info("Controller:User trying to activate openHours with id: "+id);
         return openHoursService.activateOpenHours(id);
     }
 
@@ -95,7 +94,7 @@ public class OpenHoursController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public OpenHours updateOpenHours(@RequestBody OpenHours openHours){
-        logger.info("Controller:User trying to update and save openHours with id: "+openHours.getId());
+        //logger.info("Controller:User trying to update and save openHours with id: "+openHours.getId());
         return openHoursService.updateOpenHours(openHours);
     }
 

@@ -3,8 +3,7 @@ package com.org.THC.exception;
 import com.org.THC.THCApplication;
 import com.org.THC.model.ErrorExceptionMessage;
 import lombok.Data;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+  
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     @ExceptionHandler(Exception.class)
     public final String errorMessageResponseEntity(Exception exception){
         ErrorExceptionMessage errorMessage=new ErrorExceptionMessage(exception.getMessage());
         ResponseEntity<ErrorExceptionMessage> errorExceptionMessageResponseEntity= new ResponseEntity<ErrorExceptionMessage>(errorMessage,new HttpHeaders(),HttpStatus.INTERNAL_SERVER_ERROR);
         //log errorExceptionMessageResponseEntity and return user to default page
-        logger.error("Exception:"+exception);
+        //logger.error("Exception:"+exception);
 
         return "redirect:/error";
     }

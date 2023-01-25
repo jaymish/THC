@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 
 @RestController
 @RequestMapping(path = "/home")
 public class DefaultController {
 
     private UserDetailsService userDetailsService;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
     public DefaultController(UserDetailsService userDetailsService){
         this.userDetailsService=userDetailsService;
     }
@@ -46,7 +45,7 @@ public class DefaultController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     public String createUser(@RequestBody Users user){
-        logger.info("Controller:User "+user.getUsername()+" trying to save");
+        //logger.info("Controller:User "+user.getUsername()+" trying to save");
         return userDetailsService.saveUser(user);
         //return "true";
     }

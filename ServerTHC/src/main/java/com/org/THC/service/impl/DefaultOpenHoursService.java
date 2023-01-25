@@ -8,8 +8,7 @@ import com.org.THC.model.PageOpenHours;
 import com.org.THC.repo.OpenHoursRepo;
 import com.org.THC.repo.PageOpenHoursRepo;
 import com.org.THC.service.OpenHoursService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+ 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +22,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
     private OpenHoursRepo openHoursRepo;
     private EmailServiceImpl emailService;
     private PageOpenHoursRepo pageOpenHoursRepo;
-    private static final Logger logger = LogManager.getLogger(THCApplication.class);
+    //private static final Logger logger = LogManager.getLogger(THCApplication.class);
 
     public DefaultOpenHoursService(OpenHoursRepo openHoursRepo, EmailServiceImpl emailService,PageOpenHoursRepo pageOpenHoursRepo){
         this.openHoursRepo = openHoursRepo;
@@ -32,7 +31,7 @@ public class DefaultOpenHoursService implements OpenHoursService {
     }
     @Override
     public boolean createOpenHours(OpenHours openHours) {
-        logger.info("Service:User trying to save openHours "+openHours.getDay()+" "+openHours.getStartTime()+" "+openHours.getEndTime());
+        //logger.info("Service:User trying to save openHours "+openHours.getDay()+" "+openHours.getStartTime()+" "+openHours.getEndTime());
         openHoursRepo.saveOpenHours(openHours);
         //emailService.sendSimpleMessage(openHours.getCustomer().getEmail_id(),"OpenHours Created","Thank you your openHours was created. Here is the detail of your openHours \n"+ openHours.toString());
         return true;
@@ -55,20 +54,20 @@ public class DefaultOpenHoursService implements OpenHoursService {
     @Override
     public OpenHours deactivateOpenHours(String id) {
         //logic to check if deactivate is possible
-        logger.info("Service:User trying to deactivate openHours with id: "+id);
+        //logger.info("Service:User trying to deactivate openHours with id: "+id);
         return openHoursRepo.openHoursDeactivate(id);
     }
 
     @Override
     public OpenHours activateOpenHours(String id) {
         //logic to check if deactivate is possible
-        logger.info("Service:User trying to activate openHours with id: "+id);
+        //logger.info("Service:User trying to activate openHours with id: "+id);
         return openHoursRepo.openHoursActivate(id);
     }
 
     @Override
     public OpenHours updateOpenHours(OpenHours openHours) {
-        logger.info("Service:User trying to update and save openHours with id: "+openHours.getId());
+        //logger.info("Service:User trying to update and save openHours with id: "+openHours.getId());
         return openHoursRepo.updateOpenHours(openHours);
     }
 
